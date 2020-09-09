@@ -1,0 +1,58 @@
+﻿@model ZMLisSys.Models.Listest
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Listest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TestName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.P_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.P_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sex_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Idno_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Idno_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

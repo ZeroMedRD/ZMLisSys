@@ -1,0 +1,207 @@
+﻿body {
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
+    background-color: #C9E9E6;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+/***** Login Template *****/
+.inner-bg {
+    padding: 100px 0 170px 0;
+}
+
+.top-content .text {
+    color: #fff;
+}
+
+    .top-content .text h1 {
+        color: #fff;
+    }
+
+.top-content .description {
+    margin: 20px 0 10px 0;
+}
+
+    .top-content .description p {
+        opacity: 0.8;
+    }
+
+    .top-content .description a {
+        color: #fff;
+    }
+
+        .top-content .description a:hover,
+        .top-content .description a:focus {
+            border-bottom: 1px dotted #fff;
+        }
+
+.form-box {
+    margin-top: 35px;
+}
+
+.form-top {
+    overflow: hidden;
+    padding: 0 25px 15px 25px;
+    background: #fff;
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    text-align: left;
+}
+
+.form-top-left {
+    float: left;
+    width: 75%;
+    padding-top: 25px;
+}
+
+    .form-top-left h3 {
+        margin-top: 0;
+    }
+
+.form-top-right {
+    float: left;
+    width: 25%;
+    padding-top: 5px;
+    font-size: 66px;
+    color: #ddd;
+    line-height: 100px;
+    text-align: right;
+}
+
+.form-bottom {
+    padding: 25px 25px 30px 25px;
+    background: #eee;
+    -moz-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+    text-align: left;
+}
+
+    .form-bottom form textarea {
+        height: 100px;
+    }
+
+    .form-bottom form button.btn {
+        width: 100%;
+    }
+
+    .form-bottom form .input-error {
+        border-color: #4aaf51;
+    }
+
+.social-login {
+    margin-top: 35px;
+}
+
+    .social-login h3 {
+        color: #fff;
+    }
+
+.social-login-buttons {
+    margin-top: 25px;
+}
+
+
+/** Editor Form 1**/
+.edit-row {
+    padding: 5px 1px 5px 10px;
+}
+
+.edit-head {
+    display: inline-block;
+    height: 35px;
+    width: 20%;
+    line-height: 35px;
+    padding: 0 10px 0 10px;
+}
+
+.edit-body {
+    display: inline-block;
+    line-height: 30px;
+    width: 76%;
+}
+
+.edit-child-head {
+    display: inline-block;
+    height: 35px;
+    width: 44%;
+    line-height: 35px;
+    padding: 0 10px 0 10px;
+}
+
+.edit-child-body {
+    display: inline-block;
+    width: 48%;
+    line-height: 30px;
+}
+
+.input-box {
+    border: 1px solid #ccc;
+}
+
+.pre-text {
+    padding-top: 0px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    color: black;
+    font-size: larger;
+}
+
+.inputHead {
+    float: left;
+    width: 50%;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background-color: #eee;
+    padding: 4px 12px 4px 12px;
+    font-size: 14px;
+}
+
+.inputBody {
+    float: left;
+    width: 50%;
+}
+
+/***** Media queries ****
+
+@media (min-width: 992px) and (max-width: 1199px) {
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+}
+
+@media (max-width: 767px) {
+
+    .inner-bg {
+        padding: 60px 0 110px 0;
+    }
+}
+
+@media (max-width: 415px) {
+
+    h1, h2 {
+        font-size: 32px;
+    }
+}*/

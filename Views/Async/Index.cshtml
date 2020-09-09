@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+
+@*@Scripts.Render("~/bundles/kendo")*@
+@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/contents/css")
+
+
+
+<h2>測試環境主頁面</h2>
+
+
+<html>
+
+<head>
+    <script>
+        function newlaboratory() {
+            var nickname = prompt('請輸入新的檢驗所名稱');
+
+            //<option value="Taipei">亞東</option>
+            document.getElementById("newselect").innerHTML += "<option>" + nickname + "</option>";
+            //alert('檢驗所: ' + nickname);
+        }
+    </script>
+    
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 title_background">
+                        <p class="title">請選擇上傳檢驗的格式</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 framestyle">
+                        <div class="row">
+                            <div class="col-md-6" style="text-align: left;">
+                                <div class="selectfont">
+                                    <p class="selectfont">選擇檢驗所</p>
+                                    <select name="YourLocation" id="newselect">
+                                        <option value="Taipei">    </option>
+                                        <option value="Taipei">亞東</option>
+                                        <option value="Taoyuan">常誠</option>
+                                        @*<option value="Hsinchu">新竹</option>
+                                            <option value="Miaoli">苗栗</option>*@
+                                        ...
+                                    </select>
+                                    <br />
+                                    <input type="button" value="新增檢驗所" onclick="newlaboratory()" style="margin-top:3%;" />
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="text-align: right;">
+                                <div class="selectfont">
+                                    <p class="selectfont">選擇檢驗格式</p>
+                                    <select name="YourLocation">
+                                        <option value="Taipei">Excel</option>
+                                        <option value="Taoyuan">CSV</option>
+                                        <option value="Hsinchu">TXT</option>
+                                        <option value="Miaoli">XML</option>
+                                        ...
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:center">
+                            <div class="col-md-12">
+                                @*<input type="button" value="確認" style="font-size:30px;font-weight: bold;" />*@
+                                <a href="~/Async/About" style="font-size:30px;font-weight: bold;">
+                                    確認
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

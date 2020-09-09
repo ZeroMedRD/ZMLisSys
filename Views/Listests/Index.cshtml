@@ -1,0 +1,136 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<ZMLisSys.Models.Listest>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>檢驗平台</h2>
+
+<div class="well">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#UploadModal">
+        匯入資料
+    </button>
+    <button class="btn btn-primary" id="ButtonExport" name="ButtonExport">
+        匯出資料
+    </button>
+</div>
+
+<input type="file" onchange="importExcel(this)" />
+<div id="demo"></div>
+
+
+@*<p>
+        @Html.ActionLink("新增", "Create")
+    </p>*@
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+<table class="table table-striped table-bordered">
+    @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TestName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.P_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sex_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idno_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th></th>
+        </tr>*@
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TestName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().P_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Sex_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Idno_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CreateDate)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.P_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sex_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idno_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Idno_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Idno_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Idno_id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.Partial("_UploadFile")
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/kendo")
+@Styles.Render("~/contents/css")
+
+<!--使用jQuery操作dom-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!--使用JS-XLSX操作xlsx-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.2/xlsx.full.min.js"></script>
+
+<!--使用FileSaver下載資料成為檔案-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+
+<script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+
+
+@section scripts
+{
+    <script src="~/Scripts/bootbox.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Scripts/project.js"></script>
+    <script src="~/Scripts/project.extends.js"></script>
+    <script src="~/Scripts/project.ZipCode.js"></script>
+    <script src="~/Scripts/js-xlsx.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var actionUrls = {
+                Upload: '@Url.Action("Upload", "Listests")',
+                Import: '@Url.Action("Import", "Listests")',
+                HasData: '@Url.Action("HasData", "Listests")',
+                ExportData: '@Url.Action("Export", "Listests")'
+            };
+            project.ZipCode.Initialize(actionUrls);
+        });
+    </script>
+}

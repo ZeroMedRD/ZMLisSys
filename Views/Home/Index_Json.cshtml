@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>Index_Json</h2>
+
+<!--使用jQuery操作dom-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!--使用JS-XLSX操作xlsx-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.2/xlsx.full.min.js"></script>
+
+<!--使用FileSaver下載資料成為檔案-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+
+<script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+
+<script src="~/Scripts/js-xlsx.js"></script>
+
+@*<script>
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", "./Index", true);
+        xhr.send();
+    </script>*@
+
+<script>
+
+    $(document).ready(function () {
+        $("#test111").click(function () {
+            $("p").slideToggle();
+        });
+    });
+
+
+</script>
+
+<form id="login">
+    <input type="button" name="submit" value="submit" onclick="getFormInfo();">
+</form>
+
+<input type="file" onchange="importExcel(this)" />
+<br />
+<button id="button1" onclick="getFormInfo()">確認1</button>
+<br />
+<button id="button2" onclick="getFormInfo2()">確認2</button>
+<br />
+@*<input type="button" onclick="GetData()" value="clickme" />*@
+<button id="button3" onclick="GetData()">Get</button>
+<div id="demo"></div>
+<div id="demo2"></div>
+<div class="info"></div>
+<pre id="demo3"></pre>
+
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/kendo")
+@Styles.Render("~/contents/css")
+
+
+
+

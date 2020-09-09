@@ -1,0 +1,63 @@
+﻿.k-datepicker {
+    /*background: #333 !important;*/
+    border: 1px solid #555 !important;
+    /*color: #EEE !important;*/
+}
+
+.k-numerictextbox {
+    /*background: #333 !important;*/
+    border: 1px solid #555 !important;
+    /*color: #EEE !important;*/
+}
+
+.k-textbox {
+    /*background: #333 !important;*/
+    border: 1px solid #555 !important;
+    /*color: #EEE !important;*/
+}
+
+.k-dropdown {
+    border: 1px solid #555 !important;
+}
+
+/* Grid 按鈕顏色 */
+.k-grid .k-button {
+    background-color: #f0ac4e !important;
+    color: white !important;
+}
+
+#wrapper {
+    width: 100%;
+    /*border: 1px solid black;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-font {
+    font-size: 1rem !important;
+}
+
+.no-padding-and-margin {
+    padding: 0 0 0 0 !important;
+    margin: 0 0 0 0 !important;
+}
+
+.editor-head {
+    float: left;
+    padding: 5px;
+    border: solid 1px;
+    border-radius: 3px;
+    line-height: 1.4em;
+}
+
+.editor-body {
+    width: 60%;
+    float: left;
+}
+
+.editor-disabled-color {
+    width: 100%;
+    background-color: lightgrey !important;
+    color: orange;
+}
