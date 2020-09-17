@@ -4,8 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="98771600fc3342149a36f63a8eba9d4c" Name="Diagram1">
-        <EntityTypeShape EntityType="ZMListestModel.Listest" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="be6452f8f0044fe99cc557dcfdf867eb" Name="Diagram1">
+        <EntityTypeShape EntityType="ZMCMSModel.ComboDetail" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZMCMSModel.ComboMaster" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

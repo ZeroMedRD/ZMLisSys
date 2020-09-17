@@ -1,0 +1,72 @@
+﻿@(Html.Kendo().Grid<ZMLisSys.ViewModels.LisLaboratory_ViewModels_str>()
+    .Name("grid_LisLaboratory_str")
+    .Selectable(selectable => selectable
+    .Mode(GridSelectionMode.Single)
+    .Type(GridSelectionType.Row))
+    .Events(events =>
+    {
+        events.Change("LisLaboratory_Grid_OnRowSelect");
+        //events.DataBound("dataBound");
+    })
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.Rowid).Hidden(true);
+        columns.Bound(c => c.LLRowid).Hidden(true);
+        columns.Bound(c => c.Field_name);
+        columns.Bound(c => c.Field_type);
+        columns.Bound(c => c.Field_length);
+        columns.Bound(c => c.Field_HB);
+        //columns.Bound(c => c.s_data);
+        //columns.Bound(c => c.name);
+        //columns.Bound(c => c.sex);
+        //columns.Bound(c => c.p_id);
+        //columns.Bound(c => c.birth);
+        //columns.Bound(c => c.c_id);
+        //columns.Bound(c => c.h_no);
+        columns.Command(command =>
+        {
+            //command.Edit().Text("修改");
+            command.Edit().Text("修改");
+            //command.Destroy().Text("刪除");
+            command.Custom("刪除").IconClass("k-icon k-i-close").Click("openWindow");
+            /*command.Custom("匯入").IconClass("k-icon k-i-track-changes").Click("importExcel");  */ //.Click("openAAFWindow");      // Asthma Assessment Form 氣喘評估表, JavaScript in Asthma.js
+            //command.Custom("刪除").IconClass("k-icon k-i-close");   //.Click("openWindow");     // Javascript in ZMCMSv2.js
+            //command.Custom("氣喘自我評估").HtmlAttributes(new { @style = "width:135px;" }).IconClass("k-icon k-i-track-changes").Click("openAAFWindow");      // Asthma Assessment Form 氣喘評估表, JavaScript in Asthma.js
+        }).Width("35%");
+    })
+    .ToolBar(toolbar =>
+    {
+    toolbar.Create().Text("新增");
+    toolbar.Excel().Text("輸出到 Excel");
+        @*toolbar.Template(@<text><div style="float:left;padding-right:10px;"><button id="btnInsert" class="btn btn-warning" onclick="openReferralForm()"><i class="fa fa-plus"> 填寫轉診單</i></button></div>
+                                <div style="float:left;padding-right:10px;">
+                                    <button id="btnExport2Excel" class="btn btn-warning k-grid-excel">
+                                        <i class="fa fa-file-excel"> 輸出到 Excel</i>
+                                    </button>
+                                </div>
+                         </text>);*@
+    })
+    .Excel(e => e.Filterable(true).AllPages(true))
+    .ColumnMenu()
+    .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+    .Pageable(page => page.Refresh(true).ButtonCount(10))
+    .Navigatable()
+    .Sortable(sortable =>
+    {
+        sortable.SortMode(GridSortMode.MultipleColumn);
+    })
+    .Filterable()
+    //Scrollable(scrollable => scrollable.Enabled(false))
+    .Scrollable(scrollable => scrollable.Enabled(true).Height(600))
+    .DataSource(dataSource => dataSource.Ajax().PageSize(30)
+        .Sort(s => s.Add("Field_name").Descending())
+        .Model(model => model.Id(p => p.Rowid))
+        //.Events(events => events.Error("error_handler").Sync("sync_handler"))
+        .Read(read => read.Action("LisLab_Read_str", "LisSchema"))
+        .Create(create => create.Action("LisLab_Create_str", "LisSchema"))
+        .Update(update => update.Action("LisLab_Update_str", "LisSchema"))
+        .Destroy(destory => destory.Action("LisLab_Destroy_str", "LisSchema"))
+    )
+    .NoRecords("目前未有任何資料顯示 !")
+)
+

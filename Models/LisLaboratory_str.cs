@@ -12,13 +12,13 @@ namespace ZMLisSys.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Listest
+    public partial class LisLaboratory_str
     {
-        public string ID { get; set; }
-        public string TestName { get; set; }
-        public string P_name { get; set; }
-        public string Sex_id { get; set; }
-        public string Idno_id { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public string Rowid { get; set; }
+        public string LLRowid { get; set; }
+        public string Field_name { get; set; }
+        public string Field_type { get; set; }
+        public string Field_length { get; set; }
+        public string Field_HB { get; set; }
     }
 }

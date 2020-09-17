@@ -1,56 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<!--使用jQuery操作dom-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-<!--使用JS-XLSX操作xlsx-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.2/xlsx.full.min.js"></script>
-
-<!--使用FileSaver下載資料成為檔案-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
-
-<script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
-
-<script src="~/Scripts/js-xlsx222.js"></script>
-
-<script src="~/Scripts/js-xlsx333.js"></script>
-
-
 <h2>測試環境主頁面</h2>
-
-@*<div class="well">
-        <button class="btn btn-primary" id="upload_input" data-toggle="modal" data-target="#UploadModal">
-            匯入資料
-        </button>
-        <button class="btn btn-primary" id="ButtonExport" name="ButtonExport">
-            匯出資料
-        </button>
-    </div>
-
-
-    <input type="file" onchange="importExcel(this)" />
-    <div id="demo">
-    </div>*@
-
-@*<input type="file" id="upload_input" />
-
-    <h4>show json</h4>
-    <pre id="upload_showjson"></pre>
-
-    <h4>show csv</h4>
-    <pre id="upload_showcsv"></pre>
-
-    <button id="download_button">下載測試檔案</button>*@
-
-<input type="file" onchange="importf(this)" />
-<pre id="demo"></pre>
-
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/kendo")
-@Styles.Render("~/contents/css")
-

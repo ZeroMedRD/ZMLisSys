@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,6 +36,19 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,7 +76,7 @@
       <HintPath>packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
     <Reference Include="Kendo.Mvc">
-      <HintPath>..\..\Program Files (x86)\Progress\Telerik UI for ASP.NET MVC R2 2018\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for ASP.NET MVC R2 2018\wrappers\aspnetmvc\Binaries\Mvc5\Kendo.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="LinqToExcel, Version=1.11.0.0, Culture=neutral, PublicKeyToken=9c8ea65a58f03f1f, processorArchitecture=MSIL">
       <HintPath>packages\LinqToExcel.1.11.0\lib\LinqToExcel.dll</HintPath>
@@ -162,34 +175,62 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ListestsController.cs" />
+    <Compile Include="Controllers\LisSchemaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\CustomResults\ExportExcelResult.cs" />
-    <Compile Include="Infrastructure\Helpers\CheckResult.cs" />
-    <Compile Include="Infrastructure\Helpers\ImportDataHelper.cs" />
-    <Compile Include="Infrastructure\Helpers\JsonHelper.cs" />
-    <Compile Include="Models\Listest.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\ComboDetail.cs">
+      <DependentUpon>ZMCMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model1.Context.cs">
+    <Compile Include="Models\ComboMaster.cs">
+      <DependentUpon>ZMCMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LisLaboratory.cs">
+      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LisLaboratory_str.cs">
+      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LISQueue.cs">
+      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LISSchedule.cs">
+      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZMCMSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
+      <DependentUpon>ZMCMSModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model1.cs">
+    <Compile Include="Models\ZMCMSModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ZMCMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model1.Designer.cs">
+    <Compile Include="Models\ZMCMSModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>ZMCMSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZMLisSysModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZMLisSysModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZMLisSysModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZMLisSysModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZMLisSysModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ZMCMSv2_ViewModels.cs" />
+    <Compile Include="ViewModels\ZMLisSys_ViewModels.cs" />
+    <Compile Include="ZMLisSysAreaRegistration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLte3\build\config\postcss.config.js" />
@@ -2437,15 +2478,25 @@
     <Content Include="AdminLte3\plugins\summernote\summernote.min.js.map" />
     <Content Include="AdminLte3\plugins\sweetalert2-theme-bootstrap-4\bootstrap-4.scss" />
     <Content Include="AdminLte3\plugins\toastr\toastr.js.map" />
-    <Content Include="Models\Model1.Context.tt">
+    <Content Include="Models\ZMCMSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>ZMCMSModel.edmx</DependentUpon>
+      <LastGenOutput>ZMCMSModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model1.tt">
+    <Content Include="Models\ZMCMSModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>ZMCMSModel.edmx</DependentUpon>
+      <LastGenOutput>ZMCMSModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ZMLisSysModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ZMLisSysModel.edmx</DependentUpon>
+      <LastGenOutput>ZMLisSysModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ZMLisSysModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ZMLisSysModel.edmx</DependentUpon>
+      <LastGenOutput>ZMLisSysModel.cs</LastGenOutput>
     </Content>
     <Content Include="packages\Antlr.3.5.0.2\.signature.p7s" />
     <Content Include="packages\Antlr.3.5.0.2\Antlr.3.5.0.2.nupkg" />
@@ -2645,15 +2696,22 @@
     <Content Include="Content\kendo\2018.2.516\kendo.uniform.mobile.min.css.map" />
     <Content Include="Content\kendo\kendo.custom.dataviz.json" />
     <Content Include="Content\kendo\kendo.custom.less" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\jasny-bootstrap.css.map" />
     <Content Include="App_Data\test5.csv" />
+    <EntityDeploy Include="Models\ZMCMSModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ZMCMSModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ZMCMSModel.edmx.diagram">
+      <DependentUpon>ZMCMSModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ZMLisSysModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ZMLisSysModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ZMLisSysModel.edmx.diagram">
+      <DependentUpon>ZMLisSysModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll" />
     <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.pdb" />
@@ -3869,6 +3927,7 @@
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-TW.min.js" />
     <Content Include="Scripts\kendo\2018.2.516\pako_deflate.min.js" />
+    <Content Include="Scripts\ZMLisSys.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\project.extends.js" />
     <Content Include="Scripts\project.js" />
@@ -3887,10 +3946,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Async\Index.cshtml" />
     <Content Include="Scripts\kendo\2018.2.516\cultures\kendo.culture.aa-DJ.min.js.map" />
     <Content Include="Scripts\kendo\2018.2.516\cultures\kendo.culture.aa-ER.min.js.map" />
     <Content Include="Scripts\kendo\2018.2.516\cultures\kendo.culture.aa-ET.min.js.map" />
@@ -4917,13 +4973,12 @@
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-CN.min.js.map" />
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-HK.min.js.map" />
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-TW.min.js.map" />
-    <Content Include="Views\Listests\Create.cshtml" />
-    <Content Include="Views\Listests\Delete.cshtml" />
-    <Content Include="Views\Listests\Details.cshtml" />
-    <Content Include="Views\Listests\Edit.cshtml" />
-    <Content Include="Views\Listests\Index.cshtml" />
-    <Content Include="Views\Listests\_UploadFile.cshtml" />
     <Content Include="Views\Home\Index_Json.cshtml" />
+    <Content Include="Views\LisSchema\Index.cshtml" />
+    <Content Include="Views\LisSchema\_LisLab.cshtml" />
+    <Content Include="Views\LisSchema\_LisSchema.cshtml" />
+    <Content Include="Views\Async\Index.cshtml" />
+    <Content Include="Views\LisSchema\_LisSchema2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileCloud\" />

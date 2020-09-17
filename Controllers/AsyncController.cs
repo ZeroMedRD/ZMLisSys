@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using ZMLisSys.Infrastructure.Helpers;
 using ClosedXML.Excel;
 using System.Data;
 using System.Data.OleDb;
@@ -80,29 +79,29 @@ namespace ZMLisSys.Controllers
             return Content("");
         }
 
-        public virtual ActionResult UploadFile()
-        {
-            //## 如果有任何檔案類型才做
-            if (Request.Files.AllKeys.Any())
-            {
-                //## 讀取指定的上傳檔案ID
-                var httpPostedFile = Request.Files["UploadedImage"];
+        //public virtual ActionResult UploadFile()
+        //{
+        //    //## 如果有任何檔案類型才做
+        //    if (Request.Files.AllKeys.Any())
+        //    {
+        //        //## 讀取指定的上傳檔案ID
+        //        var httpPostedFile = Request.Files["UploadedImage"];
 
-                //## 真實有檔案，進行上傳
-                if (httpPostedFile != null && httpPostedFile.ContentLength != 0)
-                {
-                    httpPostedFile.SaveAs("~/FileUploads");
-                }
-            }
+        //        //## 真實有檔案，進行上傳
+        //        if (httpPostedFile != null && httpPostedFile.ContentLength != 0)
+        //        {
+        //            httpPostedFile.SaveAs("~/FileUploads");
+        //        }
+        //    }
 
-            //## 模擬上傳的檔案內容
-            List<JsonHelper> oStr = new List<JsonHelper>();
-            //oStr.Add(new JsonHelper() { ID = 1, Name = "王1" });
-            //oStr.Add(new JsonHelper() { ID = 2, Name = "王2" });
+        //    //## 模擬上傳的檔案內容
+        //    //List<JsonHelper> oStr = new List<JsonHelper>();
+        //    //oStr.Add(new JsonHelper() { ID = 1, Name = "王1" });
+        //    //oStr.Add(new JsonHelper() { ID = 2, Name = "王2" });
 
-            //## 將結果回傳
-            return Json(new { isUploaded = true, result = oStr }, "text/html");
-        }
+        //    //## 將結果回傳
+        //    return Json(new { isUploaded = true, result = oStr }, "text/html");
+        //}
 
     }
 }

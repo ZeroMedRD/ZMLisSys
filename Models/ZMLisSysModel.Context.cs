@@ -13,10 +13,10 @@ namespace ZMLisSys.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ZMListestEntities : DbContext
+    public partial class ZMLisSysEntities : DbContext
     {
-        public ZMListestEntities()
-            : base("name=ZMListestEntities")
+        public ZMLisSysEntities()
+            : base("name=ZMLisSysEntities")
         {
         }
     
@@ -25,6 +25,9 @@ namespace ZMLisSys.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Listest> Listests { get; set; }
+        public virtual DbSet<LisLaboratory> LisLaboratory { get; set; }
+        public virtual DbSet<LisLaboratory_str> LisLaboratory_str { get; set; }
+        public virtual DbSet<LISQueue> LISQueue { get; set; }
+        public virtual DbSet<LISSchedule> LISSchedule { get; set; }
     }
 }

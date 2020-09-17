@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/main")
+    @Scripts.Render("~/bundles/kendo")
+    @Styles.Render("~/contents/css")
+    <script src="~/Scripts/js-xlsx.js"></script>
+    <script src="~/Scripts/ZMLisSys.js"></script>
+
+    <style>
+        .card-body {
+            padding: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-primary">
+                    <div class="card-header padding-header">
+                        <h4 class="card-title">檢驗所標題</h4>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @Html.Partial("_LisLab")
+                    </div>
+                </div>
+            </div>
+            @*<div class="col-md-8">
+                        <div class="card card-primary">
+                            <div class="card-header padding-header">
+                                <h4 class="card-title">結構維護</h4>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @Html.Partial("_LisSchema")
+                            </div>
+                        </div>
+                </div>*@
+            <div class="col-sm-8">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h4 class="card-title">結構維護</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div style="padding-top:1px;">
+                                <div style="text-align:center;border:solid 1px;color:white;background-color:#008a8b;padding:5px;">
+                                    @*<h6>檢驗項目A</h6>*@
+                                    <span style="padding-right:20px;">檢驗項目A</span>
+                                </div>
+                            </div>
+                            @Html.Partial("_LisSchema")
+                        </div>
+                        @*<div class="col-sm-6">
+                            <div style="padding-top:1px;">
+                                <div style="text-align:center;border:solid 1px;color:white;background-color:#008a8b;padding:5px;height:40px;">
+                                    <span style="padding-right:20px;">檢驗項目B</span>
+                                    <input type="button" value="儲存" id='send-selected'>
+                                </div>
+                            </div>
+                            @Html.Partial("_LisSchema2")
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="demo"></div>
+
+    <div id="modalWindow">
+        <h4>確定要刪除資料嗎 ?</h4>
+        <div style="text-align:right;">
+            <button id="yes" class="k-button">要刪除</button>
+            <button id="no" class="k-button">取消</button>
+        </div>
+    </div>
+
+    <div id="ConfirmFormWindow">
+        <h4>資料已經儲存完畢 !</h4>
+        <div style="text-align:right;">
+            <button id="no" class="k-button" onclick="$('#ConfirmFormWindow').data('kendoWindow').close();">確定</button>
+        </div>
+    </div>
+</body>
+</html>

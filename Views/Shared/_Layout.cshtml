@@ -1,43 +1,161 @@
 ﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("應用程式名稱", "Index", "Async", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("首頁", "Index", "Async")</li>
-                    <li>@Html.ActionLink("關於", "About", "Async")</li>
-                    <li>@Html.ActionLink("連絡人", "Contact", "Async")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
-        </footer>
-    </div>
+<html lang="en">
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <title>ZMCMSv2 | 個案管理系統</title>
+
+    @*<link rel="stylesheet" href="~/admin-lte/css/skins/all.min.css" />
+        <link rel="stylesheet" href="~/admin-lte/css/AdminLTE.min.css" />*@
+    @*@Styles.Render("~/Content/css")*@
+    @*<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />*@
+    @*<link rel="stylesheet" href="~/Content/icheck-bootstrap.min.css" />*@
+    @*<link rel="stylesheet" href="~/admin-lte/css/skins/all.min.css" />
+        <link rel="stylesheet" href="~/admin-lte/css/AdminLTE.min.css" />*@
+    @Scripts.Render("~/bundles/main")
+    @Scripts.Render("~/bundles/admin-lte")
+    @Styles.Render("~/contents/main")
+
+    @*<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />*@
+
+    <style>
+        .navbar-white {
+            background-color: #C9E9E6 !important;
+        }
+
+        .content-wrapper {
+            /*min-height: calc(100vh - calc(3.5rem + 1px) - calc(3.5rem + 1px)) !important;*/
+            min-height: calc(100vh - calc(3.5rem + 1px) - calc(3.5rem + 1px)) !important;
+            background: #C9E9E6 !important;
+        }
+
+        .navbar-dark {
+            background-color: #0E635C !important;
+        }
+
+        /*.sidebar-dark-primary {
+            background-color: #0E635C !important;
+        }*/
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <!-- 右上角使用者登入及登入後狀態顯示 -->
+        @*<nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">*@
+        <nav class="main-header navbar navbar-expand navbar-dark navbar-light border-bottom">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link"></a>
+                </li>
+                @*<li class="nav-item d-none d-sm-inline-block">
+                        <a href="#" class="nav-link"></a>
+                    </li>*@
+            </ul>
+
+            <div style="line-height:1.4em;">
+                <h5 style="font-weight:bold;color:#f8ff54;">
+                    @{ if (Session["HospitalTitle"] != null)
+                        { @Html.Label(Session["HospitalTitle"].ToString());
+                    }
+                    }
+                </h5>
+            </div>
+
+            <!-- Right navbar links -->
+            @*@Html.Partial("_LoginPartial")*@
+        </nav>
+
+        <!-- 左側主功能表由上而下做選單設定 Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="@Url.Action("Index","Home", new { area = "" })" class="brand-link">
+                @*<a href="~/Home/Index" class="brand-link">*@
+                <img src="~/Assets/SystemImages/ZeroMedLogo-50.png"
+                     alt="ZeroMed Tech Logo"
+                     class="brand-image img-circle elevation-3"
+                     style="opacity: .8" />
+                <span class="brand-text font-weight-light">凌醫個案管理系統</span>
+            </a>
+
+            @RenderSection("scripts", required: false)
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        @*<img src="@Url.Content(Session["ImageUrl"].ToString())" class="img-circle" alt="User Image">*@
+                        @*<img src="~/Assets/SystemImages/user2-160x160.jpg"
+                            class="img-circle elevation-2"
+                            alt="User Image" />*@
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">
+                            @*@Html.Label(Session["UserRealName"].ToString())*@
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第一層、第二層功能選單 -->
+                @if (Session["Menu"] == null)
+                {
+                    Response.Redirect("~/Home/Index");
+                }
+                else
+                {
+                    @Html.Raw(Session["Menu"].ToString())
+                }
+            </div>
+        </aside>
+
+        <!-- 右側工作區域由上而下設定 -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    @RenderSection("dashboard", required: false)
+                </div>
+            </div>
+            <!-- Main content -->
+            <section class="content">
+                @*<div class="container-fluid">*@
+                <!-- /.row -->
+                @*主要資訊呈現區塊*@
+                @RenderBody()
+                @*</div>*@
+            </section>
+        </div>
+        <!-- /.content -->
+        <!-- 底部版權宣告 -->
+        <footer class="main-footer">
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2020-2025 <a href="http://www.zeromed.com.tw/">. 凌醫科技顧問股份有限公司</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 2.0.0-alpha
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        @*<aside class="control-sidebar control-sidebar-dark">*@
+        @*Control sidebar content goes here*@
+        @*@RenderSection("patientlist", required: false)*@
+        @*</aside>*@
+        <!-- /.control-sidebar -->
+    </div>
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/admin-lte")
+        @Scripts.Render("~/bundles/kendo")*@
 </body>
 </html>
