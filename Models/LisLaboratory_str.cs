@@ -14,11 +14,11 @@ namespace ZMLisSys.Models
     
     public partial class LisLaboratory_str
     {
-        public string Rowid { get; set; }
+        public string SMRowid { get; set; }
         public string LLRowid { get; set; }
-        public string Field_name { get; set; }
-        public string Field_type { get; set; }
-        public string Field_length { get; set; }
-        public string Field_HB { get; set; }
+        public string SMFieldName { get; set; }
+        public string SMFieldType { get; set; }
+        public string SMFieldLength { get; set; }
+        public string SMFieldKind { get; set; }
     }
 }

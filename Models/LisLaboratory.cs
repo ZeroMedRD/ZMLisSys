@@ -16,6 +16,6 @@ namespace ZMLisSys.Models
     {
         public string LLRowid { get; set; }
         public string LLName { get; set; }
-        public string F_format { get; set; }
+        public string LLFormat { get; set; }
     }
 }

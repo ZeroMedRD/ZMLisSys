@@ -34,15 +34,26 @@ function openWindow(e) {
 }
 
 function LisLaboratory_Grid_OnRowSelect(e) {
-    // 取得資料前,先把條件變數做整理
-    
+    // 取得資料前,先把條件變數做整理    
     var grid = e.sender;
     var dsa = grid.dataItem(grid.select());
-    alert(dsa.LLRowid);
+    //alert(dsa.LLRowid);
+    
     // 重新讀取個案追區塊
-    $("#grid_LisLaboratory").data("kendoGrid").
+    $("#grid_LisLaboratory_str").data("kendoGrid").
         dataSource.read(
             {
-                LLRowid: dsa.LLRowid,
+                sLLRowid: dsa.LLRowid,
             });
+}
+
+function getLLRowid() {
+    var grid = $('#grid_LisLaboratory').data('kendoGrid');
+    var dsa = grid.dataItem(grid.select());
+
+    var request = {
+        sLLRowid: dsa.LLRowid
+    };
+
+    return request;
 }

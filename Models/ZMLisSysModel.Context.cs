@@ -25,9 +25,9 @@ namespace ZMLisSys.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<LisLaboratory> LisLaboratory { get; set; }
-        public virtual DbSet<LisLaboratory_str> LisLaboratory_str { get; set; }
         public virtual DbSet<LISQueue> LISQueue { get; set; }
         public virtual DbSet<LISSchedule> LISSchedule { get; set; }
+        public virtual DbSet<LisLaboratory> LisLaboratory { get; set; }
+        public virtual DbSet<LisLaboratory_str> LisLaboratory_str { get; set; }
     }
 }

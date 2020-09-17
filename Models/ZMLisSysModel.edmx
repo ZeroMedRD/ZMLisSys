@@ -11,18 +11,18 @@
           </Key>
           <Property Name="LLRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="LLName" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="F_format" Type="nvarchar" MaxLength="50" />
+          <Property Name="LLFormat" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="LisLaboratory_str">
           <Key>
-            <PropertyRef Name="Rowid" />
+            <PropertyRef Name="SMRowid" />
           </Key>
-          <Property Name="Rowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SMRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="LLRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Field_name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Field_type" Type="nvarchar" MaxLength="50" />
-          <Property Name="Field_length" Type="nvarchar(max)" />
-          <Property Name="Field_HB" Type="nvarchar" MaxLength="50" />
+          <Property Name="SMFieldName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SMFieldType" Type="nvarchar" MaxLength="50" />
+          <Property Name="SMFieldLength" Type="nvarchar(max)" />
+          <Property Name="SMFieldKind" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="LISQueue">
           <Key>
@@ -70,25 +70,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ZMLISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="LisLaboratory">
-          <Key>
-            <PropertyRef Name="LLRowid" />
-          </Key>
-          <Property Name="LLRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LLName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="F_format" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="LisLaboratory_str">
-          <Key>
-            <PropertyRef Name="Rowid" />
-          </Key>
-          <Property Name="Rowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LLRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Field_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Field_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Field_length" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Field_HB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="LISQueue">
           <Key>
             <PropertyRef Name="LQRowid" />
@@ -126,38 +107,36 @@
           <Property Name="SCHReceiveMail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="ZMLisSysEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="LisLaboratory" EntityType="Self.LisLaboratory" />
-          <EntitySet Name="LisLaboratory_str" EntityType="Self.LisLaboratory_str" />
           <EntitySet Name="LISQueue" EntityType="Self.LISQueue" />
           <EntitySet Name="LISSchedule" EntityType="Self.LISSchedule" />
+          <EntitySet Name="LisLaboratory" EntityType="ZMLISModel.LisLaboratory" />
+          <EntitySet Name="LisLaboratory_str" EntityType="ZMLISModel.LisLaboratory_str" />
         </EntityContainer>
+        <EntityType Name="LisLaboratory">
+          <Key>
+            <PropertyRef Name="LLRowid" />
+          </Key>
+          <Property Name="LLRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLFormat" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LisLaboratory_str">
+          <Key>
+            <PropertyRef Name="SMRowid" />
+          </Key>
+          <Property Name="SMRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SMFieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SMFieldType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SMFieldLength" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SMFieldKind" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ZMLISModelStoreContainer" CdmEntityContainer="ZMLisSysEntities">
-          <EntitySetMapping Name="LisLaboratory">
-            <EntityTypeMapping TypeName="ZMLISModel.LisLaboratory">
-              <MappingFragment StoreEntitySet="LisLaboratory">
-                <ScalarProperty Name="LLRowid" ColumnName="LLRowid" />
-                <ScalarProperty Name="LLName" ColumnName="LLName" />
-                <ScalarProperty Name="F_format" ColumnName="F_format" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LisLaboratory_str">
-            <EntityTypeMapping TypeName="ZMLISModel.LisLaboratory_str">
-              <MappingFragment StoreEntitySet="LisLaboratory_str">
-                <ScalarProperty Name="Rowid" ColumnName="Rowid" />
-                <ScalarProperty Name="LLRowid" ColumnName="LLRowid" />
-                <ScalarProperty Name="Field_name" ColumnName="Field_name" />
-                <ScalarProperty Name="Field_type" ColumnName="Field_type" />
-                <ScalarProperty Name="Field_length" ColumnName="Field_length" />
-                <ScalarProperty Name="Field_HB" ColumnName="Field_HB" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="LISQueue">
             <EntityTypeMapping TypeName="ZMLISModel.LISQueue">
               <MappingFragment StoreEntitySet="LISQueue">
@@ -193,6 +172,27 @@
                 <ScalarProperty Name="SCHTime05" ColumnName="SCHTime05" />
                 <ScalarProperty Name="SCHDescription" ColumnName="SCHDescription" />
                 <ScalarProperty Name="SCHReceiveMail" ColumnName="SCHReceiveMail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LisLaboratory">
+            <EntityTypeMapping TypeName="ZMLISModel.LisLaboratory">
+              <MappingFragment StoreEntitySet="LisLaboratory">
+                <ScalarProperty Name="LLFormat" ColumnName="LLFormat" />
+                <ScalarProperty Name="LLName" ColumnName="LLName" />
+                <ScalarProperty Name="LLRowid" ColumnName="LLRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LisLaboratory_str">
+            <EntityTypeMapping TypeName="ZMLISModel.LisLaboratory_str">
+              <MappingFragment StoreEntitySet="LisLaboratory_str">
+                <ScalarProperty Name="SMFieldKind" ColumnName="SMFieldKind" />
+                <ScalarProperty Name="SMFieldLength" ColumnName="SMFieldLength" />
+                <ScalarProperty Name="SMFieldType" ColumnName="SMFieldType" />
+                <ScalarProperty Name="SMFieldName" ColumnName="SMFieldName" />
+                <ScalarProperty Name="LLRowid" ColumnName="LLRowid" />
+                <ScalarProperty Name="SMRowid" ColumnName="SMRowid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

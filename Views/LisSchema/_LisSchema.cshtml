@@ -3,19 +3,19 @@
     .Selectable(selectable => selectable
     .Mode(GridSelectionMode.Single)
     .Type(GridSelectionType.Row))
-    .Events(events =>
-    {
-        events.Change("LisLaboratory_Grid_OnRowSelect");
-        //events.DataBound("dataBound");
-    })
+    //.Events(events =>
+    //{
+    //    events.Change("LisLaboratory_Grid_OnRowSelect");
+    //    //events.DataBound("dataBound");
+    //})
     .Columns(columns =>
     {
-        columns.Bound(c => c.Rowid).Hidden(true);
+        columns.Bound(c => c.SMRowid).Hidden(true);
         columns.Bound(c => c.LLRowid).Hidden(true);
-        columns.Bound(c => c.Field_name);
-        columns.Bound(c => c.Field_type);
-        columns.Bound(c => c.Field_length);
-        columns.Bound(c => c.Field_HB);
+        columns.Bound(c => c.SMFieldName);
+        columns.Bound(c => c.SMFieldType);
+        columns.Bound(c => c.SMFieldLength);
+        columns.Bound(c => c.SMFieldKind);
         //columns.Bound(c => c.s_data);
         //columns.Bound(c => c.name);
         //columns.Bound(c => c.sex);
@@ -59,13 +59,13 @@
     //Scrollable(scrollable => scrollable.Enabled(false))
     .Scrollable(scrollable => scrollable.Enabled(true).Height(600))
     .DataSource(dataSource => dataSource.Ajax().PageSize(30)
-        .Sort(s => s.Add("Field_name").Descending())
-        .Model(model => model.Id(p => p.Rowid))
+        .Sort(s => s.Add("SMFieldName").Descending())
+        .Model(model => model.Id(p => p.SMRowid))
         //.Events(events => events.Error("error_handler").Sync("sync_handler"))
-        .Read(read => read.Action("LisLab_Read_str", "LisSchema"))
-        .Create(create => create.Action("LisLab_Create_str", "LisSchema"))
-        .Update(update => update.Action("LisLab_Update_str", "LisSchema"))
-        .Destroy(destory => destory.Action("LisLab_Destroy_str", "LisSchema"))
+        .Read(read => read.Action("LisSchema_Read", "LisSchema"))
+        .Create(create => create.Action("LisSchema_Create", "LisSchema").Data("getLLRowid"))
+        .Update(update => update.Action("LisSchema_Update", "LisSchema"))
+        .Destroy(destory => destory.Action("LisSchema_Destroy", "LisSchema"))
     )
     .NoRecords("目前未有任何資料顯示 !")
 )

@@ -15,28 +15,28 @@ namespace ZMLisSys.ViewModels
         public string LLName { get; set; }
 
         [Display(Name = "檢驗格式")]
-        public string F_format { get; set; }
+        public string LLFormat { get; set; }
     }
 
     public class LisLaboratory_ViewModels_str
     {
         [Display(Name = "檢驗所結構序號")]
-        public string Rowid { get; set; }
+        public string SMRowid { get; set; }
 
         [Display(Name = "檢驗所資料序號")]
         public string LLRowid { get; set; }
 
-        [Display(Name = "名稱")]
-        public string Field_name { get; set; }
+        [Display(Name = "欄位名稱")]
+        public string SMFieldName { get; set; }
 
-        [Display(Name = "格式")]
-        public string Field_type { get; set; }
+        [Display(Name = "資料型態")]
+        public string SMFieldType { get; set; }
 
-        [Display(Name = "長度")]
-        public string Field_length { get; set; }
+        [Display(Name = "資料長度")]
+        public string SMFieldLength { get; set; }
 
-        [Display(Name = "表頭表身")]
-        public string Field_HB { get; set; }
+        [Display(Name = "資料分類")]
+        public string SMFieldKind { get; set; }
     }
 
     public class LisLaboratory_ViewModels_head

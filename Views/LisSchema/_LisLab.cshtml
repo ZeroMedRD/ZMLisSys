@@ -1,6 +1,4 @@
-﻿@model ZMLisSys.ViewModels.LisLaboratory_ViewModels
-
-@(Html.Kendo().Grid<ZMLisSys.ViewModels.LisLaboratory_ViewModels>()
+﻿@(Html.Kendo().Grid<ZMLisSys.ViewModels.LisLaboratory_ViewModels>()
     .Name("grid_LisLaboratory")
     .Selectable(selectable => selectable
     .Mode(GridSelectionMode.Single)
@@ -14,14 +12,14 @@
     {
         columns.Bound(c => c.LLRowid).Hidden(true);
         columns.Bound(c => c.LLName);
-        columns.Bound(c => c.F_format);
+        columns.Bound(c => c.LLFormat).EditorTemplateName("LLFormatEditor");
         columns.Command(command =>
         {
             //command.Edit().Text("修改");
             command.Edit().Text("修改");
             //command.Destroy().Text("刪除");
             command.Custom("刪除").IconClass("k-icon k-i-close").Click("openWindow");
-            command.Custom("匯入").IconClass("k-icon k-i-track-changes").Click("importExcel");   //.Click("openAAFWindow");      // Asthma Assessment Form 氣喘評估表, JavaScript in Asthma.js
+            //command.Custom("匯入").IconClass("k-icon k-i-track-changes").Click("importExcel");   //.Click("openAAFWindow");      // Asthma Assessment Form 氣喘評估表, JavaScript in Asthma.js
             //command.Custom("刪除").IconClass("k-icon k-i-close");   //.Click("openWindow");     // Javascript in ZMCMSv2.js
             //command.Custom("氣喘自我評估").HtmlAttributes(new { @style = "width:135px;" }).IconClass("k-icon k-i-track-changes").Click("openAAFWindow");      // Asthma Assessment Form 氣喘評估表, JavaScript in Asthma.js
         }).Width("35%");
@@ -61,15 +59,3 @@
     )
     .NoRecords("目前未有任何資料顯示 !")
 )
-@(Html.Kendo().DropDownListFor(model => model.F_format)
-                            .DataTextField("CBDDescription")
-                            .DataValueField("CBDCode")
-                            .ValuePrimitive(true)
-                            .Filter("contains")
-                            .DataSource(source =>
-                            {
-                                source.Read(read =>
-                                {
-                                    read.Action("GetCombo", "LisSchema", new { stext = "ZMLisSys_format" });
-                                }).ServerFiltering(false);
-                            }).Enable(true).HtmlAttributes(new { @class= "formfont" }))
