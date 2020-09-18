@@ -15,6 +15,32 @@ $(document).ready(function () {
         resizable: false,
         width: 300
     }).data("kendoWindow");
+
+    wnd4insert = $("#modalInsertWindow").kendoWindow({
+        title: "模組確認",
+        modal: true,
+        visible: false,
+        resizable: false,
+        width: 300
+    }).data("kendoWindow");
+
+    $("#addRecord").unbind('click').click(function (e) {
+        e.preventDefault();
+
+        var gridLab = $('#grid_LisLaboratory').data('kendoGrid');
+        var gridSch = $('#grid_LisLaboratory_str').data('kendoGrid');
+        var dsa = gridSch.dataItem(gridSch.select());
+
+
+        if (dsa != null)
+        {
+            
+        }
+        else
+        {
+            alert("請選擇檢驗所或新增!!");
+        }
+    });
 });
 
 function openWindow(e) {
@@ -47,6 +73,7 @@ function LisLaboratory_Grid_OnRowSelect(e) {
             });
 }
 
+//取得檢驗Rowid 並且連動
 function getLLRowid() {
     var grid = $('#grid_LisLaboratory').data('kendoGrid');
     var dsa = grid.dataItem(grid.select());

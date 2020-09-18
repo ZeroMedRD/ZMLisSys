@@ -55,19 +55,23 @@ namespace ZMLisSys.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult LisLab_Update([DataSourceRequest] DataSourceRequest request, LisLaboratory_ViewModels crud)
         {
-            if (ModelState.IsValid)
+            if (crud != null) 
             {
-                var entity = new LisLaboratory
+                if (ModelState.IsValid)
                 {
-                    LLRowid = crud.LLRowid,
-                    LLName = crud.LLName,
-                    LLFormat = crud.LLFormat
-                };
+                    var entity = new LisLaboratory
+                    {
+                        LLRowid = crud.LLRowid,
+                        LLName = crud.LLName,
+                        LLFormat = crud.LLFormat
+                    };
 
-                db_zmlis.LisLaboratory.Attach(entity);
-                db_zmlis.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-                db_zmlis.SaveChanges();
+                    db_zmlis.LisLaboratory.Attach(entity);
+                    db_zmlis.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                    db_zmlis.SaveChanges();
+                }
             }
+            
 
             return Json(new[] { crud }.ToDataSourceResult(request, ModelState));
         }
@@ -113,8 +117,9 @@ namespace ZMLisSys.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult LisSchema_Create([DataSourceRequest] DataSourceRequest request, LisLaboratory_ViewModels_str crud, string sLLRowid)
         {
+            
             if (ModelState.IsValid)
-            {  
+            {
                 var entity = new LisLaboratory_str
                 {
                     SMRowid = Guid.NewGuid().ToString(),
@@ -130,31 +135,34 @@ namespace ZMLisSys.Controllers
                 //crud.SMRowid = entity.SMRowid;
 
             }
-                        
             return Json(new[] { crud }.ToDataSourceResult(new DataSourceRequest(), ModelState));
+
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult LisSchema_Update([DataSourceRequest] DataSourceRequest request, LisLaboratory_ViewModels_str crud)
         {
-            if (ModelState.IsValid)
+            if (crud != null) 
             {
-                var entity = new LisLaboratory_str
+                if (ModelState.IsValid)
                 {
-                    SMRowid = crud.SMRowid,
-                    LLRowid = crud.LLRowid,
-                    SMFieldName = crud.SMFieldName,
-                    SMFieldType = crud.SMFieldType,
-                    SMFieldLength = crud.SMFieldLength,
-                    SMFieldKind = crud.SMFieldKind
-                };
+                    var entity = new LisLaboratory_str
+                    {
+                        SMRowid = crud.SMRowid,
+                        LLRowid = crud.LLRowid,
+                        SMFieldName = crud.SMFieldName,
+                        SMFieldType = crud.SMFieldType,
+                        SMFieldLength = crud.SMFieldLength,
+                        SMFieldKind = crud.SMFieldKind
+                    };
 
-                db_zmlis.LisLaboratory_str.Attach(entity);
-                db_zmlis.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-                db_zmlis.SaveChanges();
+                    db_zmlis.LisLaboratory_str.Attach(entity);
+                    db_zmlis.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                    db_zmlis.SaveChanges();
+                }           
             }
-
             return Json(new[] { crud }.ToDataSourceResult(request, ModelState));
+
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

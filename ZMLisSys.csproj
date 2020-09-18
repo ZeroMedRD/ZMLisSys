@@ -4979,6 +4979,9 @@
     <Content Include="Views\LisSchema\_LisSchema.cshtml" />
     <Content Include="Views\Async\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LLFormatEditor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SMFieldTypeEditor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SMFieldLengthEditor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SMFieldKindEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileCloud\" />
