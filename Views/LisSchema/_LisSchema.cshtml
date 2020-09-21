@@ -13,16 +13,9 @@
         columns.Bound(c => c.SMRowid).Hidden(true);
         columns.Bound(c => c.LLRowid).Hidden(true);
         columns.Bound(c => c.SMFieldName);
-        columns.Bound(c => c.SMFieldType).EditorTemplateName("SMFieldTypeEditor"); ;
-        columns.Bound(c => c.SMFieldLength).EditorTemplateName("SMFieldLengthEditor"); ;
-        columns.Bound(c => c.SMFieldKind).EditorTemplateName("SMFieldKindEditor"); ;
-        //columns.Bound(c => c.s_data);
-        //columns.Bound(c => c.name);
-        //columns.Bound(c => c.sex);
-        //columns.Bound(c => c.p_id);
-        //columns.Bound(c => c.birth);
-        //columns.Bound(c => c.c_id);
-        //columns.Bound(c => c.h_no);
+        columns.Bound(c => c.SMFieldType).EditorTemplateName("SMFieldTypeEditor");
+        columns.Bound(c => c.SMFieldLength).EditorTemplateName("SMFieldLengthEditor");
+        columns.Bound(c => c.SMFieldKind).EditorTemplateName("SMFieldKindEditor");
         columns.Command(command =>
         {
             //command.Edit().Text("修改");
@@ -36,9 +29,9 @@
     })
     .ToolBar(toolbar =>
     {
-        toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
-        toolbar.Excel().Text("輸出到 Excel");
-        //toolbar.Custom().Text("匯入").HtmlAttributes(new { @onclick = "importExcel(this)" });
+    toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
+    toolbar.Excel().Text("輸出到 Excel");
+    //toolbar.Custom().Text("匯入").HtmlAttributes(new { @onclick = "importExcel(this)" });
         @*toolbar.Template(@<text><div style="float:left;padding-right:10px;"><button id="btnInsert" class="btn btn-warning" onclick="openReferralForm()"><i class="fa fa-plus"> 填寫轉診單</i></button></div>
                                 <div style="float:left;padding-right:10px;">
                                     <button id="btnExport2Excel" class="btn btn-warning k-grid-excel">
@@ -49,25 +42,32 @@
     })
     .Excel(e => e.Filterable(true).AllPages(true))
     .ColumnMenu()
-    .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
-    .Pageable(page => page.Refresh(true).ButtonCount(10))
-    .Navigatable()
-    .Sortable(sortable =>
-    {
-        sortable.SortMode(GridSortMode.MultipleColumn);
-    })
-    .Filterable()
-    //Scrollable(scrollable => scrollable.Enabled(false))
-    .Scrollable(scrollable => scrollable.Enabled(true).Height(600))
-    .DataSource(dataSource => dataSource.Ajax().PageSize(30)
-        //.Sort(s => s.Add("SMFieldName").Descending())
-        .Model(model => model.Id(p => p.SMRowid))
-        //.Events(events => events.Error("error_handler").Sync("sync_handler"))
-        .Read(read => read.Action("LisSchema_Read", "LisSchema"))
-        .Create(create => create.Action("LisSchema_Create", "LisSchema").Data("getLLRowid"))
-        .Update(update => update.Action("LisSchema_Update", "LisSchema"))
-        .Destroy(destory => destory.Action("LisSchema_Destroy", "LisSchema"))
-    )
-    .NoRecords("目前未有任何資料顯示 !")
+    .Editable(editable => editable.Mode(GridEditMode.InLine)
+              .DisplayDeleteConfirmation(false))
+        //.Events(e => e.Edit("grid_edit"))
+        //.ColumnMenu()
+        //.Editable(editable => editable.Mode(GridEditMode.PopUp)
+        //        .TemplateName("_LisSchema_Editor")
+        //        //.DisplayDeleteConfirmation(false)
+        //        .Window(w => w.Title("檢驗結構設定").Width(800))
+        //        )
+        .Pageable(page => page.Refresh(true).ButtonCount(10))
+            .Navigatable()
+            .Sortable(sortable =>
+            {
+                sortable.SortMode(GridSortMode.MultipleColumn);
+            })
+            .Filterable()
+            //Scrollable(scrollable => scrollable.Enabled(false))
+            .Scrollable(scrollable => scrollable.Enabled(true).Height(600))
+            .DataSource(dataSource => dataSource.Ajax().PageSize(30)
+                //.Sort(s => s.Add("SMFieldName").Descending())
+                .Model(model => model.Id(p => p.SMRowid))
+                //.Events(events => events.Error("error_handler").Sync("sync_handler"))
+                .Read(read => read.Action("LisSchema_Read", "LisSchema"))
+                .Create(create => create.Action("LisSchema_Create", "LisSchema").Data("getLLRowid"))
+                .Update(update => update.Action("LisSchema_Update", "LisSchema"))
+                .Destroy(destory => destory.Action("LisSchema_Destroy", "LisSchema"))
+            )
+            .NoRecords("目前未有任何資料顯示 !")
 )
-

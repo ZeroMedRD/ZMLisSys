@@ -24,23 +24,26 @@ $(document).ready(function () {
         width: 300
     }).data("kendoWindow");
 
-    $("#addRecord").unbind('click').click(function (e) {
-        e.preventDefault();
+    //隱藏未選檢驗所的新增欄位按鈕
+    $("#addRecord").hide();
 
-        var gridLab = $('#grid_LisLaboratory').data('kendoGrid');
-        var gridSch = $('#grid_LisLaboratory_str').data('kendoGrid');
-        var dsa = gridSch.dataItem(gridSch.select());
+    //$("#addRecord").unbind('click').click(function (e) {
+    //    e.preventDefault();
 
+    //    var model = e.model
+    //    var gridSch = $("#grid_LisLaboratory_str").data("kendoGrid");
+    //    var gridLab = $('#grid_LisLaboratory').data('kendoGrid'); 
+    //    var dsa = gridLab.dataItem(gridLab.select());
 
-        if (dsa != null)
-        {
-            
-        }
-        else
-        {
-            alert("請選擇檢驗所或新增!!");
-        }
-    });
+    //    if (dsa != null)
+    //    {
+    //        $("#addRecord").show();
+    //    }
+    //    else
+    //    {
+    //        alert("請選擇檢驗所或新增!!");
+    //    }
+    //});
 });
 
 function openWindow(e) {
@@ -59,18 +62,33 @@ function openWindow(e) {
     });
 }
 
+
+function grid_edit_str(e) {
+    e.preventDefault();
+    var grid = $('#grid_LisLaboratory_str').data('kendoGrid');
+    var dsa = grid.dataItem(grid.select());
+
+    if (e.model.isNew()) {
+        document.getElementById("SMRowid").value = dsa.SMRowid;
+    }
+}    
+
 function LisLaboratory_Grid_OnRowSelect(e) {
     // 取得資料前,先把條件變數做整理    
     var grid = e.sender;
     var dsa = grid.dataItem(grid.select());
     //alert(dsa.LLRowid);
-    
+
     // 重新讀取個案追區塊
     $("#grid_LisLaboratory_str").data("kendoGrid").
         dataSource.read(
             {
                 sLLRowid: dsa.LLRowid,
             });
+
+    if (dsa != null) {
+        $("#addRecord").show();
+    }
 }
 
 //取得檢驗Rowid 並且連動
@@ -78,7 +96,8 @@ function getLLRowid() {
     var grid = $('#grid_LisLaboratory').data('kendoGrid');
     var dsa = grid.dataItem(grid.select());
 
-    var request = {
+    var request =
+    {
         sLLRowid: dsa.LLRowid
     };
 
