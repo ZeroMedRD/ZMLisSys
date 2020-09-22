@@ -26,25 +26,22 @@ $(document).ready(function () {
 
     //隱藏未選檢驗所的新增欄位按鈕
     $("#addRecord").hide();
+    $("#addRecord").unbind('click').click(function (e) {
+        e.preventDefault();
+        var gridLisLab = $("#grid_LisLaboratory").data("kendoGrid");
+        //var gridLisLabstr = $("#grid_LisLaboratory_str").data("kendoGrid");
+        var dsa = gridLisLab.dataItem(gridLisLab.select());
 
-    //$("#addRecord").unbind('click').click(function (e) {
-    //    e.preventDefault();
-
-    //    var model = e.model
-    //    var gridSch = $("#grid_LisLaboratory_str").data("kendoGrid");
-    //    var gridLab = $('#grid_LisLaboratory').data('kendoGrid'); 
-    //    var dsa = gridLab.dataItem(gridLab.select());
-
-    //    if (dsa != null)
-    //    {
-    //        $("#addRecord").show();
-    //    }
-    //    else
-    //    {
-    //        alert("請選擇檢驗所或新增!!");
-    //    }
-    //});
+        if (dsa == null)
+        {
+            alert("請選擇檢驗所");
+            window.location.reload();
+            $("#addRecord").hide();
+        }
+        
+    });
 });
+
 
 function openWindow(e) {
     e.preventDefault();
@@ -62,6 +59,16 @@ function openWindow(e) {
     });
 }
 
+function grid_import(e) {
+    e.preventDefault();
+    var grid = $('#grid_LisLaboratory_str').data('kendoGrid');
+    var dsa = grid.dataItem(grid.select());
+
+    if (e.model.isNew()) {
+        document.getElementById("SMRowid").value = dsa.SMRowid;
+    }
+}    
+
 
 function grid_edit_str(e) {
     e.preventDefault();
@@ -77,17 +84,17 @@ function LisLaboratory_Grid_OnRowSelect(e) {
     // 取得資料前,先把條件變數做整理    
     var grid = e.sender;
     var dsa = grid.dataItem(grid.select());
-   
     // 重新讀取個案追區塊
     $("#grid_LisLaboratory_str").data("kendoGrid").
         dataSource.read(
             {
                 sLLRowid: dsa.LLRowid,
             });
-
-    if (dsa != null) {
+    
+    if (dsa.LLRowid != null) {
         $("#addRecord").show();
     }
+    
 }
 
 //取得檢驗Rowid 並且連動
@@ -95,10 +102,19 @@ function getLLRowid() {
     var grid = $('#grid_LisLaboratory').data('kendoGrid');
     var dsa = grid.dataItem(grid.select());
 
-    var request =
-    {
-        sLLRowid: dsa.LLRowid
-    };
+    if (dsa != null) {
+        $("#addRecord").show();
+        var request =
+        {
+            sLLRowid: dsa.LLRowid
+        };
 
+    }
+    else
+    {
+        $("#addRecord").hide();
+
+    }
+   
     return request;
 }

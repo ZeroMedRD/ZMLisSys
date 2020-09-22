@@ -29,9 +29,9 @@
     })
     .ToolBar(toolbar =>
     {
-    toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
-    toolbar.Excel().Text("輸出到 Excel");
-    //toolbar.Custom().Text("匯入").HtmlAttributes(new { @onclick = "importExcel(this)" });
+        toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
+        toolbar.Excel().Text("輸出到 Excel");
+        toolbar.Custom().Text("匯入").HtmlAttributes(new { @onChange = "importExcel()" });
         @*toolbar.Template(@<text><div style="float:left;padding-right:10px;"><button id="btnInsert" class="btn btn-warning" onclick="openReferralForm()"><i class="fa fa-plus"> 填寫轉診單</i></button></div>
                                 <div style="float:left;padding-right:10px;">
                                     <button id="btnExport2Excel" class="btn btn-warning k-grid-excel">

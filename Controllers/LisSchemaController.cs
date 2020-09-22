@@ -129,7 +129,6 @@ namespace ZMLisSys.Controllers
                     SMFieldLength = crud.SMFieldLength,
                     SMFieldKind = crud.SMFieldKind
                 };
-
                 db_zmlis.LisLaboratory_str.Add(entity);
                 db_zmlis.SaveChanges();
                 //crud.SMRowid = entity.SMRowid;
