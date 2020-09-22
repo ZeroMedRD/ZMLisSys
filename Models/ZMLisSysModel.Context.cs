@@ -29,5 +29,6 @@ namespace ZMLisSys.Models
         public virtual DbSet<LISSchedule> LISSchedule { get; set; }
         public virtual DbSet<LisLaboratory> LisLaboratory { get; set; }
         public virtual DbSet<LisLaboratory_str> LisLaboratory_str { get; set; }
+        public virtual DbSet<LisLaboratory_item> LisLaboratory_item { get; set; }
     }
 }

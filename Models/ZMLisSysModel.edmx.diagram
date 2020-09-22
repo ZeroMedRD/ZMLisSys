@@ -7,8 +7,9 @@
       <Diagram DiagramId="bfc7576776314448a039aed2a0360e37" Name="Diagram1">
         <EntityTypeShape EntityType="ZMLISModel.LISQueue" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ZMLISModel.LISSchedule" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZMLISModel.LisLaboratory" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZMLISModel.LisLaboratory" Width="1.5" PointX="2.875" PointY="0.75" />
         <EntityTypeShape EntityType="ZMLISModel.LisLaboratory_str" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ZMLISModel.LisLaboratory_item" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

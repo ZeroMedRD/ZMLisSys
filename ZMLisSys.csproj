@@ -188,6 +188,9 @@
     <Compile Include="Models\LisLaboratory.cs">
       <DependentUpon>ZMLisSysModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LisLaboratory_item.cs">
+      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LisLaboratory_str.cs">
       <DependentUpon>ZMLisSysModel.tt</DependentUpon>
     </Compile>
