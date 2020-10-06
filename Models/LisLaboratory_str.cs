@@ -20,5 +20,7 @@ namespace ZMLisSys.Models
         public string SMFieldType { get; set; }
         public string SMFieldLength { get; set; }
         public string SMFieldKind { get; set; }
+        public string SMFieldMeno { get; set; }
+        public string SMDisplaySeq { get; set; }
     }
 }

@@ -50,6 +50,8 @@
           <Property Name="SMFieldType" Type="nvarchar" MaxLength="50" />
           <Property Name="SMFieldLength" Type="nvarchar(max)" />
           <Property Name="SMFieldKind" Type="char" MaxLength="1" />
+          <Property Name="SMFieldMeno" Type="nvarchar(max)" />
+          <Property Name="SMDisplaySeq" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="LISQueue">
           <Key>
@@ -159,6 +161,8 @@
           <Property Name="SMFieldType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SMFieldLength" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SMFieldKind" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="SMFieldMeno" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SMDisplaySeq" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LisLaboratory_item">
           <Key>
@@ -243,6 +247,8 @@
           <EntitySetMapping Name="LisLaboratory_str">
             <EntityTypeMapping TypeName="ZMLISModel.LisLaboratory_str">
               <MappingFragment StoreEntitySet="LisLaboratory_str">
+                <ScalarProperty Name="SMDisplaySeq" ColumnName="SMDisplaySeq" />
+                <ScalarProperty Name="SMFieldMeno" ColumnName="SMFieldMeno" />
                 <ScalarProperty Name="SMFieldKind" ColumnName="SMFieldKind" />
                 <ScalarProperty Name="SMFieldLength" ColumnName="SMFieldLength" />
                 <ScalarProperty Name="SMFieldType" ColumnName="SMFieldType" />

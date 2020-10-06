@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/main")*@
+    @*@Scripts.Render("~/bundles/kendo")*@
+    @*@Styles.Render("~/contents/css")*@
+
+    <script src="~/Scripts/ZMLisSys.js"></script>
+
+   
+</head>
+<body>
+    <h3>List item</h3>
+    <table>
+        <tr>
+            <th>p_id</th>
+            <th>name</th>
+            <th>birth</th>
+            <th>sex</th>
+            <th>c_id</th>
+        </tr>
+        @foreach (var item in ViewBag.ListAttendRecord) 
+        {
+            <tr>
+                <td>@item.p_id</td>
+                <td>@item.name</td>
+                <td>@item.birth</td>
+                <td>@item.sex</td>
+                <td>@item.c_id</td>
+            </tr>
+        }
+    </table>
+  
+</body>
+</html>

@@ -35,7 +35,14 @@ namespace ZMLisSys.Controllers
 
             return View();
         }
-               
+
+        public ActionResult Index_Json()
+        {
+           
+
+            return View();
+        }
+
         //public ActionResult Index_Json()
         //{
         //    //    List<JsonHelper> data = new List<JsonHelper>()

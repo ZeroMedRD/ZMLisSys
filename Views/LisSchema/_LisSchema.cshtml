@@ -12,6 +12,7 @@
     {
         columns.Bound(c => c.SMRowid).Hidden(true);
         columns.Bound(c => c.LLRowid).Hidden(true);
+        columns.Bound(c => c.SMFieldMeno);
         columns.Bound(c => c.SMFieldName);
         columns.Bound(c => c.SMFieldType).EditorTemplateName("SMFieldTypeEditor");
         columns.Bound(c => c.SMFieldLength).EditorTemplateName("SMFieldLengthEditor");
@@ -29,9 +30,9 @@
     })
     .ToolBar(toolbar =>
     {
-        toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
-        toolbar.Excel().Text("輸出到 Excel");
-        toolbar.Custom().Text("匯入").HtmlAttributes(new { @onChange = "importExcel()" });
+    toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
+    toolbar.Excel().Text("輸出到 Excel");
+    //toolbar.Custom().Text("匯入").HtmlAttributes(new { @onChange = "importExcel()" });
         @*toolbar.Template(@<text><div style="float:left;padding-right:10px;"><button id="btnInsert" class="btn btn-warning" onclick="openReferralForm()"><i class="fa fa-plus"> 填寫轉診單</i></button></div>
                                 <div style="float:left;padding-right:10px;">
                                     <button id="btnExport2Excel" class="btn btn-warning k-grid-excel">
@@ -42,12 +43,12 @@
     })
     .Excel(e => e.Filterable(true).AllPages(true))
     .ColumnMenu()
-    .Editable(editable => editable.Mode(GridEditMode.InLine)
-              .DisplayDeleteConfirmation(false))
-        //.Events(e => e.Edit("grid_edit"))
-        //.ColumnMenu()
+        .Editable(editable => editable.Mode(GridEditMode.InLine)
+                  .DisplayDeleteConfirmation(false))
+        //    .Events(e => e.Edit("grid_edit"))
+        //    .ColumnMenu()
         //.Editable(editable => editable.Mode(GridEditMode.PopUp)
-        //        .TemplateName("_LisSchema_Editor")
+        //        .TemplateName("_LisLabData")
         //        //.DisplayDeleteConfirmation(false)
         //        .Window(w => w.Title("檢驗結構設定").Width(800))
         //        )
@@ -70,4 +71,6 @@
                 .Destroy(destory => destory.Action("LisSchema_Destroy", "LisSchema"))
             )
             .NoRecords("目前未有任何資料顯示 !")
+
 )
+

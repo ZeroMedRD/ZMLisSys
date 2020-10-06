@@ -54,6 +54,8 @@ function importExcel(obj) {//匯入
         //var obj = JSON.parse(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], sheet2JSONOpts));//json to array/object
         var obj = JSON.parse(aa);
         document.getElementById("demo").innerHTML = aa;
+
+        alert(aa);
         //var cc = $('#demo').val();
         //alert(cc);
         //循環遍歷對象key屬性

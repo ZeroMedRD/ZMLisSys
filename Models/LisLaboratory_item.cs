@@ -36,5 +36,7 @@ namespace ZMLisSys.Models
         public string low { get; set; }
         public string high { get; set; }
         public string meno { get; set; }
+        public string c_data { get; internal set; }
+        public string s_data { get; internal set; }
     }
 }

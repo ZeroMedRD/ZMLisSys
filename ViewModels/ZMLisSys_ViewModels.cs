@@ -37,6 +37,12 @@ namespace ZMLisSys.ViewModels
 
         [Display(Name = "資料分類")]
         public string SMFieldKind { get; set; }
+
+        [Display(Name = "資料編號")]
+        public string SMFieldMeno { get; set; }
+
+        [Display(Name = "資料序號")]
+        public string SMDisplaySeq { get; set; }
     }
 
     public class LisLaboratory_ViewModels_item
