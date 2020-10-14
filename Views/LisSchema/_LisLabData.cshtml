@@ -1,0 +1,52 @@
+﻿@model ZMLisSys.ViewModels.LisLaboratory_ViewModels_str
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        /*
+            Increase the width of the edit form.
+            The default one is 400px.
+        */
+
+        .k-edit-form-container {
+            width: auto;
+        }
+
+        input,
+        select,
+        textarea {
+            max-width: 580px !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="PersonalBase" class="card card-primary">
+        <div class="card-header">
+            <div class="card-tools">
+                <div class="tab" style="float:left;">
+                    <button class="btn btn-warning tablinks active" onclick="openCity(event, 's1')">資料結構</button>
+                    <button class="btn btn-warning tablinks" onclick="openCity(event, 's2')">資料匯入</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div id="s1" class="tabcontent active" style="width:100%;">
+                    @{ Html.RenderPartial("_LisLabStr"); }
+                </div>
+                @*<div id="s2" class="tabcontent" style="width:100%;">
+                    @{ Html.RenderPartial("_LisLabimport"); }
+                </div>*@
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            openCity(event, 's1')
+        });
+    </script>
+</body>
+</html>

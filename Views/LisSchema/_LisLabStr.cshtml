@@ -1,7 +1,6 @@
 ﻿@model ZMLisSys.ViewModels.LisLaboratory_ViewModels_str
 @{
     ViewBag.Title = "_LisLabStr";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -75,21 +74,22 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card card-primary">
-                    <div class="card-header">
+                @*<div class="card card-primary">*@
+                @*<div class="card-header">
                         <h4 class="card-title">結構管理維護</h4>
-                        @*<ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav">
                                 <li>@Html.ActionLink("解析設定", "LisLabStr", "LisSchema")</li>
-                            </ul>*@
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div style="padding-top:1px;">
-                                <div style="text-align:center;border:solid 1px;color:white;background-color:#008a8b;padding:5px;">
-                                    <h6>結構欄位ALL</h6>
-                                </div>
+                            </ul>
+                    </div>*@
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div style="padding-top:1px;">
+                            <div style="text-align:center;border:solid 1px;color:white;background-color:#008a8b;padding:5px;height:40px;">
+                                @*<h6>結構欄位ALL</h6>*@
+                                <span style="padding-right:20px;">結構欄位ALL</span>
                             </div>
-                            @(Html.Kendo().ListBox()
+                        </div>
+                        @(Html.Kendo().ListBox()
                             .Name("listbox1")
                             .Draggable(true)
                             .DropSources("listbox2")
@@ -115,15 +115,15 @@
                                 .Read(read => read.Action("GetLabStr", "LisSchema"))
                             ))
                         )
-                        </div>
-                        <div class="col-sm-6">
-                            <div style="padding-top:1px;">
-                                <div style="text-align:center;border:solid 1px;color:white;background-color:#008a8b;padding:5px;height:40px;">
-                                    <span style="padding-right:20px;">已選取的欄位</span>
-                                    <input type="button" value="儲存" id='send-selected'>
-                                </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="padding-top:1px;">
+                            <div style="text-align:center;border:solid 1px;color:white;background-color:#008a8b;padding:5px;height:40px;">
+                                <span style="padding-right:20px;">已選取的欄位</span>
+                                <input type="button" value="儲存" id='send-selected'>
                             </div>
-                            @(Html.Kendo().ListBox()
+                        </div>
+                        @(Html.Kendo().ListBox()
                             .Name("listbox2")
                             .Draggable(true)
                             .DropSources("listbox1")
@@ -144,30 +144,15 @@
                                 .Read(read => read.Action("GetSelectedLabStr", "LisSchema"))
                             )).Events(e => e.Reorder("onReorder"))
                         )
-                        </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
     </div>
 
 
-
-    @*<div id="modalWindow">
-        <h4>確定要刪除資料嗎 ?</h4>
-        <div style="text-align:right;">
-            <button id="yes" class="k-button">要刪除</button>
-            <button id="no" class="k-button">取消</button>
-        </div>
-    </div>
-
-    <div id="ConfirmFormWindow">
-        <h4>資料已經儲存完畢 !</h4>
-        <div style="text-align:right;">
-            <button id="no" class="k-button" onclick="$('#ConfirmFormWindow').data('kendoWindow').close();">確定</button>
-        </div>
-    </div>*@
 
 </body>
 </html>

@@ -121,6 +121,7 @@ namespace ZMLisSys.Controllers
                                             ll.SMFieldType, 
                                             ll.SMFieldLength, 
                                             ll.SMFieldKind,
+                                            SMFieldKindName = (ll.SMFieldKind == "H") ? "表頭" : "表身",
                                             ll.SMFieldMeno
                                         }
                                        ).ToDataSourceResult(request);

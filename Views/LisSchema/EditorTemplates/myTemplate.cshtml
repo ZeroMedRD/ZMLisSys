@@ -1,0 +1,16 @@
+﻿@model ZMLisSys.ViewModels.LisLaboratory_ViewModels_str
+
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.LLRowid)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.SMFieldName)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.SMFieldMeno)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.SMFieldType)
+    @Html.ValidationMessageFor(model => model.SMFieldType)
+</div>

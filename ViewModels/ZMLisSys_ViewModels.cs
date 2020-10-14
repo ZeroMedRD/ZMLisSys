@@ -26,19 +26,22 @@ namespace ZMLisSys.ViewModels
         [Display(Name = "檢驗所資料序號")]
         public string LLRowid { get; set; }
 
-        [Display(Name = "欄位名稱")]
+        [Display(Name = "名稱")]
         public string SMFieldName { get; set; }
 
-        [Display(Name = "資料型態")]
+        [Display(Name = "型態")]
         public string SMFieldType { get; set; }
 
-        [Display(Name = "資料長度")]
+        [Display(Name = "長度")]
         public string SMFieldLength { get; set; }
 
-        [Display(Name = "資料分類")]
+        [Display(Name = "分類")]
         public string SMFieldKind { get; set; }
 
-        [Display(Name = "資料編號")]
+        [Display(Name = "資料分類")]
+        public string SMFieldKindName { get; set; }
+
+        [Display(Name = "編號")]
         public string SMFieldMeno { get; set; }
 
         [Display(Name = "資料序號")]

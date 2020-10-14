@@ -13,6 +13,7 @@
     @Scripts.Render("~/bundles/kendo")
     @Styles.Render("~/contents/css")
 
+    @*<link href="~/Content/Tabs.css" rel="stylesheet" />*@
     <script src="~/Scripts/ZMLisSys.js"></script>
 
     <style>
@@ -62,7 +63,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card card-primary">
                     <div class="card-header padding-header">
                         <h4 class="card-title">檢驗所標題</h4>
@@ -75,20 +76,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header padding-header">
                         <h4 class="card-title">結構維護</h4>
                     </div>
                     <div class="card-body">
                         @Html.Partial("_LisSchema")
+
                     </div>
                 </div>
-
             </div>
         </div>
-
-        <div id="demo"></div>
 
         <div id="modalWindow">
             <h4>確定要刪除資料嗎 ?</h4>
@@ -103,6 +102,10 @@
             <div style="text-align:right;">
                 <button id="no" class="k-button" onclick="$('#ConfirmFormWindow').data('kendoWindow').close();">確定</button>
             </div>
+        </div>
+
+        <div id="modalImportSchema" style="width:100%;">
+            @Html.Partial("_LisLabData")
         </div>
     </div>
 </body>

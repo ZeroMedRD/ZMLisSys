@@ -1,4 +1,8 @@
-﻿var wnd, wndConfirmMessage   //, wnd4ReferralOutForm, wnd4ReferralInForm;
+﻿function openImportSchema() {    
+    wnd4ImportSchema.center().open();
+}   
+
+var wnd, wndConfirmMessage, wnd4ImportSchema   //, wnd4ReferralInForm;
 $(document).ready(function () {
     wnd = $("#modalWindow").kendoWindow({
         title: "刪除資料確認",
@@ -16,16 +20,17 @@ $(document).ready(function () {
         width: 300
     }).data("kendoWindow");
 
-    wnd4insert = $("#modalInsertWindow").kendoWindow({
-        title: "模組確認",
+    wnd4ImportSchema = $("#modalImportSchema").kendoWindow({
+        title: "資料結構解析",
         modal: true,
         visible: false,
         resizable: false,
-        width: 300
+        width: 1000
     }).data("kendoWindow");
 
     //隱藏未選檢驗所的新增欄位按鈕
     $("#addRecord").hide();
+    $("#ImportSchema").hide();
     $("#addRecord").unbind('click').click(function (e) {
         e.preventDefault();
         var gridLisLab = $("#grid_LisLaboratory").data("kendoGrid");
@@ -37,6 +42,7 @@ $(document).ready(function () {
             alert("請選擇檢驗所");
             window.location.reload();
             $("#addRecord").hide();
+            $("#ImportSchema").hide();
         }
         
     });
@@ -93,6 +99,7 @@ function LisLaboratory_Grid_OnRowSelect(e) {
     
     if (dsa.LLRowid != null) {
         $("#addRecord").show();
+        $("#ImportSchema").show();
     }
     
 }

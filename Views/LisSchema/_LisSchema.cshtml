@@ -16,7 +16,7 @@
         columns.Bound(c => c.SMFieldName);
         columns.Bound(c => c.SMFieldType).EditorTemplateName("SMFieldTypeEditor");
         columns.Bound(c => c.SMFieldLength).EditorTemplateName("SMFieldLengthEditor");
-        columns.Bound(c => c.SMFieldKind).EditorTemplateName("SMFieldKindEditor");
+        columns.Bound(c => c.SMFieldKindName).EditorTemplateName("SMFieldKindEditor");
         columns.Command(command =>
         {
             //command.Edit().Text("修改");
@@ -30,10 +30,10 @@
     })
     .ToolBar(toolbar =>
     {
-    toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
-    toolbar.Excel().Text("輸出到 Excel");
-    //toolbar.Custom().Text("匯入").HtmlAttributes(new { @onChange = "importExcel()" });
-        @*toolbar.Template(@<text><div style="float:left;padding-right:10px;"><button id="btnInsert" class="btn btn-warning" onclick="openReferralForm()"><i class="fa fa-plus"> 填寫轉診單</i></button></div>
+        toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
+        toolbar.Excel().Text("輸出到 Excel");
+        toolbar.Custom().Text("資料結構解析").HtmlAttributes(new { id = "ImportSchema", onclick="openImportSchema()" }).Url("#");
+        @*toolbar.Template(@<text><button id="ImportSchema" class="btn btn-warning" onclick="openImportSchema()"><i class="fa fa-plus"> 資料結構解析</i></button>
                                 <div style="float:left;padding-right:10px;">
                                     <button id="btnExport2Excel" class="btn btn-warning k-grid-excel">
                                         <i class="fa fa-file-excel"> 輸出到 Excel</i>
@@ -43,15 +43,8 @@
     })
     .Excel(e => e.Filterable(true).AllPages(true))
     .ColumnMenu()
-        .Editable(editable => editable.Mode(GridEditMode.InLine)
-                  .DisplayDeleteConfirmation(false))
-        //    .Events(e => e.Edit("grid_edit"))
-        //    .ColumnMenu()
-        //.Editable(editable => editable.Mode(GridEditMode.PopUp)
-        //        .TemplateName("_LisLabData")
-        //        //.DisplayDeleteConfirmation(false)
-        //        .Window(w => w.Title("檢驗結構設定").Width(800))
-        //        )
+        .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))        
+        //.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("myTemplate").Window(w => w.Title("檢驗結構設定").Width(800)))
         .Pageable(page => page.Refresh(true).ButtonCount(10))
             .Navigatable()
             .Sortable(sortable =>
@@ -73,4 +66,3 @@
             .NoRecords("目前未有任何資料顯示 !")
 
 )
-

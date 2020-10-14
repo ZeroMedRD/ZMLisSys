@@ -4986,9 +4986,10 @@
     <Content Include="Views\Shared\EditorTemplates\SMFieldLengthEditor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SMFieldKindEditor.cshtml" />
     <Content Include="Views\LisSchema\Success.cshtml" />
-    <Content Include="Views\LisSchema\EditorTemplates\_LisLabData.cshtml" />
     <Content Include="Views\LisSchema\_LisLabimport.cshtml" />
     <Content Include="Views\LisSchema\_LisLabStr.cshtml" />
+    <Content Include="Views\LisSchema\EditorTemplates\myTemplate.cshtml" />
+    <Content Include="Views\LisSchema\_LisLabData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileCloud\" />
