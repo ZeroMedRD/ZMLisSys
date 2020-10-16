@@ -1,5 +1,7 @@
-﻿function openImportSchema() {    
+﻿function openImportSchema() {  
+    //e.preventDefault();
     wnd4ImportSchema.center().open();
+   
 }   
 
 var wnd, wndConfirmMessage, wnd4ImportSchema   //, wnd4ReferralInForm;
@@ -25,7 +27,8 @@ $(document).ready(function () {
         modal: true,
         visible: false,
         resizable: false,
-        width: 1000
+        width: 1000,
+        //LoadContentFrom: ("GetLabStr", "LisSchema")
     }).data("kendoWindow");
 
     //隱藏未選檢驗所的新增欄位按鈕
@@ -124,4 +127,15 @@ function getLLRowid() {
     }
    
     return request;
+}
+
+function onReorder(e) {
+    e.preventDefault();
+    var dataSource = e.sender.dataSource;
+
+    var dataItem = e.dataItems[0]
+    var index = dataSource.indexOf(dataItem) + e.offset;
+    dataSource.remove(dataItem);
+    dataSource.insert(index, dataItem);
+    e.sender.wrapper.find("[data-uid='" + dataItem.uid + "']").addClass("k-state-selected");
 }
