@@ -28,7 +28,7 @@ $(document).ready(function () {
         visible: false,
         resizable: false,
         width: 1000,
-        //LoadContentFrom: ("GetLabStr", "LisSchema")
+        LoadContentFrom: ("GetLabStr", "LisSchema")
     }).data("kendoWindow");
 
     //隱藏未選檢驗所的新增欄位按鈕
