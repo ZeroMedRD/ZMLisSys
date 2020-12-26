@@ -1,0 +1,13 @@
+﻿@using System.Collections
+@using Kendo.Mvc.UI
+
+@(Html.Kendo().DropDownListFor(m => m)
+            .Name("laboratoryClass_id")
+            .DataValueField("id")
+            .DataTextField("name")
+            .SelectedIndex(0)
+            .DataSource(ds => ds
+                .Read(read => read.Action("GetLaboratoryClass", "GetData"))
+            )
+            .Filter("contains")
+)

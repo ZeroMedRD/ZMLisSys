@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LIS_HISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="lisHospitalLaboratoryItem">
+          <Key>
+            <PropertyRef Name="HLIRowid" />
+          </Key>
+          <Property Name="HLIRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLIRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="HLICode" Type="nvarchar" MaxLength="20" />
+          <Property Name="HLIDisplayRange" Type="nvarchar" MaxLength="100" />
+          <Property Name="HLIUpMale" Type="float" />
+          <Property Name="HLILoMale" Type="float" />
+          <Property Name="HLIUpFemale" Type="float" />
+          <Property Name="HLILoFemale" Type="float" />
+        </EntityType>
+        <EntityType Name="lisPatientLaboratoryDetail">
+          <Key>
+            <PropertyRef Name="PLDRowid" />
+          </Key>
+          <Property Name="PLDRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PLMRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="HLIRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PLDCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="PLDName" Type="nvarchar" MaxLength="255" />
+          <Property Name="PLDValue" Type="float" />
+          <Property Name="PLDStrValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="PLDType" Type="nvarchar" MaxLength="50" />
+          <Property Name="PLDUnit" Type="nvarchar" MaxLength="20" />
+          <Property Name="PLDMemo" Type="nvarchar" MaxLength="255" />
+          <Property Name="PLDSeqno" Type="int" Nullable="false" />
+          <Property Name="PLDInsertDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="lisPatientLaboratoryMaster">
+          <Key>
+            <PropertyRef Name="PLMRowid" />
+          </Key>
+          <Property Name="PLMRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PTRowid" Type="nvarchar" MaxLength="128" />
+          <Property Name="PLMPTIdno" Type="nvarchar" MaxLength="10" />
+          <Property Name="PLMPTName" Type="nvarchar" MaxLength="20" />
+          <Property Name="PLMPTBirthday" Type="nvarchar" MaxLength="10" />
+          <Property Name="PLMPTGender" Type="nvarchar" MaxLength="10" />
+          <Property Name="PLMPTCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="PLMClinicDate" Type="datetime" />
+          <Property Name="PLMApplyDate" Type="datetime" />
+          <Property Name="PLMApplyTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="PLMInspDate" Type="datetime" />
+          <Property Name="PLMInspTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="PLMReportDate" Type="datetime" />
+          <Property Name="PLMReportTime" Type="nvarchar" MaxLength="8" />
+          <Property Name="PLMSNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="PLMReqno" Type="nvarchar" MaxLength="20" />
+          <Property Name="PLMInsertDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="strPrgID" Type="nvarchar" MaxLength="20" />
+          <Property Name="strPrgPws" Type="nvarchar" MaxLength="20" />
+          <Property Name="strUserAccount" Type="nvarchar" MaxLength="20" />
+          <Property Name="strDisplayName" Type="nvarchar" MaxLength="20" />
+          <Property Name="bolisMale" Type="bit" />
+          <Property Name="bolisAgreement" Type="bit" />
+          <Property Name="strCell" Type="nvarchar" MaxLength="20" />
+          <Property Name="strEMail" Type="nvarchar" MaxLength="50" />
+          <Property Name="strPassword" Type="nvarchar" MaxLength="20" />
+          <Property Name="strTempPhoto" Type="nvarchar" MaxLength="20" />
+          <Property Name="datBirthday" Type="datetime" />
+          <Property Name="strAddSecCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="strCommunityCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="intUserID" Type="int" />
+          <Property Name="floHeight" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floWeight" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="ftp_file_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="intRsRecno" Type="int" />
+          <Property Name="strRecno" Type="nvarchar" MaxLength="15" />
+          <Property Name="strName" Type="nvarchar" MaxLength="20" />
+          <Property Name="strShortcut" Type="nvarchar" MaxLength="10" />
+          <Property Name="strIdno" Type="nvarchar" MaxLength="20" />
+          <Property Name="strTel" Type="nvarchar" MaxLength="20" />
+          <Property Name="strAddr" Type="nvarchar" MaxLength="100" />
+          <Property Name="strCompanyName" Type="nvarchar" MaxLength="20" />
+          <Property Name="strCompanyTel" Type="nvarchar" MaxLength="20" />
+          <Property Name="strCompanyTitle" Type="nvarchar" MaxLength="20" />
+          <Property Name="strGroup" Type="nvarchar" MaxLength="20" />
+          <Property Name="strBlood" Type="nvarchar" MaxLength="10" />
+          <Property Name="intMerry" Type="int" />
+          <Property Name="intWork" Type="int" />
+          <Property Name="strHabit" Type="nvarchar" MaxLength="20" />
+          <Property Name="strAllergy" Type="nvarchar" MaxLength="40" />
+          <Property Name="strHistory" Type="nvarchar" MaxLength="40" />
+          <Property Name="strDrug" Type="nvarchar" MaxLength="40" />
+          <Property Name="strWorkOther" Type="nvarchar" MaxLength="40" />
+          <Property Name="strAllergyOther" Type="nvarchar" MaxLength="40" />
+          <Property Name="strHistoryOther" Type="nvarchar" MaxLength="40" />
+          <Property Name="strDrugOther" Type="nvarchar" MaxLength="40" />
+          <Property Name="hisMemo" Type="nvarchar(max)" />
+          <Property Name="phsTypeMemo" Type="nvarchar(max)" />
+          <Property Name="laboratoryMemo" Type="nvarchar(max)" />
+          <Property Name="patientMemo" Type="nvarchar(max)" />
+          <Property Name="isPrivate" Type="bit" />
+          <Property Name="isFreezen" Type="bit" />
+          <Property Name="hospital_no" Type="nvarchar" MaxLength="10" />
+          <Property Name="employee_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="doctor_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="doctorG8_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="g8_mode" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityContainer Name="LIS_HISModelStoreContainer">
+          <EntitySet Name="lisHospitalLaboratoryItem" EntityType="Self.lisHospitalLaboratoryItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lisPatientLaboratoryDetail" EntityType="Self.lisPatientLaboratoryDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lisPatientLaboratoryMaster" EntityType="Self.lisPatientLaboratoryMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LIS_HISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="strPrgID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strPrgPws" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strUserAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strDisplayName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="bolisMale" Type="Boolean" />
+          <Property Name="bolisAgreement" Type="Boolean" />
+          <Property Name="strCell" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strEMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="strPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strTempPhoto" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="datBirthday" Type="DateTime" Precision="3" />
+          <Property Name="strAddSecCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="strCommunityCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="intUserID" Type="Int32" />
+          <Property Name="floHeight" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floWeight" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ftp_file_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="intRsRecno" Type="Int32" />
+          <Property Name="strRecno" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="strName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strShortcut" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="strIdno" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strAddr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="strCompanyName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strCompanyTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strCompanyTitle" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strGroup" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strBlood" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="intMerry" Type="Int32" />
+          <Property Name="intWork" Type="Int32" />
+          <Property Name="strHabit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strAllergy" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="strHistory" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="strDrug" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="strWorkOther" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="strAllergyOther" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="strHistoryOther" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="strDrugOther" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="hisMemo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phsTypeMemo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="laboratoryMemo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="patientMemo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isPrivate" Type="Boolean" />
+          <Property Name="isFreezen" Type="Boolean" />
+          <Property Name="hospital_no" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="employee_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="doctor_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="doctorG8_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="g8_mode" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="LIS_HISEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Patient" EntityType="Self.Patient" />
+          <EntitySet Name="lisHospitalLaboratoryItem" EntityType="LIS_HISModel.lisHospitalLaboratoryItem" />
+          <EntitySet Name="lisPatientLaboratoryDetail" EntityType="LIS_HISModel.lisPatientLaboratoryDetail" />
+          <EntitySet Name="lisPatientLaboratoryMaster" EntityType="LIS_HISModel.lisPatientLaboratoryMaster" />
+        </EntityContainer>
+        <EntityType Name="lisHospitalLaboratoryItem">
+          <Key>
+            <PropertyRef Name="HLIRowid" />
+          </Key>
+          <Property Name="HLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="HLICode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HLIDisplayRange" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HLIUpMale" Type="Double" />
+          <Property Name="HLILoMale" Type="Double" />
+          <Property Name="HLIUpFemale" Type="Double" />
+          <Property Name="HLILoFemale" Type="Double" />
+        </EntityType>
+        <EntityType Name="lisPatientLaboratoryDetail">
+          <Key>
+            <PropertyRef Name="PLDRowid" />
+          </Key>
+          <Property Name="PLDRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PLMRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="HLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PLDCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="PLDName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PLDValue" Type="Double" />
+          <Property Name="PLDStrValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLDType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLDUnit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PLDMemo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PLDSeqno" Type="Int32" Nullable="false" />
+          <Property Name="PLDInsertDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="lisPatientLaboratoryMaster">
+          <Key>
+            <PropertyRef Name="PLMRowid" />
+          </Key>
+          <Property Name="PLMRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PTRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PLMPTIdno" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PLMPTName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PLMPTBirthday" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PLMPTGender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PLMPTCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PLMClinicDate" Type="DateTime" Precision="3" />
+          <Property Name="PLMApplyDate" Type="DateTime" Precision="3" />
+          <Property Name="PLMApplyTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="PLMInspDate" Type="DateTime" Precision="3" />
+          <Property Name="PLMInspTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="PLMReportDate" Type="DateTime" Precision="3" />
+          <Property Name="PLMReportTime" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="PLMSNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLMReqno" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PLMInsertDate" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LIS_HISModelStoreContainer" CdmEntityContainer="LIS_HISEntities">
+          <EntitySetMapping Name="Patient">
+            <EntityTypeMapping TypeName="LIS_HISModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="strPrgID" ColumnName="strPrgID" />
+                <ScalarProperty Name="strPrgPws" ColumnName="strPrgPws" />
+                <ScalarProperty Name="strUserAccount" ColumnName="strUserAccount" />
+                <ScalarProperty Name="strDisplayName" ColumnName="strDisplayName" />
+                <ScalarProperty Name="bolisMale" ColumnName="bolisMale" />
+                <ScalarProperty Name="bolisAgreement" ColumnName="bolisAgreement" />
+                <ScalarProperty Name="strCell" ColumnName="strCell" />
+                <ScalarProperty Name="strEMail" ColumnName="strEMail" />
+                <ScalarProperty Name="strPassword" ColumnName="strPassword" />
+                <ScalarProperty Name="strTempPhoto" ColumnName="strTempPhoto" />
+                <ScalarProperty Name="datBirthday" ColumnName="datBirthday" />
+                <ScalarProperty Name="strAddSecCode" ColumnName="strAddSecCode" />
+                <ScalarProperty Name="strCommunityCode" ColumnName="strCommunityCode" />
+                <ScalarProperty Name="intUserID" ColumnName="intUserID" />
+                <ScalarProperty Name="floHeight" ColumnName="floHeight" />
+                <ScalarProperty Name="floWeight" ColumnName="floWeight" />
+                <ScalarProperty Name="ftp_file_id" ColumnName="ftp_file_id" />
+                <ScalarProperty Name="intRsRecno" ColumnName="intRsRecno" />
+                <ScalarProperty Name="strRecno" ColumnName="strRecno" />
+                <ScalarProperty Name="strName" ColumnName="strName" />
+                <ScalarProperty Name="strShortcut" ColumnName="strShortcut" />
+                <ScalarProperty Name="strIdno" ColumnName="strIdno" />
+                <ScalarProperty Name="strTel" ColumnName="strTel" />
+                <ScalarProperty Name="strAddr" ColumnName="strAddr" />
+                <ScalarProperty Name="strCompanyName" ColumnName="strCompanyName" />
+                <ScalarProperty Name="strCompanyTel" ColumnName="strCompanyTel" />
+                <ScalarProperty Name="strCompanyTitle" ColumnName="strCompanyTitle" />
+                <ScalarProperty Name="strGroup" ColumnName="strGroup" />
+                <ScalarProperty Name="strBlood" ColumnName="strBlood" />
+                <ScalarProperty Name="intMerry" ColumnName="intMerry" />
+                <ScalarProperty Name="intWork" ColumnName="intWork" />
+                <ScalarProperty Name="strHabit" ColumnName="strHabit" />
+                <ScalarProperty Name="strAllergy" ColumnName="strAllergy" />
+                <ScalarProperty Name="strHistory" ColumnName="strHistory" />
+                <ScalarProperty Name="strDrug" ColumnName="strDrug" />
+                <ScalarProperty Name="strWorkOther" ColumnName="strWorkOther" />
+                <ScalarProperty Name="strAllergyOther" ColumnName="strAllergyOther" />
+                <ScalarProperty Name="strHistoryOther" ColumnName="strHistoryOther" />
+                <ScalarProperty Name="strDrugOther" ColumnName="strDrugOther" />
+                <ScalarProperty Name="hisMemo" ColumnName="hisMemo" />
+                <ScalarProperty Name="phsTypeMemo" ColumnName="phsTypeMemo" />
+                <ScalarProperty Name="laboratoryMemo" ColumnName="laboratoryMemo" />
+                <ScalarProperty Name="patientMemo" ColumnName="patientMemo" />
+                <ScalarProperty Name="isPrivate" ColumnName="isPrivate" />
+                <ScalarProperty Name="isFreezen" ColumnName="isFreezen" />
+                <ScalarProperty Name="hospital_no" ColumnName="hospital_no" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
+                <ScalarProperty Name="doctorG8_id" ColumnName="doctorG8_id" />
+                <ScalarProperty Name="g8_mode" ColumnName="g8_mode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisHospitalLaboratoryItem">
+            <EntityTypeMapping TypeName="LIS_HISModel.lisHospitalLaboratoryItem">
+              <MappingFragment StoreEntitySet="lisHospitalLaboratoryItem">
+                <ScalarProperty Name="HLILoFemale" ColumnName="HLILoFemale" />
+                <ScalarProperty Name="HLIUpFemale" ColumnName="HLIUpFemale" />
+                <ScalarProperty Name="HLILoMale" ColumnName="HLILoMale" />
+                <ScalarProperty Name="HLIUpMale" ColumnName="HLIUpMale" />
+                <ScalarProperty Name="HLIDisplayRange" ColumnName="HLIDisplayRange" />
+                <ScalarProperty Name="HLICode" ColumnName="HLICode" />
+                <ScalarProperty Name="LLIRowid" ColumnName="LLIRowid" />
+                <ScalarProperty Name="HLIRowid" ColumnName="HLIRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisPatientLaboratoryDetail">
+            <EntityTypeMapping TypeName="LIS_HISModel.lisPatientLaboratoryDetail">
+              <MappingFragment StoreEntitySet="lisPatientLaboratoryDetail">
+                <ScalarProperty Name="PLDInsertDate" ColumnName="PLDInsertDate" />
+                <ScalarProperty Name="PLDSeqno" ColumnName="PLDSeqno" />
+                <ScalarProperty Name="PLDMemo" ColumnName="PLDMemo" />
+                <ScalarProperty Name="PLDUnit" ColumnName="PLDUnit" />
+                <ScalarProperty Name="PLDType" ColumnName="PLDType" />
+                <ScalarProperty Name="PLDStrValue" ColumnName="PLDStrValue" />
+                <ScalarProperty Name="PLDValue" ColumnName="PLDValue" />
+                <ScalarProperty Name="PLDName" ColumnName="PLDName" />
+                <ScalarProperty Name="PLDCode" ColumnName="PLDCode" />
+                <ScalarProperty Name="HLIRowid" ColumnName="HLIRowid" />
+                <ScalarProperty Name="PLMRowid" ColumnName="PLMRowid" />
+                <ScalarProperty Name="PLDRowid" ColumnName="PLDRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisPatientLaboratoryMaster">
+            <EntityTypeMapping TypeName="LIS_HISModel.lisPatientLaboratoryMaster">
+              <MappingFragment StoreEntitySet="lisPatientLaboratoryMaster">
+                <ScalarProperty Name="PLMInsertDate" ColumnName="PLMInsertDate" />
+                <ScalarProperty Name="PLMReqno" ColumnName="PLMReqno" />
+                <ScalarProperty Name="PLMSNo" ColumnName="PLMSNo" />
+                <ScalarProperty Name="PLMReportTime" ColumnName="PLMReportTime" />
+                <ScalarProperty Name="PLMReportDate" ColumnName="PLMReportDate" />
+                <ScalarProperty Name="PLMInspTime" ColumnName="PLMInspTime" />
+                <ScalarProperty Name="PLMInspDate" ColumnName="PLMInspDate" />
+                <ScalarProperty Name="PLMApplyTime" ColumnName="PLMApplyTime" />
+                <ScalarProperty Name="PLMApplyDate" ColumnName="PLMApplyDate" />
+                <ScalarProperty Name="PLMClinicDate" ColumnName="PLMClinicDate" />
+                <ScalarProperty Name="PLMPTCode" ColumnName="PLMPTCode" />
+                <ScalarProperty Name="PLMPTGender" ColumnName="PLMPTGender" />
+                <ScalarProperty Name="PLMPTBirthday" ColumnName="PLMPTBirthday" />
+                <ScalarProperty Name="PLMPTName" ColumnName="PLMPTName" />
+                <ScalarProperty Name="PLMPTIdno" ColumnName="PLMPTIdno" />
+                <ScalarProperty Name="PTRowid" ColumnName="PTRowid" />
+                <ScalarProperty Name="PLMRowid" ColumnName="PLMRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

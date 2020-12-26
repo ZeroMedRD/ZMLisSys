@@ -7,21 +7,21 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ZMLisSys.Models;
-using ZMLisSys.ViewModels;
-using System.IO;
-using Excel = Microsoft.Office.Interop.Excel;
-using ClosedXML.Excel;
+using ZMLISSys.Models;
+using ZMLISSys.ViewModels;
+//using System.IO;
+//using Excel = Microsoft.Office.Interop.Excel;
+//using ClosedXML.Excel;
 
-namespace ZMLisSys.Controllers
+namespace ZMLISSys.Controllers
 {
-    public class LisSchemaController : Controller
+    public class LISSchemaController : Controller
     {
-        private ZMLisSysEntities db_zmlis = new ZMLisSysEntities();
-        private ZMCMSEntities db_zmcms = new ZMCMSEntities();
+        private ZMLISEntities db_zmlis = new ZMLISEntities();
+        private LIS_ZMCMSv2Entities db_zmcms = new LIS_ZMCMSv2Entities();
 
         // GET: LisSchema
-        public ActionResult Index()
+        public ActionResult LSIndex()
         {
             return View();
         }
@@ -30,56 +30,51 @@ namespace ZMLisSys.Controllers
         {
             return View();
         }
-
-        public ActionResult LisLabStr()
+       
+        #region LisLaboratoryMaster CRUD        
+        public ActionResult LisLaboratoryMaster_Read([DataSourceRequest] DataSourceRequest request)
         {
-            return View();
-        }
-
-        #region LisLab CRUD        
-        public ActionResult LisLab_Read([DataSourceRequest] DataSourceRequest request)
-        {
-            DataSourceResult result = (from ll in db_zmlis.LisLaboratory 
-                                       select new { ll.LLRowid, ll.LLName, ll.LLFormat}).ToDataSourceResult(request);
+            DataSourceResult result = (from ll in db_zmlis.lisLaboratoryMaster
+                                       select new { ll.LLMRowid, ll.LLMName, ll.LLMFormat}).ToDataSourceResult(request);
 
             return Json(result);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LisLab_Create([DataSourceRequest] DataSourceRequest request, LisLaboratory_ViewModels crud)
+        public ActionResult LisLaboratoryMaster_Create([DataSourceRequest] DataSourceRequest request, ViewModel_LisLaboratoryMaster crud)
         {
             if (ModelState.IsValid)
             {
-                var entity = new LisLaboratory
+                var entity = new lisLaboratoryMaster
                 {
-                    LLRowid = Guid.NewGuid().ToString(),
-                    LLName = crud.LLName,
-                    LLFormat = crud.LLFormat
+                    LLMRowid = Guid.NewGuid().ToString(),
+                    LLMName = crud.LLMName,
+                    LLMFormat = crud.LLMFormat
                 };
 
-                db_zmlis.LisLaboratory.Add(entity);
+                db_zmlis.lisLaboratoryMaster.Add(entity);
                 db_zmlis.SaveChanges();
-                crud.LLRowid = entity.LLRowid;
+                crud.LLMRowid = entity.LLMRowid;
             }
 
             return Json(new[] { crud }.ToDataSourceResult(new DataSourceRequest(), ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LisLab_Update([DataSourceRequest] DataSourceRequest request, LisLaboratory_ViewModels crud)
+        public ActionResult LisLaboratoryMaster_Update([DataSourceRequest] DataSourceRequest request, ViewModel_LisLaboratoryMaster crud)
         {
             if (crud != null) 
             {
                 if (ModelState.IsValid)
                 {
-                    var entity = new LisLaboratory
+                    var entity = new lisLaboratoryMaster
                     {
-                        LLRowid = crud.LLRowid,
-                        LLName = crud.LLName,
-                        LLFormat = crud.LLFormat
+                        LLMRowid = crud.LLMRowid,
+                        LLMName = crud.LLMName,
+                        LLMFormat = crud.LLMFormat
                     };
 
-                    db_zmlis.LisLaboratory.Attach(entity);
+                    db_zmlis.lisLaboratoryMaster.Attach(entity);
                     db_zmlis.Entry(entity).State = System.Data.Entity.EntityState.Modified;
                     db_zmlis.SaveChanges();
                 }
@@ -90,17 +85,17 @@ namespace ZMLisSys.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LisLab_Destroy([DataSourceRequest] DataSourceRequest request, LisLaboratory crud)
+        public ActionResult LisLaboratoryMaster_Destroy([DataSourceRequest] DataSourceRequest request, lisLaboratoryMaster crud)
         {
             if (ModelState.IsValid)
             {
-                var entity = new LisLaboratory
+                var entity = new lisLaboratoryMaster
                 {
-                    LLRowid = crud.LLRowid
+                    LLMRowid = crud.LLMRowid
                 };
 
-                db_zmlis.LisLaboratory.Attach(entity);
-                db_zmlis.LisLaboratory.Remove(entity);
+                db_zmlis.lisLaboratoryMaster.Attach(entity);
+                db_zmlis.lisLaboratoryMaster.Remove(entity);
                 db_zmlis.SaveChanges();
             }
 
@@ -108,44 +103,88 @@ namespace ZMLisSys.Controllers
         }
         #endregion
 
-        #region LisSchema CRUD        
-        public ActionResult LisSchema_Read([DataSourceRequest] DataSourceRequest request, string sLLRowid)
+        #region LisLaboratoryDetail CRUD        
+        public ActionResult LisLaboratoryDetail_Read([DataSourceRequest] DataSourceRequest request, string sLLMRowid)
         {
-            DataSourceResult result = (from ll in db_zmlis.LisLaboratory_str
-                                       where ll.LLRowid == sLLRowid
-                                        select new 
-                                        { 
-                                            ll.SMRowid, 
-                                            ll.LLRowid,
-                                            ll.SMFieldName, 
-                                            ll.SMFieldType, 
-                                            ll.SMFieldLength, 
-                                            ll.SMFieldKind,
-                                            SMFieldKindName = (ll.SMFieldKind == "H") ? "表頭" : "表身",
-                                            ll.SMFieldMeno
-                                        }
-                                       ).ToDataSourceResult(request);
+            var db_LisLaboratoryDetail = (from ll in db_zmlis.lisLaboratoryDetail where ll.LLMRowid == sLLMRowid select ll).ToList();
+
+            var db_LLDFieldType = (from cm in db_zmcms.ComboMaster
+                                    where cm.CBMClass == "ZMLisSys_LLDFieldType"
+                                    join cd in db_zmcms.ComboDetail on cm.CBMRowid equals cd.CBMRowid
+                                    orderby cd.CBDDisplayOrder
+                                    select new { cd.CBDRowid, cd.CBDCode, cd.CBDDescription }).ToList();
+
+            var db_LLDFieldKind = (from cm in db_zmcms.ComboMaster
+                                    where cm.CBMClass == "ZMLisSys_LLDFieldKind"
+                                    join cd in db_zmcms.ComboDetail on cm.CBMRowid equals cd.CBMRowid
+                                    orderby cd.CBDDisplayOrder
+                                    select new { cd.CBDRowid, cd.CBDCode, cd.CBDDescription }).ToList();
+
+            var db_LLDMappingField = (from cm in db_zmcms.ComboMaster
+                                      where cm.CBMClass == "ZMLisSys_LLDMappingField"
+                                      join cd in db_zmcms.ComboDetail on cm.CBMRowid equals cd.CBMRowid
+                                      orderby cd.CBDDisplayOrder
+                                      select new { cd.CBDRowid, cd.CBDCode, cd.CBDDescription }).ToList();
+
+
+            //var LLDFieldType = (from cm in db_zmcms.ComboMaster where cm.CBMClass == "ZMLisSys_LLDFieldType" join cd in db_zmcms.ComboDetail on cm.CBMRowid equals cd.CBMRowid select new { cd.CBDCode, cd.CBDDescription }).ToList();
+            //var db_LLDFieldKind = (from cm in db_zmcms.ComboMaster where cm.CBMClass == "ZMLisSys_LLDFieldKind" join cd in db_zmcms.ComboDetail on cm.CBMRowid equals cd.CBMRowid select new { cd.CBDCode, cd.CBDDescription }).ToList();
+            //var db_LisLaboratoryDetail = (from ll in db_zmlis.LisLaboratoryDetail where ll.LLMRowid == sLLMRowid select ll).ToList();
+
+            DataSourceResult result = (from ll in db_LisLaboratoryDetail
+                                       join t1 in db_LLDFieldType on ll.LLDFieldType equals t1.CBDRowid into ps1
+                                       from rs1 in ps1.DefaultIfEmpty()
+                                       join t2 in db_LLDFieldKind on ll.LLDFieldKind equals t2.CBDCode into ps2
+                                       from rs2 in ps2.DefaultIfEmpty()
+                                       join t3 in db_LLDMappingField on ll.LLDMappingField equals t3.CBDRowid into ps3
+                                       from rs3 in ps3.DefaultIfEmpty()
+                                       orderby ll.LLDSeqno ascending
+                                       select new
+                                       {
+                                           ll.LLDRowid,
+                                           ll.LLMRowid,
+                                           ll.LLDCode,
+                                           ll.LLDFieldName,
+                                           ll.LLDFieldType,
+                                           LLDFieldTypeName = (rs1 == null || rs1.CBDRowid == null ? "N/A" : rs1.CBDDescription),
+                                           ll.LLDFieldLength,
+                                           ll.LLDFieldFloatLength,
+                                           ll.LLDFieldKind,
+                                           LLDFieldKindName = (rs2 == null || rs2.CBDRowid == null ? "N/A" : rs2.CBDDescription),
+                                           ll.LLDFieldMemo,
+                                           ll.LLDTextStartPos,
+                                           ll.LLDTextEndPos,
+                                           ll.LLDSeqno,
+                                           ll.LLDMappingField,
+                                           LLDMappingFieldName = (rs3 == null || rs3.CBDRowid == null ? "N/A" : rs3.CBDDescription),
+                                       }).ToDataSourceResult(request);
 
             return Json(result);
         }
                 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LisSchema_Create([DataSourceRequest] DataSourceRequest request, LisLaboratory_ViewModels_str crud, string sLLRowid)
+        public ActionResult LisLaboratoryDetail_Create([DataSourceRequest] DataSourceRequest request, ViewModel_LisLaboratoryDetail crud, string sLLMRowid)
         {
             
             if (ModelState.IsValid)
             {
-                var entity = new LisLaboratory_str
+                var entity = new lisLaboratoryDetail
                 {
-                    SMRowid = Guid.NewGuid().ToString(),
-                    LLRowid = sLLRowid,
-                    SMFieldName = crud.SMFieldName,
-                    SMFieldType = crud.SMFieldType,
-                    SMFieldLength = crud.SMFieldLength,
-                    SMFieldKind = crud.SMFieldKind,
-                    SMFieldMeno = crud.SMFieldMeno
+                    LLDRowid = Guid.NewGuid().ToString(),
+                    LLMRowid = sLLMRowid,
+                    LLDCode = crud.LLDCode,
+                    LLDFieldName = crud.LLDFieldName,
+                    LLDFieldType = crud.LLDFieldType,
+                    LLDFieldLength = crud.LLDFieldLength,
+                    LLDFieldFloatLength = crud.LLDFieldFloatLength,
+                    LLDFieldKind = crud.LLDFieldKind,
+                    LLDFieldMemo = crud.LLDFieldMemo,
+                    LLDTextStartPos = crud.LLDTextStartPos,
+                    LLDTextEndPos = crud.LLDTextEndPos,
+                    LLDSeqno = crud.LLDSeqno,
+                    LLDMappingField = crud.LLDMappingField
                 };
-                db_zmlis.LisLaboratory_str.Add(entity);
+                db_zmlis.lisLaboratoryDetail.Add(entity);
                 db_zmlis.SaveChanges();
                 //crud.SMRowid = entity.SMRowid;
 
@@ -155,165 +194,74 @@ namespace ZMLisSys.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LisSchema_Update([DataSourceRequest] DataSourceRequest request, LisLaboratory_ViewModels_str crud)
+        public ActionResult LisLaboratoryDetail_Update([DataSourceRequest] DataSourceRequest request, ViewModel_LisLaboratoryDetail crud)
         {
             if (crud != null) 
             {
                 if (ModelState.IsValid)
                 {
-                    var entity = new LisLaboratory_str
+                    var entity = new lisLaboratoryDetail
                     {
-                        SMRowid = crud.SMRowid,
-                        LLRowid = crud.LLRowid,
-                        SMFieldName = crud.SMFieldName,
-                        SMFieldType = crud.SMFieldType,
-                        SMFieldLength = crud.SMFieldLength,
-                        SMFieldKind = crud.SMFieldKind,
-                        SMFieldMeno = crud.SMFieldMeno
+                        LLDRowid = crud.LLDRowid,
+                        LLMRowid = crud.LLMRowid,
+                        LLDCode = crud.LLDCode,
+                        LLDFieldName = crud.LLDFieldName,
+                        LLDFieldType = crud.LLDFieldType,
+                        LLDFieldLength = crud.LLDFieldLength,
+                        LLDFieldFloatLength = crud.LLDFieldFloatLength,
+                        LLDFieldKind = crud.LLDFieldKind,
+                        LLDFieldMemo = crud.LLDFieldMemo,
+                        LLDTextStartPos = crud.LLDTextStartPos,
+                        LLDTextEndPos = crud.LLDTextEndPos,
+                        LLDSeqno = crud.LLDSeqno,
+                        LLDMappingField = crud.LLDMappingField
                     };
 
-                    db_zmlis.LisLaboratory_str.Attach(entity);
+                    db_zmlis.lisLaboratoryDetail.Attach(entity);
                     db_zmlis.Entry(entity).State = System.Data.Entity.EntityState.Modified;
                     db_zmlis.SaveChanges();
-                }           
+                }
             }
             return Json(new[] { crud }.ToDataSourceResult(request, ModelState));
 
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LisSchema_Destroy([DataSourceRequest] DataSourceRequest request, LisLaboratory_str crud)
+        public ActionResult LisLaboratoryDetail_Destroy([DataSourceRequest] DataSourceRequest request, lisLaboratoryDetail crud)
         {
             if (ModelState.IsValid)
             {
-                var entity = new LisLaboratory_str
+                var entity = new lisLaboratoryDetail
                 {
-                    SMRowid = crud.SMRowid
+                    LLDRowid = crud.LLDRowid
                 };
 
-                db_zmlis.LisLaboratory_str.Attach(entity);
-                db_zmlis.LisLaboratory_str.Remove(entity);
+                db_zmlis.lisLaboratoryDetail.Attach(entity);
+                db_zmlis.lisLaboratoryDetail.Remove(entity);
                 db_zmlis.SaveChanges();
             }
 
             return Json(new[] { crud }.ToDataSourceResult(request, ModelState));
         }
-
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public ActionResult LisSchema_import([DataSourceRequest] DataSourceRequest request, LisLaboratory_ViewModels_item crud, string sLLRowid)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        var entity = new LisLaboratory_item
-        //        {
-        //            id = Guid.NewGuid().ToString(),
-        //            LLRowid = sLLRowid,
-        //            w_no = crud.w_no,
-        //            c_data = crud.c_data,
-        //            s_data = crud.s_data,
-        //            name = crud.name,
-        //            sex = crud.sex,
-        //            p_id = crud.p_id,
-        //            //birth = crud.birth,
-        //            //c_id = crud.c_id,
-        //            //h_no = crud.h_no,
-        //            //item_cname = crud.item_cname,
-        //            //item_ename = crud.item_ename,
-        //            //nhi_code = crud.nhi_code,
-        //            //CHD_V = crud.CHD_V,
-        //            //c_type = crud.c_type,
-        //            //low = crud.low,
-        //            //high = crud.high
-        //        };
-        //        db_zmlis.LisLaboratory_item.Add(entity);
-        //        db_zmlis.SaveChanges();
-        //        //crud.SMRowid = entity.SMRowid;
-
-        //    }
-        //    return Json(new[] { crud }.ToDataSourceResult(new DataSourceRequest(), ModelState));
-
-        //}
-
-        [HttpPost]
-        public ActionResult LisSchema_importEX(HttpPostedFileBase excelfile) 
-        {
-            if (excelfile == null || excelfile.ContentLength == 0)
-            {
-                ViewBag.Error = "請選擇excel檔案! < br />";
-                return View("Index");
-            }
-            else 
-            {
-                if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
-                {
-                    string path = Server.MapPath("~/FileUploads/" + excelfile.FileName);
-                    if (System.IO.File.Exists(path))
-                        System.IO.File.Exists(path);
-                    excelfile.SaveAs(path);
-                    //讀取excel資料
-                    Excel.Application application = new Excel.Application();
-                    Excel.Workbook workbook = application.Workbooks.Open(path);
-                    Excel.Worksheet worksheet = workbook.ActiveSheet;
-                    Excel.Range range = worksheet.UsedRange;
-                    List<LisLaboratory_ViewModels_item> listitem = new List<LisLaboratory_ViewModels_item>();
-                    for (int row = 2; row <= range.Rows.Column; row++)
-                    {
-                        LisLaboratory_ViewModels_item r = new LisLaboratory_ViewModels_item();
-                        r.p_id = ((Excel.Range)range.Cells[row, 2]).Text;
-                        r.name = ((Excel.Range)range.Cells[row, 3]).Text;
-                        r.birth = ((Excel.Range)range.Cells[row, 4]).Text;
-                        r.sex = ((Excel.Range)range.Cells[row, 5]).Text;
-                        r.c_id = ((Excel.Range)range.Cells[row, 6]).Text;
-                        listitem.Add(r);
-                    }
-                    ViewBag.ListAttendRecord = listitem;
-                    return View("Success");
-                }
-                else
-                {
-                    ViewBag.Error = "檔案型態不正確! <br />";
-                    return View("Index");
-                }
-            }
-        }
-
         #endregion
 
-        #region 取得參數設定資料
-        public JsonResult GetCombo(string stext)
+        #region GetLaboratorySchema_取得檢驗所定義的欄位清單資料
+        public ActionResult GetLaboratorySchema(string sLLMRowid)
         {
-
-            var result = (from cm in db_zmcms.ComboMaster
-                          where cm.CBMClass == stext
-                          join cd in db_zmcms.ComboDetail on cm.CBMRowid equals cd.CBMRowid
-                          where cd.CBDDisplayFlag == true
-                          orderby cd.CBDDisplayOrder
-                          select new
-                          {
-                              CBDRowid = cd.CBDRowid,
-                              CBDCode = cd.CBDCode,
-                              CBDDescription = cd.CBDDescription,
-                              CBDDisplayFlag = cd.CBDDisplayFlag,
-                              CBDDisplayOrder = cd.CBDDisplayOrder
-                          });
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-
-        #region GetLabStr_取得欄位清單
-        public ActionResult GetLabStr(string sLLRowid)
-        {
-            if (sLLRowid != null)
+            if (sLLMRowid != null)
             {
-                var db_temp = from ll in db_zmlis.LisLaboratory_str
-                              where ll.LLRowid == sLLRowid
+                var db_temp = from ll in db_zmlis.lisLaboratoryDetail
+                              where ll.LLMRowid == sLLMRowid
+                              join ldm in db_zmlis.lisDataMapping on ll.LLDRowid equals ldm.LLDRowid into ps
+                              from ldm in ps.DefaultIfEmpty()
+                              where ldm.LLDRowid == null
+                              orderby ll.LLDSeqno
                               select new
                               {
-                                  SMRowid = ll.SMRowid,
-                                  SMFieldName = ll.SMFieldName
-
+                                  ll.LLDRowid,
+                                  ll.LLDCode,                                  
+                                  ll.LLDFieldName,
+                                  ll.LLDSeqno
                               };
 
                 return Content(JsonConvert.SerializeObject(db_temp), "application/json");
@@ -323,19 +271,21 @@ namespace ZMLisSys.Controllers
         }
         #endregion
 
-        #region GetLabStr_取得欄位篩選後清單
-        public ActionResult GetSelectedLabStr(string sLLRowid)
+        #region GetSelectedLaboratorySchema_取得檢驗所定義的欄位清單資料
+        public ActionResult GetSelectedLaboratorySchema(string sLLMRowid)
         {
-            if (sLLRowid != null)
+            if (sLLMRowid != null)
             {
-                var db_temp = from ll in db_zmlis.LisLaboratory_str
-                              where ll.LLRowid == sLLRowid
-                              orderby ll.SMDisplaySeq
-                              select new
-                              {
-                                  SMRowid = ll.SMRowid,
-                                  SMFieldName = ll.SMFieldName
-                              };
+                var db_temp = (from ll in db_zmlis.lisLaboratoryDetail where ll.LLMRowid == sLLMRowid
+                               join ldm in db_zmlis.lisDataMapping on ll.LLDRowid equals ldm.LLDRowid                               
+                               orderby ldm.LDMSeqno
+                               select new
+                               {
+                                   ldm.LDMRowid,
+                                   ldm.LLDRowid,
+                                   ll.LLDFieldName,
+                                   ll.LLDSeqno
+                               });
 
                 return Content(JsonConvert.SerializeObject(db_temp), "application/json");
             }
@@ -343,34 +293,5 @@ namespace ZMLisSys.Controllers
             return Content("");
         }
         #endregion
-
-        #region GetStr_Creat 欄位存檔+順序
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public ActionResult GetStr_Create(string sId, string[] Items)
-        //{
-        //    // 先刪除該人員全部角色
-        //    var delete_record = db_zmlis.LisLaboratory_str.Where(x => x.LLRowid == sId);
-        //    db_zmlis.LisLaboratory_str.RemoveRange(delete_record);
-        //    db_zmlis.SaveChanges();
-
-        //    // 再把 list 內 insert into Table            
-        //    for (var i = 0; i <= Items.Count(); i++)
-        //    {
-        //        db_zmlis.LisLaboratory_str.Add(
-        //            new LisLaboratory_str
-        //            {
-        //                SMRowid = Guid.NewGuid().ToString(),
-        //                SMDisplaySeq = i,
-        //                LLRowid = sId          
-        //            });
-
-        //        db_zmlis.SaveChanges();
-        //    }
-
-        //    return Json(Items);
-        //}
-        #endregion
-
     }
-
 }

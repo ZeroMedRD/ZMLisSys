@@ -1,24 +1,24 @@
 ﻿using System.Web.Mvc;
 
-namespace ZMCMSv2.Areas.ZMLisSys
+namespace ZMCMSv2.Areas.ZMLISSys
 {
-    public class ZMLisSysAreaRegistration : AreaRegistration 
+    public class ZMLISSysAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "ZMLisSys";
+                return "ZMLISSys";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "ZMLisSys_default",
-                "ZMLisSys/{controller}/{action}/{id}",
+                "ZMLISSys_default",
+                "ZMLISSys/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
-                new string[] { "ZMLisSys.Controllers" }
+                new string[] { "ZMLISSys.Controllers" }
             );
         }
     }

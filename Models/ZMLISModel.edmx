@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ZMLISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="lisDataMapping">
+          <Key>
+            <PropertyRef Name="LDMRowid" />
+          </Key>
+          <Property Name="LDMRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLDRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SBRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LDMSeqno" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lisLaboratoryClass">
+          <Key>
+            <PropertyRef Name="LLCRowid" />
+          </Key>
+          <Property Name="LLCRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLCCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LLCTrdCName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LLCEngName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="lisLaboratoryDetail">
+          <Key>
+            <PropertyRef Name="LLDRowid" />
+          </Key>
+          <Property Name="LLDRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLMRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLDCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="LLDFieldName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LLDFieldType" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLDFieldLength" Type="int" />
+          <Property Name="LLDFieldFloatLength" Type="int" />
+          <Property Name="LLDFieldKind" Type="char" MaxLength="1" />
+          <Property Name="LLDFieldMemo" Type="nvarchar(max)" />
+          <Property Name="LLDTextStartPos" Type="int" />
+          <Property Name="LLDTextEndPos" Type="int" />
+          <Property Name="LLDSeqno" Type="int" />
+          <Property Name="LLDMappingField" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="lisLaboratoryItem">
+          <Key>
+            <PropertyRef Name="LLIRowid" />
+          </Key>
+          <Property Name="LLIRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLCRowid" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLINhiCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLITrdCName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LLIEngName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LLINhiCost" Type="float" />
+          <Property Name="LLICostType" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLIType" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLIUnit" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="lisLaboratoryMaster">
+          <Key>
+            <PropertyRef Name="LLMRowid" />
+          </Key>
+          <Property Name="LLMRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLMName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LLMFormat" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LISQueue">
+          <Key>
+            <PropertyRef Name="LQRowid" />
+          </Key>
+          <Property Name="LQRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SCHRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LQDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="LQDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LQActiveDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LQFinishDateTime" Type="datetime" />
+          <Property Name="LQResult" Type="char" MaxLength="1" />
+          <Property Name="LQMessage" Type="nvarchar(max)" />
+          <Property Name="LQSeqno" Type="int" />
+          <Property Name="LQJobFilename" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="LISSchedule">
+          <Key>
+            <PropertyRef Name="SCHRowid" />
+          </Key>
+          <Property Name="SCHRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="HGRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SCHMon" Type="bit" />
+          <Property Name="SCHTue" Type="bit" />
+          <Property Name="SCHWed" Type="bit" />
+          <Property Name="SCHThu" Type="bit" />
+          <Property Name="SCHFri" Type="bit" />
+          <Property Name="SCHSat" Type="bit" />
+          <Property Name="SCHSun" Type="bit" />
+          <Property Name="SCHTime01" Type="datetime" />
+          <Property Name="SCHTime02" Type="datetime" />
+          <Property Name="SCHTime03" Type="datetime" />
+          <Property Name="SCHTime04" Type="datetime" />
+          <Property Name="SCHTime05" Type="datetime" />
+          <Property Name="SCHDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="SCHReceiveMail" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityContainer Name="ZMLISModelStoreContainer">
+          <EntitySet Name="lisDataMapping" EntityType="Self.lisDataMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lisLaboratoryClass" EntityType="Self.lisLaboratoryClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lisLaboratoryDetail" EntityType="Self.lisLaboratoryDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lisLaboratoryItem" EntityType="Self.lisLaboratoryItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lisLaboratoryMaster" EntityType="Self.lisLaboratoryMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LISQueue" EntityType="Self.LISQueue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LISSchedule" EntityType="Self.LISSchedule" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ZMLISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LISQueue">
+          <Key>
+            <PropertyRef Name="LQRowid" />
+          </Key>
+          <Property Name="LQRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SCHRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LQDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LQDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LQActiveDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LQFinishDateTime" Type="DateTime" Precision="3" />
+          <Property Name="LQResult" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LQMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LQSeqno" Type="Int32" />
+          <Property Name="LQJobFilename" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LISSchedule">
+          <Key>
+            <PropertyRef Name="SCHRowid" />
+          </Key>
+          <Property Name="SCHRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HGRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SCHMon" Type="Boolean" />
+          <Property Name="SCHTue" Type="Boolean" />
+          <Property Name="SCHWed" Type="Boolean" />
+          <Property Name="SCHThu" Type="Boolean" />
+          <Property Name="SCHFri" Type="Boolean" />
+          <Property Name="SCHSat" Type="Boolean" />
+          <Property Name="SCHSun" Type="Boolean" />
+          <Property Name="SCHTime01" Type="DateTime" Precision="3" />
+          <Property Name="SCHTime02" Type="DateTime" Precision="3" />
+          <Property Name="SCHTime03" Type="DateTime" Precision="3" />
+          <Property Name="SCHTime04" Type="DateTime" Precision="3" />
+          <Property Name="SCHTime05" Type="DateTime" Precision="3" />
+          <Property Name="SCHDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SCHReceiveMail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="ZMLISEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LISQueue" EntityType="Self.LISQueue" />
+          <EntitySet Name="LISSchedule" EntityType="Self.LISSchedule" />
+          <EntitySet Name="lisLaboratoryClass" EntityType="ZMLISModel.lisLaboratoryClass" />
+          <EntitySet Name="lisLaboratoryItem" EntityType="ZMLISModel.lisLaboratoryItem" />
+          <EntitySet Name="lisLaboratoryMaster" EntityType="ZMLISModel.lisLaboratoryMaster" />
+          <EntitySet Name="lisDataMapping" EntityType="ZMLISModel.lisDataMapping" />
+          <EntitySet Name="lisLaboratoryDetail" EntityType="ZMLISModel.lisLaboratoryDetail" />
+        </EntityContainer>
+        <EntityType Name="lisLaboratoryClass">
+          <Key>
+            <PropertyRef Name="LLCRowid" />
+          </Key>
+          <Property Name="LLCRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLCCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LLCTrdCName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLCEngName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lisLaboratoryItem">
+          <Key>
+            <PropertyRef Name="LLIRowid" />
+          </Key>
+          <Property Name="LLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLCRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLINhiCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLITrdCName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLIEngName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLINhiCost" Type="Double" />
+          <Property Name="LLICostType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLIType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLIUnit" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lisLaboratoryMaster">
+          <Key>
+            <PropertyRef Name="LLMRowid" />
+          </Key>
+          <Property Name="LLMRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLMName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLMFormat" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lisDataMapping">
+          <Key>
+            <PropertyRef Name="LDMRowid" />
+          </Key>
+          <Property Name="LDMRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLDRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SBRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LDMSeqno" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lisLaboratoryDetail">
+          <Key>
+            <PropertyRef Name="LLDRowid" />
+          </Key>
+          <Property Name="LLDRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLMRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLDCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LLDFieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LLDFieldType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLDFieldLength" Type="Int32" />
+          <Property Name="LLDFieldFloatLength" Type="Int32" />
+          <Property Name="LLDFieldKind" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LLDFieldMemo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LLDTextStartPos" Type="Int32" />
+          <Property Name="LLDTextEndPos" Type="Int32" />
+          <Property Name="LLDSeqno" Type="Int32" />
+          <Property Name="LLDMappingField" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ZMLISModelStoreContainer" CdmEntityContainer="ZMLISEntities">
+          <EntitySetMapping Name="LISQueue">
+            <EntityTypeMapping TypeName="ZMLISModel.LISQueue">
+              <MappingFragment StoreEntitySet="LISQueue">
+                <ScalarProperty Name="LQRowid" ColumnName="LQRowid" />
+                <ScalarProperty Name="SCHRowid" ColumnName="SCHRowid" />
+                <ScalarProperty Name="LQDescription" ColumnName="LQDescription" />
+                <ScalarProperty Name="LQDateTime" ColumnName="LQDateTime" />
+                <ScalarProperty Name="LQActiveDateTime" ColumnName="LQActiveDateTime" />
+                <ScalarProperty Name="LQFinishDateTime" ColumnName="LQFinishDateTime" />
+                <ScalarProperty Name="LQResult" ColumnName="LQResult" />
+                <ScalarProperty Name="LQMessage" ColumnName="LQMessage" />
+                <ScalarProperty Name="LQSeqno" ColumnName="LQSeqno" />
+                <ScalarProperty Name="LQJobFilename" ColumnName="LQJobFilename" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LISSchedule">
+            <EntityTypeMapping TypeName="ZMLISModel.LISSchedule">
+              <MappingFragment StoreEntitySet="LISSchedule">
+                <ScalarProperty Name="SCHRowid" ColumnName="SCHRowid" />
+                <ScalarProperty Name="HGRowid" ColumnName="HGRowid" />
+                <ScalarProperty Name="SCHMon" ColumnName="SCHMon" />
+                <ScalarProperty Name="SCHTue" ColumnName="SCHTue" />
+                <ScalarProperty Name="SCHWed" ColumnName="SCHWed" />
+                <ScalarProperty Name="SCHThu" ColumnName="SCHThu" />
+                <ScalarProperty Name="SCHFri" ColumnName="SCHFri" />
+                <ScalarProperty Name="SCHSat" ColumnName="SCHSat" />
+                <ScalarProperty Name="SCHSun" ColumnName="SCHSun" />
+                <ScalarProperty Name="SCHTime01" ColumnName="SCHTime01" />
+                <ScalarProperty Name="SCHTime02" ColumnName="SCHTime02" />
+                <ScalarProperty Name="SCHTime03" ColumnName="SCHTime03" />
+                <ScalarProperty Name="SCHTime04" ColumnName="SCHTime04" />
+                <ScalarProperty Name="SCHTime05" ColumnName="SCHTime05" />
+                <ScalarProperty Name="SCHDescription" ColumnName="SCHDescription" />
+                <ScalarProperty Name="SCHReceiveMail" ColumnName="SCHReceiveMail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisLaboratoryClass">
+            <EntityTypeMapping TypeName="ZMLISModel.lisLaboratoryClass">
+              <MappingFragment StoreEntitySet="lisLaboratoryClass">
+                <ScalarProperty Name="LLCEngName" ColumnName="LLCEngName" />
+                <ScalarProperty Name="LLCTrdCName" ColumnName="LLCTrdCName" />
+                <ScalarProperty Name="LLCCode" ColumnName="LLCCode" />
+                <ScalarProperty Name="LLCRowid" ColumnName="LLCRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisLaboratoryItem">
+            <EntityTypeMapping TypeName="ZMLISModel.lisLaboratoryItem">
+              <MappingFragment StoreEntitySet="lisLaboratoryItem">
+                <ScalarProperty Name="LLIUnit" ColumnName="LLIUnit" />
+                <ScalarProperty Name="LLIType" ColumnName="LLIType" />
+                <ScalarProperty Name="LLICostType" ColumnName="LLICostType" />
+                <ScalarProperty Name="LLINhiCost" ColumnName="LLINhiCost" />
+                <ScalarProperty Name="LLIEngName" ColumnName="LLIEngName" />
+                <ScalarProperty Name="LLITrdCName" ColumnName="LLITrdCName" />
+                <ScalarProperty Name="LLINhiCode" ColumnName="LLINhiCode" />
+                <ScalarProperty Name="LLCRowid" ColumnName="LLCRowid" />
+                <ScalarProperty Name="LLIRowid" ColumnName="LLIRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisLaboratoryMaster">
+            <EntityTypeMapping TypeName="ZMLISModel.lisLaboratoryMaster">
+              <MappingFragment StoreEntitySet="lisLaboratoryMaster">
+                <ScalarProperty Name="LLMFormat" ColumnName="LLMFormat" />
+                <ScalarProperty Name="LLMName" ColumnName="LLMName" />
+                <ScalarProperty Name="LLMRowid" ColumnName="LLMRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisDataMapping">
+            <EntityTypeMapping TypeName="ZMLISModel.lisDataMapping">
+              <MappingFragment StoreEntitySet="lisDataMapping">
+                <ScalarProperty Name="LDMSeqno" ColumnName="LDMSeqno" />
+                <ScalarProperty Name="SBRowid" ColumnName="SBRowid" />
+                <ScalarProperty Name="LLDRowid" ColumnName="LLDRowid" />
+                <ScalarProperty Name="LDMRowid" ColumnName="LDMRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisLaboratoryDetail">
+            <EntityTypeMapping TypeName="ZMLISModel.lisLaboratoryDetail">
+              <MappingFragment StoreEntitySet="lisLaboratoryDetail">
+                <ScalarProperty Name="LLDMappingField" ColumnName="LLDMappingField" />
+                <ScalarProperty Name="LLDSeqno" ColumnName="LLDSeqno" />
+                <ScalarProperty Name="LLDTextEndPos" ColumnName="LLDTextEndPos" />
+                <ScalarProperty Name="LLDTextStartPos" ColumnName="LLDTextStartPos" />
+                <ScalarProperty Name="LLDFieldMemo" ColumnName="LLDFieldMemo" />
+                <ScalarProperty Name="LLDFieldKind" ColumnName="LLDFieldKind" />
+                <ScalarProperty Name="LLDFieldFloatLength" ColumnName="LLDFieldFloatLength" />
+                <ScalarProperty Name="LLDFieldLength" ColumnName="LLDFieldLength" />
+                <ScalarProperty Name="LLDFieldType" ColumnName="LLDFieldType" />
+                <ScalarProperty Name="LLDFieldName" ColumnName="LLDFieldName" />
+                <ScalarProperty Name="LLDCode" ColumnName="LLDCode" />
+                <ScalarProperty Name="LLMRowid" ColumnName="LLMRowid" />
+                <ScalarProperty Name="LLDRowid" ColumnName="LLDRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

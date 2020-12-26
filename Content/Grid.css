@@ -1,0 +1,20 @@
+﻿/*Grid Toolbar attributes*/
+.k-grid-toolbar, .k-grouping-header {
+    background-color: white;
+}
+
+/*Grid header attributes*/
+.k-grid-header .k-header {
+    background-color: #0E635C;
+    font-size: 1.1em;
+    /*overflow: visible !important;
+    white-space: normal !important;*/
+}
+
+/*Grid td border attributes*/
+.k-grid td {
+    border-width: 0px 1px 1px 0px;
+    border-color: orange;
+    color: black;
+    font-size: 1.0em;
+}

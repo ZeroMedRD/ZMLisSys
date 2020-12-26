@@ -13,9 +13,9 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZMLisSys</RootNamespace>
-    <AssemblyName>ZMLisSys</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>ZMLISSys</RootNamespace>
+    <AssemblyName>ZMLISSys</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -104,6 +105,7 @@
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -111,14 +113,11 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -156,6 +155,7 @@
       <Private>True</Private>
       <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -165,6 +165,9 @@
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="ZMLib">
+      <HintPath>..\ZMLib\ZMLib\bin\Debug\ZMLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -176,65 +179,149 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AsyncController.cs" />
+    <Compile Include="Controllers\GetDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LisSchemaController.cs" />
+    <Compile Include="Controllers\LaboratoryBaseController.cs" />
+    <Compile Include="Controllers\HospitalLaboratoryController.cs" />
+    <Compile Include="Controllers\LISSchemaController.cs" />
+    <Compile Include="Controllers\LISUploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ComboDetail.cs">
-      <DependentUpon>ZMCMSModel.tt</DependentUpon>
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ComboMaster.cs">
-      <DependentUpon>ZMCMSModel.tt</DependentUpon>
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LisLaboratory.cs">
-      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    <Compile Include="Models\laboratory_class.cs">
+      <DependentUpon>LIS_AntifatModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LisLaboratory_item.cs">
-      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    <Compile Include="Models\laboratory_clinic.cs">
+      <DependentUpon>LIS_AntifatModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LisLaboratory_str.cs">
-      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+    <Compile Include="Models\laboratory_item.cs">
+      <DependentUpon>LIS_AntifatModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisDataMapping.cs">
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisHospitalLaboratoryItem.cs">
+      <DependentUpon>LIS_HISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisLaboratoryClass.cs">
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisLaboratoryDetail.cs">
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisLaboratoryItem.cs">
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisLaboratoryMaster.cs">
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisPatientLaboratoryDetail.cs">
+      <DependentUpon>LIS_HISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisPatientLaboratoryMaster.cs">
+      <DependentUpon>LIS_HISModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LISQueue.cs">
-      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LISSchedule.cs">
-      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ZMCMSModel.Context.cs">
+    <Compile Include="Models\LIS_AntifatModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ZMCMSModel.Context.tt</DependentUpon>
+      <DependentUpon>LIS_AntifatModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ZMCMSModel.cs">
+    <Compile Include="Models\LIS_AntifatModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ZMCMSModel.tt</DependentUpon>
+      <DependentUpon>LIS_AntifatModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ZMCMSModel.Designer.cs">
+    <Compile Include="Models\LIS_AntifatModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ZMCMSModel.edmx</DependentUpon>
+      <DependentUpon>LIS_AntifatModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\ZMLisSysModel.Context.cs">
+    <Compile Include="Models\LIS_HISEntities.cs" />
+    <Compile Include="Models\LIS_HISModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ZMLisSysModel.Context.tt</DependentUpon>
+      <DependentUpon>LIS_HISModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ZMLisSysModel.cs">
+    <Compile Include="Models\LIS_HISModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ZMLisSysModel.tt</DependentUpon>
+      <DependentUpon>LIS_HISModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ZMLisSysModel.Designer.cs">
+    <Compile Include="Models\LIS_HISModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ZMLisSysModel.edmx</DependentUpon>
+      <DependentUpon>LIS_HISModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LIS_ZMCMSv2Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LIS_ZMCMSv2Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LIS_ZMCMSv2Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LIS_ZMCMSv2Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LIS_ZMCMSv2Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Patient.cs">
+      <DependentUpon>LIS_HISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SysHospital.cs">
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SysMedicalGroup.cs">
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SysMedicalGroupHospital.cs">
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SysRole.cs">
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SysRoleProgram.cs">
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SysUploadServer.cs">
+      <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZMLISModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZMLISModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZMLISModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZMLISModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZMLISModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\DAO_SQLink.cs" />
     <Compile Include="ViewModels\ZMCMSv2_ViewModels.cs" />
-    <Compile Include="ViewModels\ZMLisSys_ViewModels.cs" />
+    <Compile Include="ViewModels\ZMLISSys_ViewModels.cs" />
     <Compile Include="ZMLisSysAreaRegistration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1966,6 +2053,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Editor.css" />
+    <Content Include="Content\Grid.css" />
     <Content Include="Content\jasny-bootstrap.css" />
     <Content Include="Content\jasny-bootstrap.min.css" />
     <Content Include="Content\kendo\2018.2.516\Black\editor.png" />
@@ -2307,7 +2395,9 @@
     <Content Include="Content\kendo\2018.2.516\Uniform\sprite_kpi_2x.png" />
     <Content Include="Content\kendo\kendo.custom.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Public\ZMCMSv2.css" />
     <Content Include="Content\Tabs.css" />
+    <Content Include="Content\ZMLISSys\ZMLISSys.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2483,25 +2573,45 @@
     <Content Include="AdminLte3\plugins\summernote\summernote.min.js.map" />
     <Content Include="AdminLte3\plugins\sweetalert2-theme-bootstrap-4\bootstrap-4.scss" />
     <Content Include="AdminLte3\plugins\toastr\toastr.js.map" />
-    <Content Include="Models\ZMCMSModel.Context.tt">
+    <Content Include="Models\LIS_AntifatModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ZMCMSModel.edmx</DependentUpon>
-      <LastGenOutput>ZMCMSModel.Context.cs</LastGenOutput>
+      <DependentUpon>LIS_AntifatModel.edmx</DependentUpon>
+      <LastGenOutput>LIS_AntifatModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ZMCMSModel.tt">
+    <Content Include="Models\LIS_AntifatModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ZMCMSModel.edmx</DependentUpon>
-      <LastGenOutput>ZMCMSModel.cs</LastGenOutput>
+      <DependentUpon>LIS_AntifatModel.edmx</DependentUpon>
+      <LastGenOutput>LIS_AntifatModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ZMLisSysModel.Context.tt">
+    <Content Include="Models\LIS_HISModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ZMLisSysModel.edmx</DependentUpon>
-      <LastGenOutput>ZMLisSysModel.Context.cs</LastGenOutput>
+      <DependentUpon>LIS_HISModel.edmx</DependentUpon>
+      <LastGenOutput>LIS_HISModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ZMLisSysModel.tt">
+    <Content Include="Models\LIS_HISModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ZMLisSysModel.edmx</DependentUpon>
-      <LastGenOutput>ZMLisSysModel.cs</LastGenOutput>
+      <DependentUpon>LIS_HISModel.edmx</DependentUpon>
+      <LastGenOutput>LIS_HISModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LIS_ZMCMSv2Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LIS_ZMCMSv2Model.edmx</DependentUpon>
+      <LastGenOutput>LIS_ZMCMSv2Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LIS_ZMCMSv2Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LIS_ZMCMSv2Model.edmx</DependentUpon>
+      <LastGenOutput>LIS_ZMCMSv2Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ZMLISModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ZMLISModel.edmx</DependentUpon>
+      <LastGenOutput>ZMLISModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ZMLISModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ZMLISModel.edmx</DependentUpon>
+      <LastGenOutput>ZMLISModel.cs</LastGenOutput>
     </Content>
     <Content Include="packages\Antlr.3.5.0.2\.signature.p7s" />
     <Content Include="packages\Antlr.3.5.0.2\Antlr.3.5.0.2.nupkg" />
@@ -2702,21 +2812,35 @@
     <Content Include="Content\kendo\kendo.custom.dataviz.json" />
     <Content Include="Content\kendo\kendo.custom.less" />
     <Content Include="Content\jasny-bootstrap.css.map" />
-    <Content Include="App_Data\test5.csv" />
-    <EntityDeploy Include="Models\ZMCMSModel.edmx">
+    <EntityDeploy Include="Models\LIS_AntifatModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ZMCMSModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>LIS_AntifatModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ZMCMSModel.edmx.diagram">
-      <DependentUpon>ZMCMSModel.edmx</DependentUpon>
+    <Content Include="Models\LIS_AntifatModel.edmx.diagram">
+      <DependentUpon>LIS_AntifatModel.edmx</DependentUpon>
     </Content>
-    <EntityDeploy Include="Models\ZMLisSysModel.edmx">
+    <EntityDeploy Include="Models\LIS_ZMCMSv2Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ZMLisSysModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>LIS_ZMCMSv2Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ZMLisSysModel.edmx.diagram">
-      <DependentUpon>ZMLisSysModel.edmx</DependentUpon>
+    <Content Include="Models\LIS_ZMCMSv2Model.edmx.diagram">
+      <DependentUpon>LIS_ZMCMSv2Model.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\LIS_HISModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LIS_HISModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\LIS_HISModel.edmx.diagram">
+      <DependentUpon>LIS_HISModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ZMLISModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ZMLISModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ZMLISModel.edmx.diagram">
+      <DependentUpon>ZMLISModel.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll" />
     <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.pdb" />
@@ -3932,7 +4056,6 @@
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-TW.min.js" />
     <Content Include="Scripts\kendo\2018.2.516\pako_deflate.min.js" />
-    <Content Include="Scripts\ZMLisSys.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\project.extends.js" />
     <Content Include="Scripts\project.js" />
@@ -3940,6 +4063,7 @@
     <Content Include="Scripts\readxlsx.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ZMLISSys\ZMLISSys.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -4979,22 +5103,38 @@
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-HK.min.js.map" />
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-TW.min.js.map" />
     <Content Include="Views\Home\Index_Json.cshtml" />
-    <Content Include="Views\LisSchema\Index.cshtml" />
-    <Content Include="Views\LisSchema\_LisLab.cshtml" />
-    <Content Include="Views\LisSchema\_LisSchema.cshtml" />
+    <Content Include="Views\LISSchema\LSIndex.cshtml" />
+    <Content Include="Views\LISSchema\_LISLaboratoryMaster.cshtml" />
+    <Content Include="Views\LISSchema\_LISLaboratoryDetail.cshtml" />
     <Content Include="Views\Async\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\LLFormatEditor.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\SMFieldTypeEditor.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\SMFieldLengthEditor.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\SMFieldKindEditor.cshtml" />
-    <Content Include="Views\LisSchema\Success.cshtml" />
-    <Content Include="Views\LisSchema\_LisLabimport.cshtml" />
-    <Content Include="Views\LisSchema\_LisLabStr.cshtml" />
-    <Content Include="Views\LisSchema\EditorTemplates\myTemplate.cshtml" />
-    <Content Include="Views\LisSchema\_LisLabData.cshtml" />
+    <Content Include="Views\LISSchema\EditorTemplates\LLDFormatEditor.cshtml" />
+    <Content Include="Views\LISSchema\EditorTemplates\LLDFieldTypeEditor.cshtml" />
+    <Content Include="Views\LISSchema\EditorTemplates\LLDFieldKindEditor.cshtml" />
+    <Content Include="Views\LISSchema\_LisLabimport.cshtml" />
+    <Content Include="Views\LISSchema\_LisLabData.cshtml" />
+    <Content Include="Views\LaboratoryBase\LBIndexV1.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\LaboratoryClassEditor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\LaboratoryClinicEditor.cshtml" />
+    <Content Include="Views\LaboratoryBase\LBIndexV2.cshtml" />
+    <Content Include="Views\LaboratoryBase\_LisLaboratoryClass.cshtml" />
+    <Content Include="Views\LaboratoryBase\_LisLaboratoryItem.cshtml" />
+    <Content Include="Views\LaboratoryBase\EditorTemplates\LLICostTypeEditor.cshtml" />
+    <Content Include="Views\LaboratoryBase\EditorTemplates\LLITypeEditor.cshtml" />
+    <Content Include="Views\HospitalLaboratory\LHIndex.cshtml" />
+    <Content Include="Views\HospitalLaboratory\_HospitalLaboratoryItem.cshtml" />
+    <Content Include="Views\LaboratoryBase\_LisLaboratoryItemAll.cshtml" />
+    <Content Include="Views\LaboratoryBase\EditorTemplates\LLCRowidEditor.cshtml" />
+    <Content Include="Views\HospitalLaboratory\_Hospital.cshtml" />
+    <Content Include="Views\LISSchema\EditorTemplates\LLDMappingFieldEditor.cshtml" />
+    <Content Include="Views\LISUpload\LUIndex.cshtml" />
+    <Content Include="Views\LISUpload\_lisPatientLaboratoryMaster.cshtml" />
+    <Content Include="Views\LISUpload\_lisPatientLaboratoryDetail.cshtml" />
+    <Content Include="Views\LISUpload\_lisPatientLaboratoryStatus.cshtml" />
+    <Content Include="Views\HospitalLaboratory\H2LIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FileCloud\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="FileCloud\UploadFile\LISTemp\" />
     <Folder Include="PhotoCloud\HospitalImages\" />
   </ItemGroup>
   <ItemGroup>
@@ -5077,6 +5217,25 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>set v1=D:\ZeroMedRD\ZMLISSys\bin
+set v2=D:\ZeroMedRD\ZMLISSys\Content\ZMLISSys
+set v3=D:\ZeroMedRD\ZMLISSys\Scripts\ZMLISSys
+&gt;ZMLISSys.txt (
+  echo open 65.52.165.109
+  echo user ZMCMSv2User 1qaz@WSX
+  echo prompt off
+  echo cd bin
+  echo mput %25v1%25\ZMLISSys.dll %25v1%25\ZMLISSys.pdb %25v1%25\ZMLISSys.dll.config
+  echo cd ..\Content\ZMLISSys
+  echo mput %25v2%25\ZMLISSys.css
+  echo cd ..\..\Scripts\ZMLISSys
+  echo mput %25v3%25\ZMLISSys.js
+  echo BYE
+)
+ftp -n -s:ZMLISSys.txt
+del ZMLISSys.txt</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

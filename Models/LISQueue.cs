@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZMLisSys.Models
+namespace ZMLISSys.Models
 {
     using System;
     using System.Collections.Generic;

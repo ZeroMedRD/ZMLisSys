@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ZMLisSys.ViewModels
+namespace ZMLISSys.ViewModels
 {
     public class MenuViewModel
     {

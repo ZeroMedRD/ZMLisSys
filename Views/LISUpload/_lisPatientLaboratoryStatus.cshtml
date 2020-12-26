@@ -1,0 +1,35 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_SysUploadServer>()
+    .Name("grid_SysUploadServer")
+    .Columns(columns =>
+    {
+        columns.Bound(d => d.USRowid).Hidden(true);
+        columns.Bound(d => d.USHospRowid).Hidden(true);
+        columns.Bound(d => d.USHospID).Hidden(true);
+        columns.Bound(d => d.USLoadDateTime).Format("{0: yyyy-MM-dd HH:mm:ss}").Width(120);
+        columns.Bound(d => d.USLoadFilename);
+        columns.Bound(d => d.USServerStatus).Width(80);
+        columns.Bound(d => d.USRecordCount).Hidden(true);
+    })
+    .ColumnMenu()
+    .Pageable(page => page.Refresh(true).ButtonCount(30)
+        .PageSizes(new[] { 50, 100, 300, 500, 1000 }).Messages(message => message.ItemsPerPage("筆／頁")))
+    .Navigatable()
+    .Scrollable(scrollable => scrollable.Enabled(true).Height("640"))
+    .Sortable(sortable =>
+    {
+        sortable.SortMode(GridSortMode.MultipleColumn);
+    })
+    .Filterable()    
+    .Sortable(sortable =>
+    {
+        sortable.SortMode(GridSortMode.MultipleColumn);
+    })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        //.Sort(x => { x.Add("USLoadDateTime").Descending(); })
+        .PageSize(50)
+        .Model(model => model.Id(p => p.USRowid))
+        //.Events(events => events.Error("error_handler").Sync("sync_handler"))
+        .Read(read => read.Action("SysUploadServer_Read", "LISUpload").Data("GetSysUploadServerSelected")))
+    .NoRecords("目前未有任何資料顯示 !")
+)

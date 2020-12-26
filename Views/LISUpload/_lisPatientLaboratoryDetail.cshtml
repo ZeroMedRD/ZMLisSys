@@ -1,0 +1,23 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisPatientLaboratoryDetail>()
+    .Name("grid_lisPatientLaboratoryDetail")
+    .Columns(columns =>
+    {
+        columns.Bound(lpd => lpd.PLDRowid).Hidden(true);
+        columns.Bound(lpd => lpd.PLMRowid).Hidden(true);
+        columns.Bound(lpd => lpd.HLIRowid).Hidden(true);
+        columns.Bound(lpd => lpd.PLMValue);
+        columns.Bound(lpd => lpd.PLMStrValue);
+        columns.Bound(lpd => lpd.PLMSeqno);
+    })
+    .ColumnMenu()
+    .Pageable(page => page.Refresh(true).ButtonCount(10).PageSizes(new[] { 15, 30, 50, 100 }).Messages(message => message.ItemsPerPage("筆／頁")))
+    .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+    .Navigatable()    
+    .Scrollable(scrollable => scrollable.Enabled(true).Height("310"))
+    .DataSource(dataSource => dataSource.Ajax()        
+        .Model(model => { model.Id(o => o.PLDRowid); })
+        .Read(read => read.Action("lisPatientLaboratoryDetail_Read", "LISUpload"))
+        .Events(events => events.Error("error_handler"))        // .Sync("sync_handler_ordfa")
+        .PageSize(15))
+    .NoRecords("目前未有任何資料顯示 !")
+)

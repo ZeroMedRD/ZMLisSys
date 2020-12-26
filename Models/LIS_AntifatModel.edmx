@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LIS_AntifatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="laboratory_class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="20" />
+          <Property Name="nick" Type="nvarchar" MaxLength="10" />
+          <Property Name="name" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="laboratory_clinic">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="20" />
+          <Property Name="seq" Type="int" />
+        </EntityType>
+        <EntityType Name="laboratory_item">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="laboratoryClass_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="code" Type="nvarchar" MaxLength="20" />
+          <Property Name="nick" Type="nvarchar" MaxLength="10" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="chnName" Type="nvarchar" MaxLength="50" />
+          <Property Name="unit" Type="nvarchar" MaxLength="20" />
+          <Property Name="standard" Type="nvarchar" MaxLength="50" />
+          <Property Name="nhi_code" Type="nvarchar" MaxLength="10" />
+          <Property Name="laboratory_clinic_code" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityContainer Name="LIS_AntifatModelStoreContainer">
+          <EntitySet Name="laboratory_class" EntityType="Self.laboratory_class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="laboratory_clinic" EntityType="Self.laboratory_clinic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="laboratory_item" EntityType="Self.laboratory_item" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LIS_AntifatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="laboratory_class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="nick" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="laboratory_clinic">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="seq" Type="Int32" />
+        </EntityType>
+        <EntityType Name="laboratory_item">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="laboratoryClass_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="nick" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="chnName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="standard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nhi_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="laboratory_clinic_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="LIS_AntifatEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="laboratory_class" EntityType="Self.laboratory_class" />
+          <EntitySet Name="laboratory_clinic" EntityType="Self.laboratory_clinic" />
+          <EntitySet Name="laboratory_item" EntityType="Self.laboratory_item" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LIS_AntifatModelStoreContainer" CdmEntityContainer="LIS_AntifatEntities">
+          <EntitySetMapping Name="laboratory_class">
+            <EntityTypeMapping TypeName="LIS_AntifatModel.laboratory_class">
+              <MappingFragment StoreEntitySet="laboratory_class">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="nick" ColumnName="nick" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="laboratory_clinic">
+            <EntityTypeMapping TypeName="LIS_AntifatModel.laboratory_clinic">
+              <MappingFragment StoreEntitySet="laboratory_clinic">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="seq" ColumnName="seq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="laboratory_item">
+            <EntityTypeMapping TypeName="LIS_AntifatModel.laboratory_item">
+              <MappingFragment StoreEntitySet="laboratory_item">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="laboratoryClass_id" ColumnName="laboratoryClass_id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="nick" ColumnName="nick" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="chnName" ColumnName="chnName" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="standard" ColumnName="standard" />
+                <ScalarProperty Name="nhi_code" ColumnName="nhi_code" />
+                <ScalarProperty Name="laboratory_clinic_code" ColumnName="laboratory_clinic_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

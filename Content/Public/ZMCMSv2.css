@@ -1,0 +1,104 @@
+﻿.k-edit-form-container {
+    position: relative;
+    width: auto;
+}
+
+.k-window div.k-window-content {
+    overflow: hidden;
+}
+
+.card-title-vertical {
+    height: 30px;
+    line-height: 30px;
+    font-size: 1.0rem !important;
+    /*text-align: center;*/
+    /*border: 1px dashed #f69c55;*/
+}
+
+.card-body-text {
+    font-size: 0.9rem !important;
+    padding: 2px !important;
+}
+
+.k-datepicker {
+    /*background: #333 !important;*/
+    border: 1px solid #555 !important;
+    /*color: #EEE !important;*/
+}
+
+.k-numerictextbox {
+    /*background: #333 !important;*/
+    border: 1px solid #555 !important;
+    /*color: #EEE !important;*/
+}
+
+.k-textbox {
+    /*background: #333 !important;*/
+    border: 1px solid #555 !important;
+    /*color: #EEE !important;*/
+}
+
+.k-dropdown {
+    border: 1px solid #555 !important;
+}
+
+/* Grid 按鈕顏色 */
+.k-grid .k-button {
+    background-color: #f0ac4e !important;
+    color: white !important;
+}
+
+#wrapper {
+    width: 100%;
+    /*border: 1px solid black;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Grid Edit and Delete Icon Style */
+.k-grid tbody .k-grid-edit,
+.k-grid tbody .k-grid-update,
+.k-grid tbody .k-grid-cancel {
+    min-width: 0;
+    width: calc(2px + .75rem + 1.5em);
+    height: calc(2px + .75rem + 1.5em);
+    padding: .375rem;
+}
+
+    .k-grid tbody .k-grid-edit .k-icon,
+    .k-grid tbody .k-grid-update .k-icon,
+    .k-grid tbody .k-grid-cancel .k-icon {
+        margin: 0;
+    }
+
+.k-grid tbody .k-grid- {
+    min-width: 0;
+    width: calc(2px + .75rem + 1.5em);
+    height: calc(2px + .75rem + 1.5em);
+    padding: .375rem;
+}
+
+    .k-grid tbody .k-grid- .k-icon {
+        margin: 0;
+    }
+
+.k-grid tbody .k-button {
+    min-width: 40px !important;
+}
+
+.lfmouseover {
+    cursor: not-allowed;
+}
+
+.lfcmouseover {
+    cursor: help;
+}
+
+.k-header, .k-grid-header-wrap, .k-grid .k-grouping-header, .k-grid-header, .k-grouping-header .k-group-indicator, .k-gantt-toolbar .k-state-default {
+    background-color: #363940;
+}
+
+.k-grouping-row td, td.k-group-cell, .k-resize-handle-inner, .k-grid .k-state-selected:hover .k-group-cell {
+    background-color: white !important;
+}

@@ -32,7 +32,7 @@ namespace ZMLisSys
                 "~/Adminlte3/plugins/fontawesome-free/css/all.min.css",
                 //"~/Content/all.min.css",
                 "~/AdminLte3/dist/css/adminlte.min.css",
-                "~/Content/kendo/kendo.custom.css",
+                "~/Content/kendo/kendo.custom.css",                
                 "~/Content/kendo/2018.2.516/kendo.common.min.css",
                 "~/Content/kendo/2018.2.516/kendo.rtl.min.css",
                 //"~/Content/kendo/2018.2.516/kendo.default.min.css",
@@ -41,7 +41,7 @@ namespace ZMLisSys
                 "~/Content/kendo/2018.2.516/kendo.mobile.all.min.css",
                 //"~/Content/font-awesome.min.css",
                 "~/Content/Site.css",
-                "~/Content/ReferralForm.css"
+                "~/Content/Grid.css"
                 ));
 
             bundles.Add(new StyleBundle("~/contents/main").Include(
@@ -51,14 +51,15 @@ namespace ZMLisSys
                 "~/Adminlte3/plugins/fontawesome-free/css/all.min.css",
                 //"~/Content/all.min.css",
                 "~/Adminlte3/dist/css/adminlte.min.css",
-                "~/Content/kendo/kendo.custom.css",
+                "~/Content/kendo/kendo.custom.css",                
                 "~/Content/kendo/2018.2.516/kendo.common.min.css",
                 "~/Content/kendo/2018.2.516/kendo.rtl.min.css",
                 //"~/Content/kendo/2018.2.516/kendo.default.min.css",
                 "~/Content/kendo/2018.2.516/kendo.dataviz.min.css",
                 "~/Content/kendo/2018.2.516/kendo.dataviz.default.min.css",
                 "~/Content/kendo/2018.2.516/kendo.mobile.all.min.css",
-                "~/Content/Site.css"
+                "~/Content/Site.css",
+                "~/Content/Public/ZMCMSv2.css"
                 ));
 
             bundles.Add(new StyleBundle("~/contents/editorcss").Include(

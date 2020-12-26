@@ -1,0 +1,97 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_HospitalLaboratoryItem>()
+    .Name("grid_HospitalLaboratoryItem")
+    .Columns(columns =>
+    {
+        //columns.Select().Width(50);
+        columns.Bound(m => m.HospID).HeaderHtmlAttributes(new { @style = "font-size:12px;" }).Hidden(true);
+        columns.Bound(m => m.IsChecked).ClientTemplate(@"<input onclick='ChkData(this);' type='checkbox' #= IsChecked ? checked='checked':'' # class='chkbx' />" + "<input type='hidden' name='id' value='#= IsChecked#' />").Width(45).Title(" ").Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLIRowid).Hidden(true).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLCRowid).Hidden(true).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLCTrdCName).Width(110).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.HLIRowid).Hidden(true).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLINhiCode).Width(110).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(m => m.HLICode).Width(105).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(m => m.LLITrdCName).Width(210).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLIEngName).Width(120).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLINhiCost).Width(120).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLIUnit).Width(80).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.HLIDisplayRange).Width(90).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(m => m.HLILoMale).Width(75).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(m => m.HLIUpMale).Width(75).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(m => m.HLILoFemale).Width(75).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(m => m.HLIUpFemale).Width(75).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Command(command =>
+        {
+            command.Edit().Text(" ").CancelText(" ").UpdateText(" ");
+            //command.Custom(" ").IconClass("k-icon k-i-close").Click("openWindow");
+        }).Width(110);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="refreshBtnContainer">
+                <a class="k-button k-button-icontext k-grid-excel" href="#"><span class="k-icon k-i-excel"></span>匯出到 Excel</a>
+                <button class="btn btn-navbar k-button k-button-icontext" type="button" onclick="copylisLaboratoryItem();">
+                    檢驗資料複製
+                </button>                
+            </div>
+            <div class="toolbar">
+                <div style="float:left;padding-right:5px;">
+                <label class="category-label">條件篩選:</label>
+                @(Html.Kendo().DropDownListFor(m => m)
+                    .Name("ddl_lisLaboratoryClass")
+                    .DataTextField("LLCTrdCName")
+                    .DataValueField("LLCRowid")
+                    .Events(e => e.Select("lisLaboratoryClassChange").Change("lisLaboratoryClassChange"))
+                    //.SelectedIndex(0)
+                    .DataSource(ds => ds
+                        .Read(read => read.Action("GetlisLaboratoryClass", "GetData"))
+                    )
+                    .Filter("contains"))
+
+                </div>
+                <div style="float:left;line-height:30px;">
+                    <input id="searchName" type="search" placeholder="請輸入查詢條件" aria-label="Search" style="border:solid 1px #aaaaaa;padding:2px;height:30px;width:300px !important;">
+                </div>
+                <div style="float:left;line-height:30px;">
+                    <button class="btn btn-navbar" type="button" onclick="getlisLaboratoryItem();">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </text>);
+    })
+    .Excel(e => e.Filterable(true).AllPages(true))
+    .ColumnMenu()
+    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Pageable(page => page.Refresh(true).ButtonCount(5)
+        .PageSizes(new[] { 50, 80, 100, 200, 300, 400, 500 })
+        .Messages(message => message.ItemsPerPage("每頁顯示數目"))
+    )
+    .Events(e => e.DataBound("HospitalLaboratoryItem_dataBound"))
+    .PersistSelection()
+    .Navigatable()
+    .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+    .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("670")).Resizable(resize => resize.Columns(true))
+    .DataSource(dataSource => dataSource.Ajax().ServerOperation(false)
+        //.Sort(x => { x.Add("LLINhiCode").Ascending(); })
+        .Model(model =>
+        {
+            model.Id(h => h.LLIRowid);
+            model.Field(p => p.IsChecked).Editable(false);
+            model.Field(p => p.LLIRowid).Editable(false);
+            model.Field(p => p.LLCRowid).Editable(false);
+            model.Field(p => p.LLCTrdCName).Editable(false);
+            model.Field(p => p.LLINhiCode).Editable(false);
+            model.Field(p => p.LLITrdCName).Editable(false);
+            model.Field(p => p.LLIEngName).Editable(false);
+            model.Field(p => p.LLINhiCost).Editable(false);
+            model.Field(p => p.LLIUnit).Editable(false);
+        })
+        .Events(events => events.Error("error_handler"))                //.Sync("Sync_grid_HospitalLaboratoryItem")
+        .Read(read => read.Action("HosptialLaboratoryItem_Read", "HospitalLaboratory"))
+        //.Create(create => create.Action("LisLaboratoryItem_Create", "LaboratoryBase").Data("getLLCRowid"))
+        .Update(update => update.Action("HosptialLaboratoryItem_Update", "HospitalLaboratory"))
+        //.Destroy(destroy => destroy.Action("HosptialLaboratoryItem_Destory", "HospitalLaboratory"))
+        .PageSize(15))
+        .NoRecords("目前未有任何資料顯示 !"))

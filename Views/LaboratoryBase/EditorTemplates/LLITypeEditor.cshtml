@@ -1,0 +1,13 @@
+﻿@using System.Collections
+@using Kendo.Mvc.UI
+
+@(Html.Kendo().DropDownListFor(m => m)
+        .Name("LLIType")
+        .DataValueField("CBDRowid")
+        .DataTextField("CBDDescription")
+        .SelectedIndex(0)
+        .DataSource(ds => ds
+            .Read(read => read.Action("GetCombo", "GetData", new { sText = "LLIType" }))
+        )
+        .Filter("contains")
+ )

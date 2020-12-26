@@ -1,0 +1,17 @@
+﻿@using System.Collections
+@using Kendo.Mvc.UI
+
+@(Html.Kendo().DropDownListFor(m => m)
+    .Name("LLDFieldKind")
+    .DataTextField("CBDDescription")
+    .DataValueField("CBDCode")
+    .AutoWidth(true)
+    .ValuePrimitive(true)
+    .Filter("contains")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetCombo", "GetData", new { stext = "ZMLisSys_LLDFieldKind" });
+        }).ServerFiltering(false);
+    }).Enable(true).HtmlAttributes(new { @class= "formfont" }))

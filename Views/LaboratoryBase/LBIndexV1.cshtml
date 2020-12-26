@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "檢驗項目資料維護";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Scripts.Render("~/bundles/kendo")
+    @Styles.Render("~/contents/css")    
+    <link href="~/Content/Grid.css" rel="stylesheet" />
+    <link href="~/Content/Public/ZMCMSv2.css" rel="stylesheet" />
+    <script src="~/Scripts/ZMLISSys/ZMLISSys.js"></script>    
+</head>
+
+<body>
+    <div class="container-fluid body-content-padding">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-dark">
+                    <div class="card-header" style="padding:0 10px 0 10px;">
+                        <h3 class="card-title card-title-vertical">檢驗分類</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body card-body-text">
+                        @(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_LaboratoryClass>()
+                            .Name("grid_LaboratoryClass")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(m => m.id).Hidden(true);
+                                columns.Bound(m => m.code).Width(120);
+                                columns.Bound(m => m.nick).Width(120);
+                                columns.Bound(m => m.name);
+                                columns.Command(command =>
+                                {
+                                    command.Edit().Text(" ").CancelText(" ").UpdateText(" ");
+                                    command.Custom(" ").IconClass("k-icon k-i-close").Click("openWindow");
+                                }).Width(170);
+                            })
+                            .ToolBar(toolbar =>
+                            {
+                                toolbar.Create().Text("新增資料");
+                                toolbar.Excel().Text("輸出到 Excel");
+                            })
+                            .Excel(e => e.Filterable(true).AllPages(true))
+                            .ColumnMenu()
+                            .Editable(editable =>
+                                editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                            .Pageable(page => page.Refresh(true)
+                                .ButtonCount(5)
+                                //.PageSizes(new[] { 50, 100, 300, 500, 1000 })
+                                //.Messages(message => message.ItemsPerPage("每頁顯示數目"))
+                                )
+                            .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+                            //.Events(events => { events.Change("InsulinModule_Grid_OnRowSelect"); })
+                            .Navigatable()
+                            .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+                            .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("680"))
+                            .DataSource(dataSource => dataSource.Ajax()
+                                .Sort(x => { x.Add("code").Ascending(); })
+                                .Model(model => { model.Id(h => h.id); })
+                                .Read(read => read.Action("LaboratoryClass_Read", "LaboratoryBase"))
+                                .Create(create => create.Action("LaboratoryClass_Create", "LaboratoryBase"))
+                                .Update(update => update.Action("LaboratoryClass_Update", "LaboratoryBase"))
+                                .Destroy(destroy => destroy.Action("LaboratoryClass_Destory", "LaboratoryBase"))
+                                .PageSize(15))
+                            .NoRecords("目前未有任何資料顯示 !"))
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card card-dark">
+                    <div class="card-header" style="padding:0 10px 0 10px;">
+                        <h3 class="card-title card-title-vertical">檢驗項目 V1.0</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body card-body-text">
+                        @(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_LaboratoryItem>()
+                            .Name("grid_LaboratoryItem")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(m => m.id).Hidden(true);
+                                columns.Bound(m => m.code).Width(120);
+                                columns.Bound(m => m.nick).Width(120);
+                                columns.Bound(m => m.name);
+                                columns.Bound(m => m.chnName);
+                                columns.Bound(m => m.unit).Hidden(true);
+                                columns.Bound(m => m.nhi_code).Hidden(true);
+                                columns.Bound(m => m.laboratory_clinic_name).EditorTemplateName("LaboratoryClinicEditor");
+                                columns.Bound(m => m.laboratoryClass_name).EditorTemplateName("LaboratoryClassEditor");
+
+                                columns.Command(command =>
+                                {
+                                    command.Edit().Text(" ").CancelText(" ").UpdateText(" ");
+                                    command.Custom(" ").IconClass("k-icon k-i-close").Click("openWindow");
+                                }).Width(170);
+                            })
+                            .ToolBar(toolbar =>
+                            {
+                                toolbar.Create().Text("新增資料");
+                                toolbar.Excel().Text("輸出到 Excel");
+                            })
+                            .Excel(e => e.Filterable(true).AllPages(true))
+                            .ColumnMenu()
+                            .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                            .Pageable(page => page.Refresh(true)
+                                .ButtonCount(5)
+                                .PageSizes(new[] { 15, 20, 25, 50, 100, 300, 500, 1000 })
+                                .Messages(message => message.ItemsPerPage("筆／頁"))
+                                )
+                            .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+                            //.Events(events => { events.Change("InsulinModule_Grid_OnRowSelect"); })
+                            .Navigatable()
+                            .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+                            .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("680"))
+                            .DataSource(dataSource => dataSource.Ajax()
+                                .Events(events => events.Error("error_handler").Sync("sync_handler"))
+                                .Sort(x => { x.Add("code").Ascending(); })
+                                .Model(model => { model.Id(h => h.id); })
+                                .Read(read => read.Action("LaboratoryItem_Read", "LaboratoryBase"))
+                                .Create(create => create.Action("LaboratoryItem_Create", "LaboratoryBase"))
+                                .Update(update => update.Action("LaboratoryItem_Update", "LaboratoryBase"))
+                                .Destroy(destroy => destroy.Action("LaboratoryItem_Destory", "LaboratoryBase"))
+                                .PageSize(15))
+                            .NoRecords("目前未有任何資料顯示 !"))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalWindow">
+        <h4>確定要刪除資料嗎 ?</h4>
+        <div style="text-align:right;">
+            <button id="yes" class="k-button">要刪除</button>
+            <button id="no" class="k-button">取消</button>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisPatientLaboratoryMaster>()
+    .Name("grid_lisPatientLaboratoryMaster")
+    .Columns(columns =>
+    {
+        columns.Bound(lp => lp.PLMRowid).Hidden(true);
+        columns.Bound(lp => lp.PTRowid).Hidden(true);
+        columns.Bound(lp => lp.PTIdno);
+        columns.Bound(lp => lp.PTName);
+        columns.Bound(lp => lp.PTBirthday);
+        columns.Bound(lp => lp.PTGender);
+        columns.Bound(lp => lp.PTCode);
+        columns.Bound(lp => lp.PLMClinicDate).Format("{0: yyyy-MM-dd}");
+        columns.Bound(lp => lp.PLMApplyDate).Format("{0: yyyy-MM-dd}");
+        columns.Bound(lp => lp.PLMApplyTime);
+        columns.Bound(lp => lp.PLMInspDate).Format("{0: yyyy-MM-dd}");
+        columns.Bound(lp => lp.PLMInspTime);
+        columns.Bound(lp => lp.PLMReportDate).Format("{0: yyyy-MM-dd}");
+        columns.Bound(lp => lp.PLMReportTime);
+        columns.Bound(lp => lp.PLMSNo);
+        columns.Bound(lp => lp.PLMReqno);
+    })
+    .Events(events =>
+    {
+        events.Change("lisPatientLaboratoryMaster_Grid_OnRowSelect");
+    })
+    .ColumnMenu()
+    .Pageable(page => page.Refresh(true)
+        .ButtonCount(30)
+        .PageSizes(new[] { 50, 100, 300, 500, 1000 })
+        .Messages(message => message.ItemsPerPage("筆／頁")))
+    .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+        //.Events(events => { events.Change("GetLaboratoryData"); })
+        .Navigatable()
+        .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+        .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("200"))
+        .DataSource(dataSource => dataSource.Ajax()
+            //.Sort(x => { x.Add("sno").Ascending(); })
+            //.Sort(x => { x.Add("laboratory_date").Ascending(); })   //; x.Add("d2").Ascending()
+            .Model(model => { model.Id(h => h.PLMRowid); })
+            .Read(read => read.Action("lisPatientLaboratoryMaster_Read", "LISUpload").Data("getParam"))
+            .Events(events => events.Error("error_handler").Sync("sync_handler"))
+            .PageSize(50)
+            )
+    .NoRecords("目前未有任何資料顯示 !")
+)

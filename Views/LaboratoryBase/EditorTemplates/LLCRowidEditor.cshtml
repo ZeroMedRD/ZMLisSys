@@ -1,0 +1,13 @@
+﻿@using System.Collections
+@using Kendo.Mvc.UI
+
+@(Html.Kendo().DropDownListFor(m => m)
+        .Name("LLCRowid")
+        .DataValueField("LLCRowid")
+        .DataTextField("LLCTrdCName")
+        .SelectedIndex(0)
+        .DataSource(ds => ds
+            .Read(read => read.Action("GetlisLaboratoryClass", "GetData"))
+        )
+        .Filter("contains").AutoWidth(true)
+ )

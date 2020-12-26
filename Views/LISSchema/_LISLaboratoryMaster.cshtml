@@ -1,0 +1,45 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_LisLaboratoryMaster>()
+    .Name("grid_LisLaboratoryMaster")
+    .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+    .Events(events =>
+    {
+        events.Change("LisLaboratoryMaster_Grid_OnRowSelect");        
+    })
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.LLMRowid).Hidden(true);
+        columns.Bound(c => c.LLMName);
+        columns.Bound(c => c.LLMFormat).EditorTemplateName("LLDFormatEditor").Width("25%");
+        columns.Command(command =>
+        {            
+            command.Edit().Text(" ").CancelText(" ").UpdateText(" ");            
+            command.Custom(" ").IconClass("k-icon k-i-delete").Click("openWindow");            
+        }).Width("25%");
+    })    
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create().Text("新增");
+        toolbar.Excel().Text("輸出到 Excel");        
+    })
+    .Excel(e => e.Filterable(true).AllPages(true))
+    .ColumnMenu()
+    .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+    .Pageable(page => page.Refresh(true).ButtonCount(10))
+    .Navigatable()
+    .Sortable(sortable =>
+    {
+        sortable.SortMode(GridSortMode.MultipleColumn);
+    })
+    .Filterable().Groupable()    
+    .Scrollable(scrollable => scrollable.Enabled(true).Height(640))
+    .DataSource(dataSource => dataSource.Ajax().PageSize(30)
+        .Sort(s => s.Add("LLMName").Descending())
+        .Model(model => model.Id(p => p.LLMRowid))
+        //.Events(events => events.Error("error_handler").Sync("sync_handler"))
+        .Read(read => read.Action("LisLaboratoryMaster_Read", "LISSchema"))
+        .Create(create => create.Action("LisLaboratoryMaster_Create", "LISSchema"))
+        .Update(update => update.Action("LisLaboratoryMaster_Update", "LISSchema"))
+        .Destroy(destory => destory.Action("LisLaboratoryMaster_Destroy", "LISSchema"))
+    )
+    .NoRecords("目前未有任何資料顯示 !")
+)

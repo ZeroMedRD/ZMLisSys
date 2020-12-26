@@ -1,0 +1,80 @@
+﻿@*@model ZMLisSys.ViewModels.LisLaboratory_ViewModels_str
+    @{
+        ViewBag.Title = "_LisLabStr";
+    }*@
+
+@*<!DOCTYPE html>
+    <html>
+    <head>*@
+<meta name="viewport" content="width=device-width" />
+@*@Scripts.Render("~/bundles/jquery")*@
+@*@Scripts.Render("~/bundles/main")*@
+@Scripts.Render("~/bundles/kendo")
+@Styles.Render("~/contents/css")
+
+<script src="~/Scripts/ZMLisSys.js"></script>
+<script id="SchemaListBoxTemplate" type="text/x-kendo-template">
+    <span class="k-state-default">
+        <div style='font-size:1.1em;font-weight:bold;float:left;padding-right:10px;'>(#: data.LLDSeqno #)</div>
+        @*<div style='font-size:1em;float:left;'>#: data.LLDCode #_<div>*@
+        <div style='font-size:1em;float:left;'>#: data.LLDFieldName #<div>
+        @*<div style='font-size:1em;float:left;color:red;'>(#: data.FieldKindName #)<div>*@
+    </span>
+</script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            @(Html.Kendo().ListBox()
+                    .Name("SourceSchemaListBox")
+                    .Draggable(true)
+                    .DropSources("TargetSchemaListBox")
+                    .HtmlAttributes(new { style= "width:100%;height:400px;padding:10px 0px 10px 10px;" })
+                    .ConnectWith("TargetSchemaListBox")
+                    .Selectable(ListBoxSelectable.Multiple)
+                    .DataValueField("LLDRowid")
+                    .DataTextField("LLDFieldName")
+                    .Toolbar(toolbar =>
+                    {
+                        toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
+                        toolbar.Tools(tools => tools
+                            //.MoveUp()
+                            //.MoveDown()
+                            .TransferTo()
+                            .TransferFrom()
+                            .TransferAllTo()
+                            .TransferAllFrom()
+                            //.Remove()
+                        );
+                    })
+                    .DataSource(source => source.Custom().Transport(transport => transport
+                                .Read(read => read.Action("GetLaboratorySchema", "LISSchema"))))
+                    .TemplateId("SchemaListBoxTemplate")
+                )
+        </div>
+
+        <div class="col-sm-6">
+            @(Html.Kendo().ListBox()
+                    .Name("TargetSchemaListBox")
+                    .Draggable(true)
+                    .DropSources("SourceSchemaListBox")
+                    .HtmlAttributes(new { style= "width:100%;height:400px;padding:10px 0px 10px 10px;" })
+                    .ConnectWith("SourceSchemaListBox")
+                    .DataValueField("LLDRowid")
+                    .DataTextField("LLDFieldName")
+                    .Selectable(ListBoxSelectable.Multiple)
+                    .Toolbar(toolbar =>
+                    {
+                        toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
+                        toolbar.Tools(tools => tools
+                                    .MoveUp()
+                                    .MoveDown()
+                                    );
+                    })
+                    .DataSource(source => source.Custom().Transport(transport => transport
+                                .Read(read => read.Action("GetSelectedLaboratorySchema", "LISSchema"))))
+                    .TemplateId("SchemaListBoxTemplate")
+                )
+        </div>
+    </div>
+</div>

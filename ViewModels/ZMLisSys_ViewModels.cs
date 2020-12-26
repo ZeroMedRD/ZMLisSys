@@ -4,179 +4,381 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace ZMLisSys.ViewModels
+namespace ZMLISSys.ViewModels
 {
-    public class LisLaboratory_ViewModels
+    #region ViewModel_LaboratoryClass (laboratory_class)-檢驗檢查分類 (antifat v1.0)
+    public class ViewModel_LaboratoryClass
     {
-        [Display(Name = "檢驗所資料序號")]
-        public string LLRowid { get; set; }
-
-        [Display(Name = "檢驗所名稱")]
-        public string LLName { get; set; }
-
-        [Display(Name = "檢驗格式")]
-        public string LLFormat { get; set; }
-    }
-
-    public class LisLaboratory_ViewModels_str
-    {
-        [Display(Name = "檢驗所結構序號")]
-        public string SMRowid { get; set; }
-
-        [Display(Name = "檢驗所資料序號")]
-        public string LLRowid { get; set; }
-
-        [Display(Name = "名稱")]
-        public string SMFieldName { get; set; }
-
-        [Display(Name = "型態")]
-        public string SMFieldType { get; set; }
-
-        [Display(Name = "長度")]
-        public string SMFieldLength { get; set; }
-
-        [Display(Name = "分類")]
-        public string SMFieldKind { get; set; }
-
-        [Display(Name = "資料分類")]
-        public string SMFieldKindName { get; set; }
-
-        [Display(Name = "編號")]
-        public string SMFieldMeno { get; set; }
-
         [Display(Name = "資料序號")]
-        public string SMDisplaySeq { get; set; }
-    }
-
-    public class LisLaboratory_ViewModels_item
-    {
-        [Display(Name = "檢驗所表頭序號")]
         public string id { get; set; }
 
-        [Display(Name = "檢驗所表頭資料序號")]
-        public string LLRowid { get; set; }
+        [Display(Name = "分類代碼")]
+        public string code { get; set; }
+        [Display(Name = "分類簡碼")]
+        public string nick { get; set; }
 
-        [Display(Name = "檢驗單號")]
-        public string w_no { get; set; }
+        [Display(Name = "分類名稱")]
+        public string name { get; set; }
+    }
+    #endregion
 
-        [Display(Name = "開單日期")]
-        public string c_data { get; set; }
+    #region ViewModel_LaboratoryItem (laboratory_item)-檢驗檢查項目 (antifat v1.0)
+    public class ViewModel_LaboratoryItem
+    {
+        [Display(Name = "資料序號")]
+        public string id { get; set; }
 
-        [Display(Name = "檢驗日期")]
-        public string s_data { get; set; }
+        [Display(Name = "檢驗分類資料序號")]
+        public string laboratoryClass_id { get; set; }
 
-        [Display(Name = "姓名")]
+        [Display(Name = "檢驗分類")]
+        public string laboratoryClass_name { get; set; }
+
+        [Display(Name = "項目代碼")]
+        public string code { get; set; }
+
+        [Display(Name = "項目簡碼")]
+        public string nick { get; set; }
+
+        [Display(Name = "項目名稱")]
         public string name { get; set; }
 
-        [Display(Name = "性別")]
-        public string sex { get; set; }
+        [Display(Name = "中文名稱")]
+        public string chnName { get; set; }
 
-        [Display(Name = "身分證")]
-        public string p_id { get; set; }
+        [Display(Name = "單位")]
+        public string unit { get; set; }
 
-        [Display(Name = "生日")]
-        public string birth { get; set; }
-
-        [Display(Name = "病歷號")]
-        public string c_id { get; set; }
-
-        [Display(Name = "醫事機構代碼")]
-        public string h_no { get; set; }
-
-        [Display(Name = "檢驗名稱(中文)")]
-        public string item_cname { get; set; }
-
-        [Display(Name = "檢驗名稱(英文)")]
-        public string item_ename { get; set; }
+        [Display(Name = "標準值")]
+        public string standard { get; set; }
 
         [Display(Name = "健保碼")]
         public string nhi_code { get; set; }
 
-        [Display(Name = "檢驗數值")]
-        public string CHD_V { get; set; }
+        [Display(Name = "檢驗所")]
+        public string laboratory_clinic_code { get; set; }
+
+        [Display(Name = "檢驗所")]
+        public string laboratory_clinic_name { get; set; }
+    }
+    #endregion
+
+    #region ViewModel_LisLaboratoryClass (LisLaboratoryClass)-檢驗檢查分類 (ZMLIS)
+    public class ViewModel_LisLaboratoryClass
+    {
+        [Display(Name = "資料序號")]
+        public string LLCRowid { get; set; }
+
+        [Display(Name = "分類代碼")]
+        public string LLCCode { get; set; }
+
+        [Display(Name = "分類中文名稱")]
+        public string LLCTrdCName { get; set; }
+
+        [Display(Name = "分類英文名稱")]
+        public string LLCEngName { get; set; }
+    }
+    #endregion
+
+    #region ViewModel_LisLaboratoryItem (LisLaboratoryItem)-檢驗檢查項目 (ZMLIS)
+    public class ViewModel_LisLaboratoryItem
+    {
+        [Display(Name = "資料序號")]
+        public string LLIRowid { get; set; }
+
+        [Display(Name = "分類資料序號")]
+        public string LLCRowid { get; set; }
+
+        [Display(Name = "分類名稱")]
+        public string LLCTrdCName { get; set; }
+
+        [Display(Name = "檢驗代碼")]
+        public string LLINhiCode { get; set; }
+
+        [Display(Name = "中文名稱")]
+        public string LLITrdCName { get; set; }
+
+        [Display(Name = "英文名稱")]
+        public string LLIEngName { get; set; }
+
+        [Display(Name = "支付點數")]
+        public float LLINhiCost { get; set; }
+
+        // 檢驗檢查項目類別 (自費 or 健保)
+        [Display(Name = "費用類別")]
+        public string LLICostType { get; set; }
+
+        [Display(Name = "費用類別")]
+        public string LLICostTypeName { get; set; }
+
+        [Display(Name = "項目類別")]
+        public string LLIType { get; set; }
+
+        [Display(Name = "項目類別")]
+        public string LLITypeName { get; set; }
 
         [Display(Name = "單位")]
-        public string c_type { get; set; }
-
-        [Display(Name = "檢驗異常")]
-        public string low { get; set; }
-
-        [Display(Name = "檢驗標準")]
-        public string high { get; set; }
+        public string LLIUnit { get; set; }
     }
+    #endregion
 
-    //public class LisLaboratory_ViewModels_head
-    //{
-    //    [Display(Name = "檢驗所表頭序號")]
-    //    public string id { get; set; }
+    #region ViewModel_LisLaboratoryMaster (LisLaboratoryMaster)-檢驗所結構主檔 (ZMLIS)
+    public class ViewModel_LisLaboratoryMaster
+    {
+        [Display(Name = "檢驗所資料序號")]
+        public string LLMRowid { get; set; }
 
-    //    [Display(Name = "檢驗所表頭資料序號")]
-    //    public string LLRowid { get; set; }
+        [Display(Name = "檢驗所名稱")]
+        public string LLMName { get; set; }
 
-    //    [Display(Name = "檢驗單號")]
-    //    public string w_no { get; set; }
+        [Display(Name = "檢驗格式")]
+        public string LLMFormat { get; set; }
+    }
+    #endregion
 
-    //    [Display(Name = "開單日期")]
-    //    public string c_data { get; set; }
+    #region ViewModel_LisLaboratoryDetail (LisLaboratoryDetail)-檢驗所結構明細檔 (ZMLIS)
+    public class ViewModel_LisLaboratoryDetail        
+    {
+        [Display(Name = "檢驗所結構序號")]
+        public string LLDRowid { get; set; }
 
-    //    [Display(Name = "檢驗日期")]
-    //    public string s_data { get; set; }
+        [Display(Name = "檢驗所資料序號")]
+        public string LLMRowid { get; set; }
 
-    //    [Display(Name = "姓名")]
-    //    public string name { get; set; }
+        [Display(Name = "檢驗所資料序號")]
+        public string LLDCode { get; set; }
+                
+        [Display(Name = "名稱")]
+        public string LLDFieldName { get; set; }
 
-    //    [Display(Name = "性別")]
-    //    public string sex { get; set; }
+        [Display(Name = "型態")]
+        public string LLDFieldType { get; set; }
 
-    //    [Display(Name = "身分證")]
-    //    public string p_id { get; set; }
+        [Display(Name = "型態")]
+        public string LLDFieldTypeName { get; set; }
 
-    //    [Display(Name = "生日")]
-    //    public string birth { get; set; }
+        [Display(Name = "長度")]
+        public int LLDFieldLength { get; set; }
 
-    //    [Display(Name = "病歷號")]
-    //    public string c_id { get; set; }
+        [Display(Name = "小數點")]
+        public int LLDFieldFloatLength { get; set; }
 
-    //    [Display(Name = "醫事機構代碼")]
-    //    public string h_no { get; set; }
-    //}
+        [Display(Name = "分類")]
+        public string LLDFieldKind { get; set; }
 
-    //public class LisLaboratory_ViewModels_body
-    //{
-    //    [Display(Name = "檢驗所表身序號")]
-    //    public string id { get; set; }
+        [Display(Name = "分類")]
+        public string LLDFieldKindName { get; set; }
 
-    //    [Display(Name = "檢驗所表身資料序號")]
-    //    public string LLRowid { get; set; }
+        [Display(Name = "備註")]
+        public string LLDFieldMemo { get; set; }
 
-    //    [Display(Name = "檢驗單號")]
-    //    public string w_no { get; set; }
+        [Display(Name = "起始長度")]
+        public int LLDTextStartPos { get; set; }
 
-    //    [Display(Name = "開單日期")]
-    //    public string c_data { get; set; }
+        [Display(Name = "終止長度")]
+        public int LLDTextEndPos { get; set; }
 
-    //    [Display(Name = "檢驗日期")]
-    //    public string s_data { get; set; }
+        [Display(Name = "序號")]
+        public int LLDSeqno { get; set; }
 
-    //    [Display(Name = "檢驗名稱(中文)")]
-    //    public string item_cname { get; set; }
+        [Display(Name = "對應欄位資料序號")]
+        public string LLDMappingField { get; set; }
 
-    //    [Display(Name = "檢驗名稱(英文)")]
-    //    public string item_ename { get; set; }
+        [Display(Name = "對應欄位")]
+        public string LLDMappingFieldName { get; set; }
+    }
+    #endregion
 
-    //    [Display(Name = "健保碼")]
-    //    public string nhi_code { get; set; }
+    #region ViewModel_HospitalLaboratoryItem (HospitalLaboratoryItem)-醫療院所檢驗檢查項目
+    public class ViewModel_HospitalLaboratoryItem
+    {
+        [Display(Name = "醫事機構")]
+        public string HospID { get; set; }
 
-    //    [Display(Name = "檢驗數值")]
-    //    public string CHD_V { get; set; }
+        [Display(Name = "選取")]
+        public bool IsChecked { get; set; }
 
-    //    [Display(Name = "單位")]
-    //    public string c_type { get; set; }
+        [Display(Name = "資料序號")]
+        public string LLIRowid { get; set; }
 
-    //    [Display(Name = "檢驗異常")]
-    //    public string low { get; set; }
+        [Display(Name = "分類資料序號")]
+        public string LLCRowid { get; set; }
 
-    //    [Display(Name = "檢驗標準")]
-    //    public string high { get; set; }
-    //}
+        [Display(Name = "分類名稱")]
+        public string LLCTrdCName { get; set; }
+
+        [Display(Name = "醫療院所檢驗檢查資料序號")]
+        public string HLIRowid { get; set; }
+
+        [Display(Name = "檢驗代碼")]
+        public string LLINhiCode { get; set; }
+
+        [Display(Name = "中文名稱")]
+        public string LLITrdCName { get; set; }
+
+        [Display(Name = "英文名稱")]
+        public string LLIEngName { get; set; }
+
+        [Display(Name = "支付點數")]
+        public float LLINhiCost { get; set; }        
+
+        [Display(Name = "單位")]
+        public string LLIUnit { get; set; }
+
+        [Display(Name = "檢驗所代碼")]
+        public string HLICode { get; set; }
+
+        [Display(Name = "範圍顯示")]
+        public string HLIDisplayRange { get; set; }
+
+        [Display(Name = "男低標")]
+        public float HLILoMale { get; set; }
+
+        [Display(Name = "男高標")]
+        public float HLIUpMale { get; set; }      
+
+        [Display(Name = "女低標")]
+        public float HLILoFemale { get; set; }
+
+        [Display(Name = "女高標")]
+        public float HLIUpFemale { get; set; }        
+    }
+    #endregion
+
+    #region SysHospital 醫事機構資料表 (65.52.165.109/Database:ZMCMSv2)
+    public class ViewModel_SysHospital
+    {
+        public string HospRowid { get; set; }
+
+        [Display(Name = "醫事機構代碼")]
+        public string HospID { get; set; }
+
+        [Display(Name = "醫事機構名稱")]
+        public string HospName { get; set; }
+
+        [Display(Name = "醫院地址")]
+        public string HospAddress { get; set; }
+    }
+    #endregion
+
+    #region lisPatientLaboratoryMaster 病人檢驗表頭資料 (65.52.165.109/Database:his1234567890)
+    public class ViewModel_lisPatientLaboratoryMaster
+    {
+        [Display(Name = "檢驗表頭序號")]
+        public string PLMRowid { get; set; }
+
+        [Display(Name = "病人資料序號")]
+        public string PTRowid { get; set; }
+
+        [Display(Name = "身份證字號")]
+        public string PTIdno { get; set; }
+
+        [Display(Name = "姓名")]
+        public string PTName { get; set; }
+
+        [Display(Name = "出生日期")]
+        public string PTBirthday { get; set; }
+
+        [Display(Name = "性別")]
+        public string PTGender { get; set; }
+
+        [Display(Name = "原病歷號碼")]
+        public string PTCode { get; set; }
+
+        [Display(Name = "原就醫日期")]
+        public DateTime? PLMClinicDate { get; set; }
+
+        [Display(Name = "開單日期")]
+        public DateTime? PLMApplyDate { get; set; }
+
+        [Display(Name = "開單時間")]
+        public string PLMApplyTime { get; set; }
+
+        [Display(Name = "檢驗日期")]
+        public DateTime? PLMInspDate { get; set; }
+
+        [Display(Name = "檢驗時間")]
+        public string PLMInspTime { get; set; }
+
+        [Display(Name = "報告日期")]
+        public DateTime? PLMReportDate { get; set; }
+
+        [Display(Name = "報告時間")]
+        public string PLMReportTime { get; set; }
+
+        [Display(Name = "檢驗單號")]
+        public string PLMSNo { get; set; }
+
+        [Display(Name = "看診序號")]
+        public string PLMReqno { get; set; }
+    }
+    #endregion
+
+    #region lisPatientLaboratoryMaster 病人檢驗表身資料 (65.52.165.109/Database:his1234567890)
+    public class ViewModel_lisPatientLaboratoryDetail
+    {
+        [Display(Name = "檢驗表身序號")]
+        public string PLDRowid { get; set; }
+
+        [Display(Name = "檢驗表頭序號")]
+        public string PLMRowid { get; set; }
+
+        [Display(Name = "檢驗檢查資料序號")]
+        public string HLIRowid { get; set; }
+
+        [Display(Name = "檢驗值")]
+        public float PLMValue { get; set; }
+
+        [Display(Name = "檢驗值")]
+        public string PLMStrValue { get; set; }
+
+        [Display(Name = "資料順序")]
+        public int PLMSeqno { get; set; }        
+    }
+    #endregion
+
+    #region SysUploadServer 資料上傳主機狀態 (65.52.165.109/Database:ZMCMSv2)    
+    public class ViewModel_SysUploadServer
+    {
+        [Display(Name = "資料序號")]
+        public string USRowid { get; set; }
+
+        [Display(Name = "醫事機構資料序號")]
+        public string USHospRowid { get; set; }
+
+        [Display(Name = "醫事機構代碼")]
+        public string USHospID { get; set; }
+
+        [Display(Name = "上傳檔案名稱")]
+        public string USLoadFilename { get; set; }
+
+        [Display(Name = "上傳日期")]
+        public DateTime? USLoadDateTime { get; set; }
+
+        [Display(Name = "預訂執行日期時間")]
+        public DateTime? USBookingDatetime { get; set; }
+
+        [Display(Name = "完成日期時間")]
+        public DateTime? USFinishDateTime { get; set; }
+
+        [Display(Name = "狀態")]
+        public string USServerStatus { get; set; }
+        // USServerStatus 定義，字母大寫:
+        // S: 待處理
+        // P: 處理中
+        // E: 已完成
+        // F: 處理失敗
+
+        [Display(Name = "上傳資料總筆數")]
+        public int USRecordCount { get; set; }
+
+        [Display(Name = "主機執行類別")]
+        public string USType { get; set; }
+        // USType 定義，字母大寫:
+        // H: 申報上傳 (使用者透過介面上載的檔案)
+        // L: 檢驗上傳 (使用者透過介面上載的檔案)
+        // A: 檢驗上傳 (使用者透過指定時間方式讓主機 Agent程式依時間到期時自動嫁接第三方執行自動匯入)
+        // P: 檢驗上傳 (主機 Agent程式依後台管理模式指定時間到期時自動嫁接第三方執行自動匯入)
+    }
+    #endregion
 }

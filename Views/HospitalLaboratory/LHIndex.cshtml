@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "LBIndexV2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/main")*@
+    @Scripts.Render("~/bundles/kendo")
+    @Styles.Render("~/contents/css")
+
+    @*<link href="~/Content/Tabs.css" rel="stylesheet" />*@
+    <link href="~/Content/ZMLISSys/ZMLISSys.css" rel="stylesheet" />
+    <link href="~/Content/Grid.css" rel="stylesheet" />
+    <script src="~/Scripts/ZMLISSys/ZMLISSys.js"></script>
+    @*<script src="~/Scripts/ZMLisSys.js"></script>*@    
+</head>
+<body>
+    <div class="container-fluid body-content-padding">
+        <div class="row">
+            @* 檢驗檢查左側視窗 *@
+            <div class="col-md-4">
+                <div class="card card-dark">
+                    <div class="card-header" style="padding:0 10px 0 10px;">
+                        @*<h3 class="card-title card-title-vertical">檢驗檢查分類</h3>*@
+                        <h3 class="card-title card-title-vertical">醫事機構</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body card-body-text">
+                        @*@Html.Partial("_HospitalLaboratoryClass")*@
+                        @Html.Partial("_Hospital")
+                    </div>
+                </div>
+            </div>
+
+            @* 檢驗檢查右側視窗 *@
+            <div class="col-md-8">
+                <div class="card card-dark">
+                    <div class="card-header" style="padding:0 10px 0 10px;">
+                        <h3 class="card-title card-title-vertical">檢驗檢查項目</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body card-body-text">
+                        @Html.Partial("_HospitalLaboratoryItem")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalWindow">
+        <h4>確定要刪除資料嗎 ?</h4>
+        <div style="text-align:right;">
+            <button id="yes" class="k-button">要刪除</button>
+            <button id="no" class="k-button">取消</button>
+        </div>
+    </div>
+
+    <div id="ConfirmFormWindow">
+        <h4>資料已經儲存完畢 !</h4>
+        <div style="text-align:right;">
+            <button id="no" class="k-button" onclick="$('#ConfirmFormWindow').data('kendoWindow').close();">確定</button>
+        </div>
+    </div>
+</body>
+</html>
+

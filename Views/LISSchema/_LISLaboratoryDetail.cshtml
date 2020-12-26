@@ -1,0 +1,54 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_LisLaboratoryDetail>()
+    .Name("grid_LisLaboratoryDetail")
+    .Selectable(selectable => selectable
+    .Mode(GridSelectionMode.Single)
+    .Type(GridSelectionType.Row))
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.LLDRowid).Hidden(true);
+        columns.Bound(c => c.LLMRowid).Hidden(true);
+        columns.Bound(c => c.LLDFieldName).Width(120).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDFieldTypeName).Width(120).EditorTemplateName("LLDFieldTypeEditor").HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDFieldLength).Width(80).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDFieldFloatLength).Width(80).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDTextStartPos).Width(90).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDTextEndPos).Width(90).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDFieldKindName).Width(90).EditorTemplateName("LLDFieldKindEditor").HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDFieldMemo).Width(80).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDSeqno).Width(70).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(c => c.LLDMappingFieldName).Width(120).EditorTemplateName("LLDMappingFieldEditor").HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Command(command =>
+        {
+            command.Edit().Text(" ").CancelText(" ").UpdateText(" ");
+            command.Custom(" ").IconClass("k-icon k-i-delete").Click("openWindow");
+        }).Width("110");
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create().Text("新增").HtmlAttributes(new { id = "addRecord" }).IconClass("fas fa-plus");
+        toolbar.Excel().Text("輸出到 Excel");
+        toolbar.Custom().Text("資料結構解析").HtmlAttributes(new { id = "ImportSchema", onclick="openImportSchema()" }).Url("#");
+    })
+    .Excel(e => e.Filterable(true).AllPages(true))
+    .ColumnMenu()
+    .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+    .Pageable(page => page.Refresh(true).ButtonCount(10))
+    .Navigatable()
+    .Sortable(sortable =>
+    {
+        sortable.SortMode(GridSortMode.MultipleColumn);
+    })
+    .Filterable().Groupable()
+    .Scrollable(scrollable => scrollable.Enabled(true).Height(640))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        //.Sort(s => s.Add("LLDSeqno").Ascending())
+        .PageSize(30)
+        .Model(model => model.Id(p => p.LLDRowid))
+        .Read(read => read.Action("LisLaboratoryDetail_Read", "LISSchema"))
+        .Create(create => create.Action("LisLaboratoryDetail_Create", "LISSchema").Data("getLLMRowid"))
+        .Update(update => update.Action("LisLaboratoryDetail_Update", "LISSchema"))
+        .Destroy(destory => destory.Action("LisLaboratoryDetail_Destroy", "LISSchema"))
+    )
+    .NoRecords("目前未有任何資料顯示 !")
+)

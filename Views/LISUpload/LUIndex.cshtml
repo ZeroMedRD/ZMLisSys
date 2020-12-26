@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "LUIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/main")*@
+    @Scripts.Render("~/bundles/kendo")
+    @Styles.Render("~/contents/css")
+
+    @*<link href="~/Content/Tabs.css" rel="stylesheet" />*@
+    <link href="~/Content/ZMLISSys/ZMLISSys.css" rel="stylesheet" />
+    <link href="~/Content/Grid.css" rel="stylesheet" />
+    <script src="~/Scripts/ZMLISSys/ZMLISSys.js"></script>
+    @*<script src="~/Scripts/ZMLisSys.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $("#uploadButton").bind("click", function () {
+                $("#window").data("kendoWindow").open();
+                $("#window").data("kendoWindow").center();
+                $("#uploadButton").hide();
+                //$("#uploadButton").attr('disabled','disabled');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container-fluid body-content-padding">
+        <div class="row">
+            <div class="col-md-3">
+                醫事機構：
+                @(Html.Kendo().DropDownList()
+                    .Name("ddlSysHospital")
+                    .DataTextField("HospName")
+                    .DataValueField("HospID")
+                    .AutoWidth(true)
+                    .Filter("contains")
+                    .DataSource(source =>
+                    {
+                        source.Read(read =>
+                        {
+                            read.Action("GetHospital", "GetData", new { HospID = @ViewBag.HospID });
+                        }).ServerFiltering(false); ;
+                    })
+                    .Enable(true)
+                //.HtmlAttributes(new { @class = "form-control pull-left" })
+                )                
+            </div>
+            <div class="col-md-5">
+                <div style="float:left;">
+                    檢驗資料查詢區間：
+                    @(Html.Kendo().DatePicker().Name("startDateTime")
+                        .Value(DateTime.Today)
+                        .Max(DateTime.Today)
+                        .ParseFormats(new string[] { "yyyy/MM/dd" })
+                        //.Events(e => e.Change("startChange"))
+                        .HtmlAttributes(new { style = "width: 30%; border-color:darkgrey", title = "起始日期" })) 至
+                    @(Html.Kendo().DatePicker().Name("endDateTime")
+                        .Value(DateTime.Today)
+                        //.Min(DateTime.Today)
+                        .ParseFormats(new string[] { "yyyy/MM/dd" })
+                        //.Events(e => e.Change("endChange"))
+                        .HtmlAttributes(new { style = "width: 30%; border-color:darkgrey", title = "結束日期" }))
+                    <button id="QueryButton" class="btn btn-navbar k-button k-button-icontext" onclick="GetLaboratoryData()">查詢</button>                
+                </div>                
+            </div>
+            <div class="col-md-4">
+                    指定時間：
+                    @(Html.Kendo().DateTimePicker().Name("PushDT")
+                            //.Value(DateTime.Today)
+                            .Min(DateTime.Today)
+                            .ParseFormats(new string[] { "yyyy/MM/dd hh:mm:ss" })
+                            .HtmlAttributes(new { style = "width: 50%; border-color:darkgrey", title = "指定時間" }))
+                    <button id="PushButton" class="btn btn-navbar k-button k-button-icontext" onclick="PushSchedule()">推送</button>
+                    <span id="uploadButton" class="btn btn-navbar k-button k-button-icontext">上傳檢驗檔案</span>                
+            </div>            
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-dark">
+                    <div class="card-header" style="padding:0 10px 0 10px;">
+                        <h3 class="card-title card-title-vertical">檢驗單據資料</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body card-body-text">
+                        @Html.Partial("_lisPatientLaboratoryMaster")
+                    </div>
+                </div>
+
+                <div class="card card-dark">
+                    <div class="card-header" style="padding:0 10px 0 10px;">
+                        <h3 class="card-title card-title-vertical">檢驗細項資料</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body card-body-text">
+                        @Html.Partial("_lisPatientLaboratoryDetail")
+                    </div>
+                </div>
+
+                @*上傳檔案作業視窗*@
+                @(Html.Kendo().Window().Name("window").Title("上傳檔案").Content(@<text>
+                        @using (@Html.BeginForm())
+                        {
+                            @(Html.Kendo().Upload()
+                                .Multiple(true)
+                                .Name("annex")
+                                .HtmlAttributes(new { accept = ".xls, .xlsx, .xml" })
+                                .Validation(v => v.AllowedExtensions(new string[] { ".xls", ".xlsx", ".xml" }))
+                                .Async(async => async.AutoUpload(false)
+                                    .Save("Async_Save", "LISUpload")            // , new { HospID = @ViewBag.HospID }
+                                    .Remove("Async_Remove", "LISUpload"))
+                                .Events(e => e.Upload("onUpload"))
+                            )
+                        }
+                    </text>).Draggable().Resizable().Width(350).Actions(actions => actions.Close()).Events(ev => ev.Close("onClose")).Visible(false)
+                )
+            </div>
+            <div class="col-md-4">
+                <div class="card card-danger">
+                    <div class="card-header" style="padding:0 10px 0 10px;">
+                        <h3 class="card-title card-title-vertical">上載資料處理狀態</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body card-body-text">
+                        @Html.Partial("_lisPatientLaboratoryStatus")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
