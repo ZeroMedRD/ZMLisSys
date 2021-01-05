@@ -1,5 +1,5 @@
 ﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_LisLaboratoryDetail>()
-    .Name("grid_LisLaboratoryDetail")
+    .Name("grid_lisLaboratoryDetail")
     .Selectable(selectable => selectable
     .Mode(GridSelectionMode.Single)
     .Type(GridSelectionType.Row))
@@ -39,7 +39,7 @@
         sortable.SortMode(GridSortMode.MultipleColumn);
     })
     .Filterable().Groupable()
-    .Scrollable(scrollable => scrollable.Enabled(true).Height(640))
+    .Scrollable(scrollable => scrollable.Enabled(true).Height(610))
     .DataSource(dataSource => dataSource
         .Ajax()
         //.Sort(s => s.Add("LLDSeqno").Ascending())

@@ -226,7 +226,7 @@ function LisLaboratoryMaster_Grid_OnRowSelect(e) {
     var dsa = grid.dataItem(grid.select());
 
     // 重新讀取檢驗所所屬結構
-    $("#grid_LisLaboratoryDetail").data("kendoGrid").
+    $("#grid_lisLaboratoryDetail").data("kendoGrid").
         dataSource.read(
             {
                 sLLMRowid: dsa.LLMRowid,
@@ -239,24 +239,6 @@ function LisLaboratoryMaster_Grid_OnRowSelect(e) {
                 sLLMRowid: dsa.LLMRowid,
             });
 
-    //$("#BodyListBox1").data("kendoListBox").
-    //    dataSource.read(
-    //        {
-    //            sLLRowid: dsa.LLRowid,
-    //        });
-
-    //$("#SysHeadListBox1").data("kendoListBox").
-    //    dataSource.read(
-    //        {
-    //            sLLRowid: dsa.LLRowid,
-    //        });
-
-    //$("#SysBodyListBox1").data("kendoListBox").
-    //    dataSource.read(
-    //        {
-    //            sLLRowid: dsa.LLRowid,
-    //        });
-
     if (dsa.LLMRowid != null) {
         $("#addRecord").show();
         $("#ImportSchema").show();
@@ -265,7 +247,7 @@ function LisLaboratoryMaster_Grid_OnRowSelect(e) {
 
 //取得檢驗Rowid 並且連動
 function getLLMRowid() {
-    var grid = $('#grid_LisLaboratoryMaster').data('kendoGrid');
+    var grid = $('#grid_lisLaboratoryMaster').data('kendoGrid');
     var dsa = grid.dataItem(grid.select());
 
     if (dsa != null) {
@@ -349,46 +331,52 @@ function grid_SysHospital_OnRowSelect(e) {
 
     if (dsa != null) {        
         // 把過濾條件重置
-        $("#ddl_lisLaboratoryClass").data("kendoDropDownList").select(0);
-        //$("#ddl_lisLaboratoryClass").data("kendoDropDownList").dataSource().read();
-        document.getElementById("searchName").value = "";
+        if (document.getElementById("ddl_lisLaboratoryClass") != null) {
+            $("#ddl_lisLaboratoryClass").data("kendoDropDownList").select(0);
+        }
 
-        var grid = $("#grid_HospitalLaboratoryItem").data("kendoGrid");
-                      
-        grid.dataSource.read({
-            sHospID: dsa.HospID,
-            sLLCRowid: "",
-            sSearchString: ""
-        });
-        
-        // 每次換頁會自動轉至第一頁
-        grid.one("dataBound", function (e) {
-            var ds = e.sender.dataSource;
-            //var items = ds.data().length;
-            //var pageSize = ds.pageSize();
-            //var pageNum = parseInt(items / pageSize) + 1;
-            ds.page(1);
-            //http://aisoftwarellc.com/blog/post/kendo-hacks---clear-filter-while-adding-new-rows-in-a-kendo-grid/2024
-            if (grid.dataSource) grid.dataSource.filter([]); 
-        });
+        if (document.getElementById("searchName") != null) {
+            document.getElementById("searchName").value = "";
+        }
 
-        // 下面是醫事機構接檢驗所資料的 Grid, 若沒有系統會忽略
-        var grid_H2L = $("#grid_HospitalLaboratory").data("kendoGrid");
-        grid_H2L.dataSource.read({
-            sHospID: dsa.HospID,
-            sLLCRowid: "",
-            sSearchString: ""
-        });
+        if (document.getElementById("grid_HospitalLaboratoryItem") != null) {
+            var grid = $("#grid_HospitalLaboratoryItem").data("kendoGrid");
 
-        grid_H2L.one("dataBound", function (e) {
-            var ds = e.sender.dataSource;
-            //var items = ds.data().length;
-            //var pageSize = ds.pageSize();
-            //var pageNum = parseInt(items / pageSize) + 1;
-            ds.page(1);
-            //http://aisoftwarellc.com/blog/post/kendo-hacks---clear-filter-while-adding-new-rows-in-a-kendo-grid/2024
-            if (grid_H2L.dataSource) grid_H2L.dataSource.filter([]);
-        });
+            grid.dataSource.read({
+                sHospID: dsa.HospID,
+                sLLCRowid: "",
+                sSearchString: ""
+            });
+
+            // 每次換頁會自動轉至第一頁
+            grid.one("dataBound", function (e) {
+                var ds = e.sender.dataSource;
+                //var items = ds.data().length;
+                //var pageSize = ds.pageSize();
+                //var pageNum = parseInt(items / pageSize) + 1;
+                ds.page(1);
+                //http://aisoftwarellc.com/blog/post/kendo-hacks---clear-filter-while-adding-new-rows-in-a-kendo-grid/2024
+                if (grid.dataSource) grid.dataSource.filter([]);
+            });
+        }
+
+        // 下面是醫事機構接檢驗所排程資料的 Grid
+        if (document.getElementById("grid_lisLaboratorySchedule") != null) {
+            var grid_H2L = $("#grid_lisLaboratorySchedule").data("kendoGrid");
+            grid_H2L.dataSource.read({
+                sHospRowid: dsa.HospRowid
+            });
+
+            grid_H2L.one("dataBound", function (e) {
+                var ds = e.sender.dataSource;
+                //var items = ds.data().length;
+                //var pageSize = ds.pageSize();
+                //var pageNum = parseInt(items / pageSize) + 1;
+                ds.page(1);
+                //http://aisoftwarellc.com/blog/post/kendo-hacks---clear-filter-while-adding-new-rows-in-a-kendo-grid/2024
+                if (grid_H2L.dataSource) grid_H2L.dataSource.filter([]);
+            });
+        }
     }
     else {
         //$("#addRecord").hide();
@@ -567,6 +555,16 @@ function resizeGrid() {
 }
 // #endregion
 
+
+function grid_lisPatientLaboratoryMasterRead() {    
+    // 取得資料前,先把條件變數做整理
+    var HospIDValue = $("#ddlSysHospital").data("kendoDropDownList").value();
+    var startDateTimeValue = $("#startDateTime").data("kendoDatePicker").value();
+    var endDateTimeValue = $("#endDateTime").data("kendoDatePicker").value();
+
+    return { sHospID: HospIDValue, startDate: startDateTimeValue, endDate: endDateTimeValue };
+}
+
 // #region GetSysUploadServerSelected : 取得選擇的醫事機構代碼
 function GetLaboratoryData() {
     // 取得資料前,先把條件變數做整理
@@ -586,16 +584,18 @@ function GetLaboratoryData() {
 // #endregion
 
 function lisPatientLaboratoryMaster_Grid_OnRowSelect(e) {
-    // 取得資料前,先把條件變數做整理    
+    // 取得資料前,先把條件變數做整理
+    var HospIDValue = $("#ddlSysHospital").data("kendoDropDownList").value();
     var grid = e.sender;
     var dsa = grid.dataItem(grid.select());
 
     // 重新讀取檢驗所所屬結構
-    //$("#grid_LisLaboratoryDetail").data("kendoGrid").
-    //    dataSource.read(
-    //        {
-    //            sLLMRowid: dsa.LLMRowid,
-    //        });
+    $("#grid_lisPatientLaboratoryDetail").data("kendoGrid").
+        dataSource.read(
+            {
+                sHospID: HospIDValue,
+                sPLMRowid: dsa.PLMRowid
+            });
 }
 
 // #region GetSysUploadServerSelected : 取得選擇的醫事機構代碼

@@ -12,7 +12,7 @@ namespace ZMLISSys.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LISQueue
+    public partial class lisLaboratoryQueue
     {
         public string LQRowid { get; set; }
         public string SCHRowid { get; set; }

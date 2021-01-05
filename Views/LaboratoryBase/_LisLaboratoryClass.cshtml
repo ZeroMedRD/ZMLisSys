@@ -32,7 +32,7 @@
     //.Events(events => { events.Change("InsulinModule_Grid_OnRowSelect"); })
     .Navigatable()
     .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
-    .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("680")).Resizable(resize => resize.Columns(true))
+    .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("645")).Resizable(resize => resize.Columns(true))
     .DataSource(dataSource => dataSource.Ajax()
         .Sort(x => { x.Add("LLCCode").Ascending(); })
         .Model(model => { model.Id(h => h.LLCRowid); })

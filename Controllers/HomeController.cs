@@ -66,11 +66,6 @@ namespace ZMLISSys.Controllers
             Session["UserRowid"] = "a7aa1465-4566-4142-ae09-ffdc9d107a25";          // ufoujoey@gmail.com
 
             return View();
-        }
-
-        public ActionResult Index_Json()
-        {
-            return View();
-        }
+        }       
     }
 }

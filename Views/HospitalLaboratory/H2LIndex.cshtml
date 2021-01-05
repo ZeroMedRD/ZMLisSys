@@ -43,13 +43,13 @@
             <div class="col-md-8">
                 <div class="card card-dark">
                     <div class="card-header" style="padding:0 10px 0 10px;">
-                        <h3 class="card-title card-title-vertical">檢驗連接</h3>
+                        <h3 class="card-title card-title-vertical">檢驗自動排程設定</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                         </div>
                     </div>
                     <div class="card-body card-body-text">
-                        @*@Html.Partial("_SysHospitalGrafting")*@
+                        @Html.Partial("_HospitalLaboratorySchedule")
                     </div>
                 </div>
             </div>
@@ -72,3 +72,12 @@
     </div>
 </body>
 </html>
+
+@section footermessage {
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2020-2025 <a href="http://www.zeromed.com.tw/">. 凌醫科技顧問股份有限公司</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 2.0.0-alpha
+    </div>
+}

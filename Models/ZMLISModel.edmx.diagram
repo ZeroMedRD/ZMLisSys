@@ -5,13 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7716981661054ae7a1f0ca7ab5807bd8" Name="Diagram1">
-        <EntityTypeShape EntityType="ZMLISModel.LISQueue" Width="1.5" PointX="6.125" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZMLISModel.LISSchedule" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ZMLISModel.lisLaboratoryClass" Width="2.125" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="ZMLISModel.lisLaboratoryItem" Width="2.125" PointX="3.125" PointY="0.5" />
         <EntityTypeShape EntityType="ZMLISModel.lisLaboratoryMaster" Width="1.5" PointX="6" PointY="0.625" />
-        <EntityTypeShape EntityType="ZMLISModel.lisDataMapping" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="ZMLISModel.lisLaboratoryDetail" Width="1.5" PointX="8.5" PointY="0.5" />
+        <EntityTypeShape EntityType="ZMLISModel.lisLaboratoryQueue" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="ZMLISModel.lisLaboratorySchedule" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -255,6 +257,105 @@ namespace ZMLISSys.Controllers
 
                 return Json(result);
             }            
+        }
+        #endregion
+
+        #region  HospitalLaboratory CRUD
+        public ActionResult HospitalLaboratorySchedule_Read([DataSourceRequest] DataSourceRequest request, string sHospRowid)
+        {
+            DataSourceResult result =
+                (from ls in db_zmlis.lisLaboratorySchedule where ls.HospRowid == sHospRowid select ls).ToDataSourceResult(request);
+
+            return Json(result);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult LISSchedule_Create([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud, string sHospRowid)
+        {
+            string sRowid = Guid.NewGuid().ToString();
+
+            if (!String.IsNullOrWhiteSpace(sHospRowid) && ModelState.IsValid)
+            {
+                var entity = new lisLaboratorySchedule
+                {
+                    LLSRowid = sRowid,
+                    HospRowid = sHospRowid,
+                    CBDRowid = crud.CBDRowid,
+                    LLSMon = crud.LLSMon,
+                    LLSTue = crud.LLSTue,
+                    LLSWed = crud.LLSWed,
+                    LLSThu = crud.LLSThu,
+                    LLSFri = crud.LLSFri,
+                    LLSSat = crud.LLSSat,
+                    LLSSun = crud.LLSSun,
+                    LLSTime01 = crud.LLSTime01,
+                    LLSTime02 = crud.LLSTime02,
+                    LLSTime03 = crud.LLSTime03,
+                    LLSTime04 = crud.LLSTime04,
+                    LLSTime05 = crud.LLSTime05,
+                    LLSDescription = crud.LLSDescription,
+                    LLSReceiveMail = crud.LLSReceiveMail
+                };
+
+                db_zmlis.lisLaboratorySchedule.Add(entity);
+                db_zmlis.SaveChanges();
+
+                //insert_LS.LLSRowid = entity.LLSRowid;
+            }
+
+            return Json(new[] { crud }.ToDataSourceResult(new DataSourceRequest(), ModelState));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult LISSchedule_Update([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new lisLaboratorySchedule
+                {
+                    LLSRowid = crud.LLSRowid,
+                    HospRowid = crud.HospRowid,
+                    CBDRowid = crud.CBDRowid,                    
+                    LLSMon = crud.LLSMon,
+                    LLSTue = crud.LLSTue,
+                    LLSWed = crud.LLSWed,
+                    LLSThu = crud.LLSThu,
+                    LLSFri = crud.LLSFri,
+                    LLSSat = crud.LLSSat,
+                    LLSSun = crud.LLSSun,
+                    LLSTime01 = crud.LLSTime01,
+                    LLSTime02 = crud.LLSTime02,
+                    LLSTime03 = crud.LLSTime03,
+                    LLSTime04 = crud.LLSTime04,
+                    LLSTime05 = crud.LLSTime05,
+                    LLSDescription = crud.LLSDescription,
+                    LLSReceiveMail = crud.LLSReceiveMail
+                };
+
+                db_zmlis.lisLaboratorySchedule.Attach(entity);
+                db_zmlis.Entry(entity).State = EntityState.Modified;
+                db_zmlis.SaveChanges();
+            }
+
+            return Json(new[] { crud }.ToDataSourceResult(request, ModelState));
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult LISSchedule_Destroy([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new lisLaboratorySchedule
+                {
+                    LLSRowid = crud.LLSRowid
+                };
+
+                db_zmlis.lisLaboratorySchedule.Attach(entity);
+                db_zmlis.lisLaboratorySchedule.Remove(entity);
+                db_zmlis.SaveChanges();
+            }
+
+            return Json(new[] { crud }.ToDataSourceResult(request, ModelState));
         }
         #endregion
     }

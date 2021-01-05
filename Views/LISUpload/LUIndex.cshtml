@@ -49,7 +49,7 @@
                     })
                     .Enable(true)
                 //.HtmlAttributes(new { @class = "form-control pull-left" })
-                )                
+                )
             </div>
             <div class="col-md-5">
                 <div style="float:left;">
@@ -57,28 +57,28 @@
                     @(Html.Kendo().DatePicker().Name("startDateTime")
                         .Value(DateTime.Today)
                         .Max(DateTime.Today)
-                        .ParseFormats(new string[] { "yyyy/MM/dd" })
+                        .Format("yyyy/MM/dd")
                         //.Events(e => e.Change("startChange"))
                         .HtmlAttributes(new { style = "width: 30%; border-color:darkgrey", title = "起始日期" })) 至
                     @(Html.Kendo().DatePicker().Name("endDateTime")
                         .Value(DateTime.Today)
                         //.Min(DateTime.Today)
-                        .ParseFormats(new string[] { "yyyy/MM/dd" })
+                        .Format("yyyy/MM/dd")
                         //.Events(e => e.Change("endChange"))
                         .HtmlAttributes(new { style = "width: 30%; border-color:darkgrey", title = "結束日期" }))
-                    <button id="QueryButton" class="btn btn-navbar k-button k-button-icontext" onclick="GetLaboratoryData()">查詢</button>                
-                </div>                
+                    <button id="QueryButton" class="btn btn-navbar k-button k-button-icontext" onclick="GetLaboratoryData()">查詢</button>
+                </div>
             </div>
             <div class="col-md-4">
-                    指定時間：
-                    @(Html.Kendo().DateTimePicker().Name("PushDT")
+                指定時間：
+                @(Html.Kendo().DateTimePicker().Name("PushDT")
                             //.Value(DateTime.Today)
                             .Min(DateTime.Today)
                             .ParseFormats(new string[] { "yyyy/MM/dd hh:mm:ss" })
                             .HtmlAttributes(new { style = "width: 50%; border-color:darkgrey", title = "指定時間" }))
-                    <button id="PushButton" class="btn btn-navbar k-button k-button-icontext" onclick="PushSchedule()">推送</button>
-                    <span id="uploadButton" class="btn btn-navbar k-button k-button-icontext">上傳檢驗檔案</span>                
-            </div>            
+                <button id="PushButton" class="btn btn-navbar k-button k-button-icontext" onclick="PushSchedule()">推送</button>
+                <span id="uploadButton" class="btn btn-navbar k-button k-button-icontext">上傳檢驗檔案</span>
+            </div>
         </div>
         <hr>
         <div class="row">
@@ -142,3 +142,12 @@
     </div>
 </body>
 </html>
+
+@section footermessage {
+    <!-- Default to the left -->    
+    <strong>Copyright &copy; 2020-2025 <a href="http://www.zeromed.com.tw/">. 凌醫科技顧問股份有限公司</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 2.0.0-alpha
+        </div>
+}

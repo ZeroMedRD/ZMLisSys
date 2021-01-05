@@ -1,0 +1,56 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisLaboratorySchedule>()
+    .Name("grid_lisLaboratorySchedule")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.LLSRowid).Hidden(true);
+        columns.Bound(c => c.CBDRowid).Hidden(true);
+        columns.Bound(c => c.LLSDescription).Width(200);
+        columns.Bound(c => c.CBDDescription).Hidden(true);
+        columns.Bound(c => c.LLSTcpIp).Hidden(true);
+        columns.Bound(c => c.LLSMon).ClientTemplate("# if(LLSMon==true){#" + "<input type='checkbox' checked='checked' id='chboxLLSMon' class='checkBox' disabled />" + "#}else{#" + "<input type='checkbox' id='chboxLLSMon' class='checkBox' disabled />" + "#}#").Filterable(false).Title("一");
+        columns.Bound(c => c.LLSTue).ClientTemplate("# if(LLSTue==true){#" + "<input type='checkbox' checked='checked' id='chboxLLSTue' class='checkBox' disabled />" + "#}else{#" + "<input type='checkbox' id='chboxLLSTue' class='checkBox' disabled />" + "#}#").Filterable(false).Title("二");
+        columns.Bound(c => c.LLSWed).ClientTemplate("# if(LLSWed==true){#" + "<input type='checkbox' checked='checked' id='chboxLLSWed' class='checkBox' disabled />" + "#}else{#" + "<input type='checkbox' id='chboxLLSWed' class='checkBox' disabled />" + "#}#").Filterable(false).Title("三");
+        columns.Bound(c => c.LLSThu).ClientTemplate("# if(LLSThu==true){#" + "<input type='checkbox' checked='checked' id='chboxLLSThu' class='checkBox' disabled />" + "#}else{#" + "<input type='checkbox' id='chboxLLSThu' class='checkBox' disabled />" + "#}#").Filterable(false).Title("四");
+        columns.Bound(c => c.LLSFri).ClientTemplate("# if(LLSFri==true){#" + "<input type='checkbox' checked='checked' id='chboxLLSFri' class='checkBox' disabled />" + "#}else{#" + "<input type='checkbox' id='chboxLLSFri' class='checkBox' disabled />" + "#}#").Filterable(false).Title("五");
+        columns.Bound(c => c.LLSSat).ClientTemplate("# if(LLSSat==true){#" + "<input type='checkbox' checked='checked' id='chboxLLSSat' class='checkBox' disabled />" + "#}else{#" + "<input type='checkbox' id='chboxLLSSat' class='checkBox' disabled />" + "#}#").Filterable(false).Title("六");
+        columns.Bound(c => c.LLSSun).ClientTemplate("# if(LLSSun==true){#" + "<input type='checkbox' checked='checked' id='chboxLLSSun' class='checkBox' disabled />" + "#}else{#" + "<input type='checkbox' id='chboxLLSSun' class='checkBox' disabled />" + "#}#").Filterable(false).Title("日");
+        columns.Bound(c => c.LLSTime01).Format("{0:HH:mm:ss}").Width(150);
+        columns.Bound(c => c.LLSTime02).Format("{0:HH:mm:ss}").Width(150);
+        columns.Bound(c => c.LLSTime03).Format("{0:HH:mm:ss}").Hidden(true);
+        columns.Bound(c => c.LLSTime04).Format("{0:HH:mm:ss}").Hidden(true);
+        columns.Bound(c => c.LLSTime05).Format("{0:HH:mm:ss}").Hidden(true);
+        columns.Bound(c => c.LLSReceiveMail).Hidden(true);
+        columns.Command(command =>
+        {
+            command.Edit().Text(" ");
+            command.Custom(" ").IconClass("k-icon k-i-close").Click("openWindow");
+        }).Width(110);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create().Text("新增資料");
+        toolbar.Excel().Text("輸出到 Excel");        
+    })
+    .Excel(e => e.Filterable(true).AllPages(true)).ColumnMenu()
+    //.Groupable()
+    .Editable(editable => editable.Mode(GridEditMode.PopUp)
+        .TemplateName("_lisLavoratorySchedule_Editor")
+        .DisplayDeleteConfirmation(false)
+        .Window(w => w.Title("資料維護").Width(700).Draggable()))
+    .Pageable(page => page.Refresh(true)
+        .ButtonCount(10)
+        .PageSizes(new[] { 10, 20, 30, 50, 100, 200, 500, 1000 })
+        .Messages(message => message.ItemsPerPage("每頁顯示數目")))
+    .Navigatable()
+    //.Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+    .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("670"))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Model(model => model.Id(p => p.LLSRowid))
+        .Read(read => read.Action("HospitalLaboratorySchedule_Read", "HospitalLaboratory"))
+        .Create(create => create.Action("HospitalLaboratorySchedule_Create", "HospitalLaboratory"))
+        .Update(update => update.Action("HospitalLaboratorySchedule_Update", "HospitalLaboratory"))
+        .Destroy(destroy => destroy.Action("HospitalLaboratorySchedule_Destroy", "HospitalLaboratory"))
+        .Events(events => events.Error("error_handler").Sync("sync_handler")))
+     .NoRecords("目前未有任何資料顯示 !")
+)

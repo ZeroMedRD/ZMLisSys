@@ -268,22 +268,22 @@ namespace ZMLISSys.ViewModels
         public string PLMRowid { get; set; }
 
         [Display(Name = "病人資料序號")]
-        public string PTRowid { get; set; }
+        public string PLMPTRowid { get; set; }
 
         [Display(Name = "身份證字號")]
-        public string PTIdno { get; set; }
+        public string PLMPTIdno { get; set; }
 
         [Display(Name = "姓名")]
-        public string PTName { get; set; }
+        public string PLMPTName { get; set; }
 
         [Display(Name = "出生日期")]
-        public string PTBirthday { get; set; }
+        public string PLMPTBirthday { get; set; }
 
         [Display(Name = "性別")]
-        public string PTGender { get; set; }
+        public string PLMPTGender { get; set; }
 
         [Display(Name = "原病歷號碼")]
-        public string PTCode { get; set; }
+        public string PLMPTCode { get; set; }
 
         [Display(Name = "原就醫日期")]
         public DateTime? PLMClinicDate { get; set; }
@@ -326,14 +326,29 @@ namespace ZMLISSys.ViewModels
         [Display(Name = "檢驗檢查資料序號")]
         public string HLIRowid { get; set; }
 
+        [Display(Name = "檢驗代碼")]
+        public string PLDCode { get; set; }
+
+        [Display(Name = "檢驗名稱")]
+        public string PLDName { get; set; }
+        
         [Display(Name = "檢驗值")]
-        public float PLMValue { get; set; }
+        public float PLDValue { get; set; }
 
         [Display(Name = "檢驗值")]
-        public string PLMStrValue { get; set; }
+        public string PLDStrValue { get; set; }
+
+        [Display(Name = "異常標記")]
+        public string PLDType { get; set; }
+
+        [Display(Name = "檢驗單位")]
+        public string PLDUnit { get; set; }
+
+        [Display(Name = "檢驗註記")]
+        public string PLDMemo { get; set; }
 
         [Display(Name = "資料順序")]
-        public int PLMSeqno { get; set; }        
+        public int PLDSeqno { get; set; }
     }
     #endregion
 
@@ -379,6 +394,83 @@ namespace ZMLISSys.ViewModels
         // L: 檢驗上傳 (使用者透過介面上載的檔案)
         // A: 檢驗上傳 (使用者透過指定時間方式讓主機 Agent程式依時間到期時自動嫁接第三方執行自動匯入)
         // P: 檢驗上傳 (主機 Agent程式依後台管理模式指定時間到期時自動嫁接第三方執行自動匯入)
+    }
+    #endregion
+
+    #region lisLaboratorySchedule 檢驗API自動上傳排程設定 (65.52.165.109/Database:ZMCMSv2)    
+    public class ViewModel_lisLaboratorySchedule
+    {
+        [Display(Name = "資料序號")]
+        public string LLSRowid { get; set; }
+
+        [Display(Name = "醫事機構資料序號")]
+        public string HospRowid { get; set; }
+
+        [Display(Name = "檢驗嫁接資料序號")]
+        public string CBDRowid { get; set; }
+
+        [Display(Name = "檢驗嫁接名稱")]
+        public string CBDDescription { get; set; }
+
+        [Display(Name = "主機連線名稱")]
+        public string LLSTcpIp { get; set; }
+
+        [Display(Name = "登入帳號１")]
+        public string LLSLogin01 { get; set; }
+
+        [Display(Name = "登入帳號２")]
+        public string LLSLogin02 { get; set; }
+
+        [Display(Name = "登入帳號３")]
+        public string LLSLogin03 { get; set; }
+
+        [Display(Name = "登入密碼")]
+        public string LLSPassword { get; set; }
+
+        [Display(Name = "API連接指令")]
+        public string LLSAPIUrl { get; set; }
+
+        [Display(Name = "星期一")]
+        public bool LLSMon { get; set; }
+
+        [Display(Name = "星期二")]
+        public bool LLSTue { get; set; }
+
+        [Display(Name = "星期三")]
+        public bool LLSWed { get; set; }
+
+        [Display(Name = "星期四")]
+        public bool LLSThu { get; set; }
+
+        [Display(Name = "星期五")]
+        public bool LLSFri { get; set; }
+
+        [Display(Name = "星期六")]
+        public bool LLSSat { get; set; }
+
+        [Display(Name = "星期日")]
+        public bool LLSSun { get; set; }
+
+        [Display(Name = "排程時間１")]
+        public DateTime? LLSTime01 { get; set; }
+
+        [Display(Name = "排程時間２")]
+        public DateTime? LLSTime02 { get; set; }
+
+        [Display(Name = "排程時間３")]
+        public DateTime? LLSTime03 { get; set; }
+
+        [Display(Name = "排程時間４")]
+        public DateTime? LLSTime04 { get; set; }
+
+        [Display(Name = "排程時間５")]
+        public DateTime? LLSTime05 { get; set; }
+
+        [Display(Name = "排程描述說明")]
+        public string LLSDescription { get; set; }
+
+        [Display(Name = "排程完成後發送訊息位置")]
+        public string LLSReceiveMail { get; set; }
     }
     #endregion
 }

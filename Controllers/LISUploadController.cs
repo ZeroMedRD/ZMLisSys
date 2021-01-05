@@ -66,6 +66,9 @@ namespace ZMLISSys.Controllers
         {
             DataSourceResult result = ("").ToDataSourceResult(request);
 
+            DateTime sdt = DateTime.Parse(startDate);
+            DateTime edt = DateTime.Parse(endDate);
+
             if (!String.IsNullOrEmpty(sHospID))
             {
                 GetLink();
@@ -75,7 +78,10 @@ namespace ZMLISSys.Controllers
                 {
                     LIS_HISEntities db_zmcmsdata = new LIS_HISEntities(myClass.GetSQLConnectionString(dbs, "his" + sHospID, userid, password, @"res://*/Models.LIS_HISModel.csdl|res://*/Models.LIS_HISModel.ssdl|res://*/Models.LIS_HISModel.msl"));
 
-                    result = (from lplm in db_zmcmsdata.lisPatientLaboratoryMaster select lplm).ToDataSourceResult(request);
+                    result = (from lplm in db_zmcmsdata.lisPatientLaboratoryMaster 
+                              where lplm.PLMApplyDate>=sdt && lplm.PLMApplyDate<=edt                              
+                              select lplm
+                              ).ToDataSourceResult(request);
                 }
             }
 
@@ -96,7 +102,7 @@ namespace ZMLISSys.Controllers
                     LIS_HISEntities db_zmcmsdata = new LIS_HISEntities(myClass.GetSQLConnectionString(dbs, "his" + sHospID, userid, password, @"res://*/Models.LIS_HISModel.csdl|res://*/Models.LIS_HISModel.ssdl|res://*/Models.LIS_HISModel.msl"));
 
                     result = (from lpld in db_zmcmsdata.lisPatientLaboratoryDetail 
-                              where lpld.PLMRowid == sPLMRowid
+                              where lpld.PLMRowid == sPLMRowid                              
                               select lpld).ToDataSourceResult(request);
                 }
             }

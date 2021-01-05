@@ -54,8 +54,8 @@
                     <a href="#" class="nav-link"></a>
                 </li>
                 @*<li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="nav-link"></a>
-                    </li>*@
+                    <a href="#" class="nav-link"></a>
+                </li>*@
             </ul>
 
             <div style="line-height:1.4em;">
@@ -92,8 +92,8 @@
                     <div class="image">
                         @*<img src="@Url.Content(Session["ImageUrl"].ToString())" class="img-circle" alt="User Image">*@
                         @*<img src="~/Assets/SystemImages/user2-160x160.jpg"
-                            class="img-circle elevation-2"
-                            alt="User Image" />*@
+                        class="img-circle elevation-2"
+                        alt="User Image" />*@
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">
@@ -124,7 +124,7 @@
                 </div>
             </div>
             <!-- Main content -->
-            <section class="content"  style="padding: 0px;">
+            <section class="content" style="padding: 0px;">
                 @*<div class="container-fluid">*@
                 <!-- /.row -->
                 @*主要資訊呈現區塊*@
@@ -134,13 +134,17 @@
         </div>
         <!-- /.content -->
         <!-- 底部版權宣告 -->
-        <footer class="main-footer">
+        <!--<footer class="main-footer">-->
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2020-2025 <a href="http://www.zeromed.com.tw/">. 凌醫科技顧問股份有限公司</a>.</strong>
+            <!--<strong>Copyright &copy; 2020-2025 <a href="http://www.zeromed.com.tw/">. 凌醫科技顧問股份有限公司</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 2.0.0-alpha
             </div>
+        </footer>-->
+
+        <footer class="main-footer">
+            @RenderSection("footermessage", required: false)
         </footer>
 
         <!-- Control Sidebar -->

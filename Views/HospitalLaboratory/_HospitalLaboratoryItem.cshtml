@@ -48,7 +48,6 @@
                         .Read(read => read.Action("GetlisLaboratoryClass", "GetData"))
                     )
                     .Filter("contains"))
-
                 </div>
                 <div style="float:left;line-height:30px;">
                     <input id="searchName" type="search" placeholder="請輸入查詢條件" aria-label="Search" style="border:solid 1px #aaaaaa;padding:2px;height:30px;width:300px !important;">
@@ -72,7 +71,7 @@
     .PersistSelection()
     .Navigatable()
     .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
-    .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("670")).Resizable(resize => resize.Columns(true))
+    .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("630")).Resizable(resize => resize.Columns(true))
     .DataSource(dataSource => dataSource.Ajax().ServerOperation(false)
         //.Sort(x => { x.Add("LLINhiCode").Ascending(); })
         .Model(model =>

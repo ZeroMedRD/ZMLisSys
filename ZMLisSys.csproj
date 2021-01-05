@@ -206,9 +206,6 @@
     <Compile Include="Models\laboratory_item.cs">
       <DependentUpon>LIS_AntifatModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\lisDataMapping.cs">
-      <DependentUpon>ZMLISModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\lisHospitalLaboratoryItem.cs">
       <DependentUpon>LIS_HISModel.tt</DependentUpon>
     </Compile>
@@ -224,17 +221,17 @@
     <Compile Include="Models\lisLaboratoryMaster.cs">
       <DependentUpon>ZMLISModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\lisLaboratoryQueue.cs">
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lisLaboratorySchedule.cs">
+      <DependentUpon>ZMLISModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\lisPatientLaboratoryDetail.cs">
       <DependentUpon>LIS_HISModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\lisPatientLaboratoryMaster.cs">
       <DependentUpon>LIS_HISModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LISQueue.cs">
-      <DependentUpon>ZMLISModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LISSchedule.cs">
-      <DependentUpon>ZMLISModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LIS_AntifatModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -5102,16 +5099,12 @@
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-CN.min.js.map" />
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-HK.min.js.map" />
     <Content Include="Scripts\kendo\2018.2.516\messages\kendo.messages.zh-TW.min.js.map" />
-    <Content Include="Views\Home\Index_Json.cshtml" />
     <Content Include="Views\LISSchema\LSIndex.cshtml" />
     <Content Include="Views\LISSchema\_LISLaboratoryMaster.cshtml" />
     <Content Include="Views\LISSchema\_LISLaboratoryDetail.cshtml" />
-    <Content Include="Views\Async\Index.cshtml" />
     <Content Include="Views\LISSchema\EditorTemplates\LLDFormatEditor.cshtml" />
     <Content Include="Views\LISSchema\EditorTemplates\LLDFieldTypeEditor.cshtml" />
     <Content Include="Views\LISSchema\EditorTemplates\LLDFieldKindEditor.cshtml" />
-    <Content Include="Views\LISSchema\_LisLabimport.cshtml" />
-    <Content Include="Views\LISSchema\_LisLabData.cshtml" />
     <Content Include="Views\LaboratoryBase\LBIndexV1.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LaboratoryClassEditor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LaboratoryClinicEditor.cshtml" />
@@ -5131,6 +5124,8 @@
     <Content Include="Views\LISUpload\_lisPatientLaboratoryDetail.cshtml" />
     <Content Include="Views\LISUpload\_lisPatientLaboratoryStatus.cshtml" />
     <Content Include="Views\HospitalLaboratory\H2LIndex.cshtml" />
+    <Content Include="Views\HospitalLaboratory\_HospitalLaboratorySchedule.cshtml" />
+    <Content Include="Views\HospitalLaboratory\EditorTemplates\_lisLavoratorySchedule_Editor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

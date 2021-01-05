@@ -245,53 +245,53 @@ namespace ZMLISSys.Controllers
         }
         #endregion
 
-        #region GetLaboratorySchema_取得檢驗所定義的欄位清單資料
-        public ActionResult GetLaboratorySchema(string sLLMRowid)
-        {
-            if (sLLMRowid != null)
-            {
-                var db_temp = from ll in db_zmlis.lisLaboratoryDetail
-                              where ll.LLMRowid == sLLMRowid
-                              join ldm in db_zmlis.lisDataMapping on ll.LLDRowid equals ldm.LLDRowid into ps
-                              from ldm in ps.DefaultIfEmpty()
-                              where ldm.LLDRowid == null
-                              orderby ll.LLDSeqno
-                              select new
-                              {
-                                  ll.LLDRowid,
-                                  ll.LLDCode,                                  
-                                  ll.LLDFieldName,
-                                  ll.LLDSeqno
-                              };
+        //#region GetLaboratorySchema_取得檢驗所定義的欄位清單資料
+        //public ActionResult GetLaboratorySchema(string sLLMRowid)
+        //{
+        //    if (sLLMRowid != null)
+        //    {
+        //        var db_temp = from ll in db_zmlis.lisLaboratoryDetail
+        //                      where ll.LLMRowid == sLLMRowid
+        //                      join ldm in db_zmlis.lisDataMapping on ll.LLDRowid equals ldm.LLDRowid into ps
+        //                      from ldm in ps.DefaultIfEmpty()
+        //                      where ldm.LLDRowid == null
+        //                      orderby ll.LLDSeqno
+        //                      select new
+        //                      {
+        //                          ll.LLDRowid,
+        //                          ll.LLDCode,                                  
+        //                          ll.LLDFieldName,
+        //                          ll.LLDSeqno
+        //                      };
 
-                return Content(JsonConvert.SerializeObject(db_temp), "application/json");
-            }
+        //        return Content(JsonConvert.SerializeObject(db_temp), "application/json");
+        //    }
 
-            return Content("");
-        }
-        #endregion
+        //    return Content("");
+        //}
+        //#endregion
 
-        #region GetSelectedLaboratorySchema_取得檢驗所定義的欄位清單資料
-        public ActionResult GetSelectedLaboratorySchema(string sLLMRowid)
-        {
-            if (sLLMRowid != null)
-            {
-                var db_temp = (from ll in db_zmlis.lisLaboratoryDetail where ll.LLMRowid == sLLMRowid
-                               join ldm in db_zmlis.lisDataMapping on ll.LLDRowid equals ldm.LLDRowid                               
-                               orderby ldm.LDMSeqno
-                               select new
-                               {
-                                   ldm.LDMRowid,
-                                   ldm.LLDRowid,
-                                   ll.LLDFieldName,
-                                   ll.LLDSeqno
-                               });
+        //#region GetSelectedLaboratorySchema_取得檢驗所定義的欄位清單資料
+        //public ActionResult GetSelectedLaboratorySchema(string sLLMRowid)
+        //{
+        //    if (sLLMRowid != null)
+        //    {
+        //        var db_temp = (from ll in db_zmlis.lisLaboratoryDetail where ll.LLMRowid == sLLMRowid
+        //                       join ldm in db_zmlis.lisDataMapping on ll.LLDRowid equals ldm.LLDRowid                               
+        //                       orderby ldm.LDMSeqno
+        //                       select new
+        //                       {
+        //                           ldm.LDMRowid,
+        //                           ldm.LLDRowid,
+        //                           ll.LLDFieldName,
+        //                           ll.LLDSeqno
+        //                       });
 
-                return Content(JsonConvert.SerializeObject(db_temp), "application/json");
-            }
+        //        return Content(JsonConvert.SerializeObject(db_temp), "application/json");
+        //    }
 
-            return Content("");
-        }
-        #endregion
+        //    return Content("");
+        //}
+        //#endregion
     }
 }

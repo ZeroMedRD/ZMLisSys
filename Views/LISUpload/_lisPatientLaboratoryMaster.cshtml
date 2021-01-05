@@ -3,21 +3,21 @@
     .Columns(columns =>
     {
         columns.Bound(lp => lp.PLMRowid).Hidden(true);
-        columns.Bound(lp => lp.PTRowid).Hidden(true);
-        columns.Bound(lp => lp.PTIdno);
-        columns.Bound(lp => lp.PTName);
-        columns.Bound(lp => lp.PTBirthday);
-        columns.Bound(lp => lp.PTGender);
-        columns.Bound(lp => lp.PTCode);
+        columns.Bound(lp => lp.PLMPTRowid).Hidden(true);
+        columns.Bound(lp => lp.PLMPTIdno);
+        columns.Bound(lp => lp.PLMPTName);
+        columns.Bound(lp => lp.PLMPTBirthday).Hidden(true);
+        columns.Bound(lp => lp.PLMPTGender).Hidden(true);
+        columns.Bound(lp => lp.PLMPTCode);
         columns.Bound(lp => lp.PLMClinicDate).Format("{0: yyyy-MM-dd}");
         columns.Bound(lp => lp.PLMApplyDate).Format("{0: yyyy-MM-dd}");
-        columns.Bound(lp => lp.PLMApplyTime);
+        columns.Bound(lp => lp.PLMApplyTime).Hidden(true);
         columns.Bound(lp => lp.PLMInspDate).Format("{0: yyyy-MM-dd}");
-        columns.Bound(lp => lp.PLMInspTime);
+        columns.Bound(lp => lp.PLMInspTime).Hidden(true);
         columns.Bound(lp => lp.PLMReportDate).Format("{0: yyyy-MM-dd}");
-        columns.Bound(lp => lp.PLMReportTime);
+        columns.Bound(lp => lp.PLMReportTime).Hidden(true);
         columns.Bound(lp => lp.PLMSNo);
-        columns.Bound(lp => lp.PLMReqno);
+        columns.Bound(lp => lp.PLMReqno).Hidden(true);
     })
     .Events(events =>
     {
@@ -25,7 +25,7 @@
     })
     .ColumnMenu()
     .Pageable(page => page.Refresh(true)
-        .ButtonCount(30)
+        .ButtonCount(10)
         .PageSizes(new[] { 50, 100, 300, 500, 1000 })
         .Messages(message => message.ItemsPerPage("筆／頁")))
     .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
@@ -34,11 +34,11 @@
         .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
         .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("200"))
         .DataSource(dataSource => dataSource.Ajax()
-            //.Sort(x => { x.Add("sno").Ascending(); })
-            //.Sort(x => { x.Add("laboratory_date").Ascending(); })   //; x.Add("d2").Ascending()
+            .Sort(x => { x.Add("PLMApplyDate").Ascending(); })
             .Model(model => { model.Id(h => h.PLMRowid); })
-            .Read(read => read.Action("lisPatientLaboratoryMaster_Read", "LISUpload").Data("getParam"))
+            .Read(read => read.Action("lisPatientLaboratoryMaster_Read", "LISUpload").Data("grid_lisPatientLaboratoryMasterRead"))
             .Events(events => events.Error("error_handler").Sync("sync_handler"))
+            .ServerOperation(false)
             .PageSize(50)
             )
     .NoRecords("目前未有任何資料顯示 !")

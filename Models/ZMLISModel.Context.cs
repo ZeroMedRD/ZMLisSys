@@ -25,12 +25,11 @@ namespace ZMLISSys.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<LISQueue> LISQueue { get; set; }
-        public virtual DbSet<LISSchedule> LISSchedule { get; set; }
         public virtual DbSet<lisLaboratoryClass> lisLaboratoryClass { get; set; }
         public virtual DbSet<lisLaboratoryItem> lisLaboratoryItem { get; set; }
         public virtual DbSet<lisLaboratoryMaster> lisLaboratoryMaster { get; set; }
-        public virtual DbSet<lisDataMapping> lisDataMapping { get; set; }
         public virtual DbSet<lisLaboratoryDetail> lisLaboratoryDetail { get; set; }
+        public virtual DbSet<lisLaboratoryQueue> lisLaboratoryQueue { get; set; }
+        public virtual DbSet<lisLaboratorySchedule> lisLaboratorySchedule { get; set; }
     }
 }
