@@ -26,8 +26,9 @@ namespace ZMLISSys.Models
         }
     
         public virtual DbSet<Patient> Patient { get; set; }
-        public virtual DbSet<lisHospitalLaboratoryItem> lisHospitalLaboratoryItem { get; set; }
         public virtual DbSet<lisPatientLaboratoryDetail> lisPatientLaboratoryDetail { get; set; }
         public virtual DbSet<lisPatientLaboratoryMaster> lisPatientLaboratoryMaster { get; set; }
+        public virtual DbSet<lisLaboratoryItem> lisLaboratoryItem { get; set; }
+        public virtual DbSet<lisHospitalLaboratoryItem> lisHospitalLaboratoryItem { get; set; }
     }
 }

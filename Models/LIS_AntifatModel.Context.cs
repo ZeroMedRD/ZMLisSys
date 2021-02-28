@@ -28,5 +28,6 @@ namespace ZMLISSys.Models
         public virtual DbSet<laboratory_class> laboratory_class { get; set; }
         public virtual DbSet<laboratory_clinic> laboratory_clinic { get; set; }
         public virtual DbSet<laboratory_item> laboratory_item { get; set; }
+        public virtual DbSet<body_measure> body_measure { get; set; }
     }
 }

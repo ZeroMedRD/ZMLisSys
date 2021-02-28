@@ -101,6 +101,9 @@ namespace ZMLISSys.ViewModels
         [Display(Name = "英文名稱")]
         public string LLIEngName { get; set; }
 
+        [Display(Name = "報告名稱")]
+        public string LLIRptName { get; set; }
+
         [Display(Name = "支付點數")]
         public float LLINhiCost { get; set; }
 
@@ -119,6 +122,30 @@ namespace ZMLISSys.ViewModels
 
         [Display(Name = "單位")]
         public string LLIUnit { get; set; }
+
+        [Display(Name = "歸屬類別")]
+        public string LLIKind { get; set; }
+
+        [Display(Name = "歸屬類別")]
+        public string LLIKindName { get; set; }
+
+        [Display(Name = "男性標準上限值")]
+        public float LLIUp_Male { get; set; }
+
+        [Display(Name = "男性標準下限值")]
+        public float LLILo_Male { get; set; }
+
+        [Display(Name = "女性標準上限值")]
+        public float LLIUp_Female { get; set; }
+
+        [Display(Name = "女性標準下限值")]
+        public float LLILo_Female { get; set; }
+
+        [Display(Name = "轉換率")]
+        public string LLIConvertRate { get; set; }
+
+        [Display(Name = "轉換單位")]
+        public string LLIConvertUnit { get; set; }
     }
     #endregion
 
@@ -195,26 +222,38 @@ namespace ZMLISSys.ViewModels
         [Display(Name = "醫事機構")]
         public string HospID { get; set; }
 
-        [Display(Name = "選取")]
-        public bool IsChecked { get; set; }
+        //[Display(Name = "選取")]
+        //public bool IsChecked { get; set; }
 
-        [Display(Name = "資料序號")]
-        public string LLIRowid { get; set; }
-
-        [Display(Name = "分類資料序號")]
-        public string LLCRowid { get; set; }
-
-        [Display(Name = "分類名稱")]
-        public string LLCTrdCName { get; set; }
-
+        #region his.lisHospitalLaboratoryItem
         [Display(Name = "醫療院所檢驗檢查資料序號")]
         public string HLIRowid { get; set; }
 
+        [Display(Name = "檢驗所檢驗代碼")]
+        public string HLICode { get; set; }
+
+        [Display(Name = "檢驗所檢驗名稱")]
+        public string HLIName { get; set; }
+
+        [Display(Name = "顯示值範圍")]
+        public string HLIDisplayRange { get; set; }        
+
+        [Display(Name = "檢驗對應資料序號")]
+        public string LLIRowid { get; set; }
+
+        [Display(Name = "檢驗介接資料序號")]
+        public string LLISubRowid { get; set; }
+        #endregion
+
+        #region ZMLIS.lisLaboratoryItem
         [Display(Name = "檢驗代碼")]
         public string LLINhiCode { get; set; }
 
-        [Display(Name = "中文名稱")]
-        public string LLITrdCName { get; set; }
+        [Display(Name = "檢驗名稱")]
+        public string LLITrdCName01 { get; set; }
+
+        [Display(Name = "檢驗介接名稱")]
+        public string LLITrdCName02 { get; set; }
 
         [Display(Name = "英文名稱")]
         public string LLIEngName { get; set; }
@@ -225,23 +264,27 @@ namespace ZMLISSys.ViewModels
         [Display(Name = "單位")]
         public string LLIUnit { get; set; }
 
-        [Display(Name = "檢驗所代碼")]
-        public string HLICode { get; set; }
-
-        [Display(Name = "範圍顯示")]
-        public string HLIDisplayRange { get; set; }
+        [Display(Name = "男高標")]
+        public float LLIUp_Male { get; set; }
 
         [Display(Name = "男低標")]
-        public float HLILoMale { get; set; }
-
-        [Display(Name = "男高標")]
-        public float HLIUpMale { get; set; }      
-
-        [Display(Name = "女低標")]
-        public float HLILoFemale { get; set; }
+        public float LLILo_Male { get; set; }      
 
         [Display(Name = "女高標")]
-        public float HLIUpFemale { get; set; }        
+        public float LLIUp_Female { get; set; }
+
+        [Display(Name = "女低標")]
+        public float LLILo_Female { get; set; }
+
+        [Display(Name = "轉換率")]
+        public string LLIConvertRate { get; set; }
+
+        [Display(Name = "轉換單位")]
+        public string LLIConvertUnit { get; set; }
+
+        [Display(Name = "順序")]
+        public int HLISeqno { get; set; }
+        #endregion
     }
     #endregion
 
@@ -326,6 +369,9 @@ namespace ZMLISSys.ViewModels
         [Display(Name = "檢驗檢查資料序號")]
         public string HLIRowid { get; set; }
 
+        [Display(Name = "順序")]
+        public int HLISeqno { get; set; }
+
         [Display(Name = "檢驗代碼")]
         public string PLDCode { get; set; }
 
@@ -333,10 +379,10 @@ namespace ZMLISSys.ViewModels
         public string PLDName { get; set; }
         
         [Display(Name = "檢驗值")]
-        public float PLDValue { get; set; }
+        public string PLDValue { get; set; }
 
-        [Display(Name = "檢驗值")]
-        public string PLDStrValue { get; set; }
+        //[Display(Name = "檢驗值")]
+        //public string PLDStrValue { get; set; }
 
         [Display(Name = "異常標記")]
         public string PLDType { get; set; }
@@ -349,6 +395,30 @@ namespace ZMLISSys.ViewModels
 
         [Display(Name = "資料順序")]
         public int PLDSeqno { get; set; }
+    }
+    #endregion
+
+    #region lisPatientLaboratoryMaster 病人檢驗表身資料 (65.52.165.109/Database:his1234567890)
+    public class ViewModel_lisPatientLaboratoryDateGroup
+    {
+        //lplm.PLMRowid, lplm.PTRowid, lplm.PLMPTCode, lplm.PLMApplyDate
+        [Display(Name = "醫事機構資料序號")]
+        public string HospID { get; set; }
+
+        [Display(Name = "檢驗資料序號")]
+        public string PLMRowid { get; set; }
+
+        [Display(Name = "病人資料序號")]
+        public string PTRowid { get; set; }
+
+        [Display(Name = "病歷號碼")]
+        public string PLMPTCode { get; set; }
+
+        [Display(Name = "檢驗單號")]
+        public string PLMSNo { get; set; }
+
+        [Display(Name = "檢驗日期")]
+        public DateTime PLMApplyDate { get; set; }
     }
     #endregion
 
@@ -412,7 +482,7 @@ namespace ZMLISSys.ViewModels
         [Display(Name = "檢驗嫁接名稱")]
         public string CBDDescription { get; set; }
 
-        [Display(Name = "主機連線名稱")]
+        [Display(Name = "主機連線位置")]
         public string LLSTcpIp { get; set; }
 
         [Display(Name = "登入帳號１")]
@@ -471,6 +541,52 @@ namespace ZMLISSys.ViewModels
 
         [Display(Name = "排程完成後發送訊息位置")]
         public string LLSReceiveMail { get; set; }
+    }
+    #endregion
+
+    #region ViewModel_Patient => Patient : 病人基本資料表 (zmcms.cloud/Database:his1234567890)
+    public class ViewModel_Patient
+    {
+        [Display(Name = "資料序號")]
+        public string id { get; set; }
+
+        [Display(Name = "醫事機構代碼")]
+        public string hospID { get; set; }
+
+        [Display(Name = "身份證字號")]
+        public string strIdno { get; set; }
+
+        [Display(Name = "病歷號碼")]
+        public string strUserAccount { get; set; }
+
+        [Display(Name = "原HIS病歷號碼")]
+        public int intRsRecno { get; set; }
+
+        [Display(Name = "姓名")]
+        public string strName { get; set; }
+
+        [Display(Name = "電話")]
+        public string strTel { get; set; }
+
+        [Display(Name = "行動電話")]
+        public string strCell { get; set; }
+
+        [Display(Name = "地址")]
+        public string strAddr { get; set; }
+
+        [Display(Name = "收案狀態")]
+        public string lChk { get; set; }
+    }
+    #endregion
+
+    #region ViewModel_LISChart 病人檢驗數值資料 (65.52.165.109/Database:his1234567890)
+    public class ViewModel_LISChart
+    {
+        [Display(Name = "開單日期")]
+        public string PLMApplyDate { get; set; }
+        
+        [Display(Name = "檢驗值")]
+        public decimal PLDValue { get; set; }        
     }
     #endregion
 }

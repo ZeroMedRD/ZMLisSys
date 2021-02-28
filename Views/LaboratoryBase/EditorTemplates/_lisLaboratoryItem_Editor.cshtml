@@ -1,0 +1,169 @@
+﻿@model ZMLISSys.ViewModels.ViewModel_LisLaboratoryItem
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /*.k-item {
+            color: black !important;
+        }*/
+
+        #PersonalBase {
+            /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #PersonalBase td, #PersonalBase th {
+                border: 1px solid #ff7d20;
+                padding: 8px;
+            }
+
+            /*#question tr:nth-child(even) {
+                background-color: floralwhite;
+            }*/
+
+            #PersonalBase tr {
+                background-color: antiquewhite;
+            }
+
+            /*#question tr:hover {
+                background-color: grey;
+            }*/
+
+            #PersonalBase th {
+                font-size: 16px;
+                border: 1px solid #ff7d20;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                /*background-color: #4CAF50;*/
+                color: black;
+            }
+
+        .tdTitle {
+            text-align: center;
+            width: 15%;
+        }
+
+        .tdContent {
+            text-align: left;
+            width: 35%;
+        }
+    </style>
+    <script>
+        function CBDRowidDefault(e) {
+            var dropdownlist = $("#CBDRowid").data("kendoDropDownList");
+            dropdownlist.select(0);
+            this.trigger('change');
+        }        
+    </script>
+
+    @*<link href="~/Content/Editor.css?2019112301" rel="stylesheet" />*@
+</head>
+<body>
+    @Html.HiddenFor(model => model.LLIRowid)
+    @Html.HiddenFor(model => model.LLCRowid)
+
+    <div id="PersonalBase">
+        <table>
+            <tr>
+                <td colspan="2">檢驗項目代碼(健保碼或自費碼)</td>
+                <td colspan="2">@Html.Kendo().TextBoxFor(model => model.LLINhiCode)</td>
+            </tr>
+            <tr>
+                <td>中文名稱</td>
+                <td colspan="3">@Html.Kendo().TextBoxFor(model => model.LLITrdCName).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+            </tr>
+            <tr>
+                <td>英文名稱</td>
+                <td colspan="3">@Html.Kendo().TextBoxFor(model => model.LLIEngName).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+            </tr>
+            <tr>
+                <td>報告名稱</td>
+                <td colspan="3">@Html.Kendo().TextBoxFor(model => model.LLIRptName).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+            </tr>
+            <tr>
+                <td>健保支付點數</td>
+                <td>@Html.Kendo().NumericTextBoxFor(model => model.LLINhiCost).HtmlAttributes(new { style = "width: 100%; max-width: 130px !important;" })</td>
+                <td>計量單位</td>
+                <td>@Html.Kendo().TextBoxFor(model => model.LLIUnit).HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })</td>                
+            </tr>
+            <tr>
+                <td>費用類別</td>
+                <td>
+                    @(Html.Kendo().DropDownListFor(model => model.LLICostType)
+                        .DataTextField("CBDDescription")
+                        .DataValueField("CBDRowid")
+                        .AutoWidth(true)
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetCombo", "GetData", new { stext = "LLICostType" });
+                            });
+                        }).HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })
+                        .ValuePrimitive(true)
+                        .Filter("contains"))
+                </td>
+                <td>項目類別</td>
+                <td>
+                    @(Html.Kendo().DropDownListFor(model => model.LLIType)
+                        .DataTextField("CBDDescription")
+                        .DataValueField("CBDRowid")
+                        .AutoWidth(true)
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetCombo", "GetData", new { stext = "LLIType" });
+                            });
+                        })
+                        .HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })
+                        .ValuePrimitive(true)
+                        .Filter("contains"))
+                </td>
+            </tr>
+            <tr>                
+                <td>歸屬類別</td>
+                <td>
+                    @(Html.Kendo().DropDownListFor(model => model.LLIKind)
+                        .DataTextField("CBDDescription")
+                        .DataValueField("CBDCode")
+                        .AutoWidth(true)
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetCombo", "GetData", new { stext = "LLIKind" });
+                            });
+                        })
+                        .HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })
+                        .ValuePrimitive(true)
+                        .Filter("contains"))
+                </td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <th style="text-align:center">男性標準上限值</th>
+                <th style="text-align:center">男性標準下限值</th>
+                <th style="text-align:center">女性標準上限值</th>
+                <th style="text-align:center">女性標準下限值</th>                
+            </tr>
+            <tr>
+                <td>@Html.Kendo().NumericTextBoxFor(model => model.LLIUp_Male).Decimals(4).HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })</td>
+                <td>@Html.Kendo().NumericTextBoxFor(model => model.LLILo_Male).Decimals(4).HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })</td>
+                <td>@Html.Kendo().NumericTextBoxFor(model => model.LLIUp_Female).Decimals(4).HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })</td>
+                <td>@Html.Kendo().NumericTextBoxFor(model => model.LLILo_Female).Decimals(4).HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })</td>                
+            </tr>
+            <tr>
+                <td>轉換率</td>
+                <td>@Html.Kendo().TextBoxFor(model => model.LLIConvertRate).HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })</td>
+                <td>轉換單位</td>
+                <td>@Html.Kendo().TextBoxFor(model => model.LLIConvertUnit).HtmlAttributes(new { style = "width: 100%; max-width: 160px !important;" })</td>                
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+

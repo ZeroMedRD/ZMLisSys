@@ -3,23 +3,24 @@
     .Columns(columns =>
     {
         //columns.Select().Width(50);
-        columns.Bound(m => m.HospID).HeaderHtmlAttributes(new { @style = "font-size:12px;" }).Hidden(true);
-        columns.Bound(m => m.IsChecked).ClientTemplate(@"<input onclick='ChkData(this);' type='checkbox' #= IsChecked ? checked='checked':'' # class='chkbx' />" + "<input type='hidden' name='id' value='#= IsChecked#' />").Width(45).Title(" ").Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.LLIRowid).Hidden(true).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.LLCRowid).Hidden(true).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.LLCTrdCName).Width(110).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.HLIRowid).Hidden(true).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.LLINhiCode).Width(110).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
-        columns.Bound(m => m.HLICode).Width(105).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
-        columns.Bound(m => m.LLITrdCName).Width(210).Locked(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.LLIEngName).Width(120).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.LLINhiCost).Width(120).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.LLIUnit).Width(80).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
-        columns.Bound(m => m.HLIDisplayRange).Width(90).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
-        columns.Bound(m => m.HLILoMale).Width(75).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
-        columns.Bound(m => m.HLIUpMale).Width(75).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
-        columns.Bound(m => m.HLILoFemale).Width(75).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
-        columns.Bound(m => m.HLIUpFemale).Width(75).HeaderHtmlAttributes(new { @style = "font-size:12px;" });
+        columns.Bound(m => m.HospID).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:12px;" }).Hidden(true);
+        columns.Bound(m => m.HLIRowid).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        //columns.Bound(m => m.LLIRowid).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        //columns.Bound(m => m.LLISubRowid).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.HLISeqno).HeaderHtmlAttributes(new { @style = "font-size:14px;" }).Width(80);
+        columns.Bound(m => m.HLICode).Width(120).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
+        columns.Bound(m => m.HLIName).Width(150).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
+        //columns.Bound(m => m.LLCTrdCName).Width(110).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLITrdCName01).Width(150).EditorTemplateName("_LLDRowidEditor").HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLITrdCName02).Width(150).EditorTemplateName("_LLDSubRowidEditor").HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.LLINhiCode).Width(110).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        //columns.Bound(m => m.LLINhiCost).Width(120).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        //columns.Bound(m => m.LLIUnit).Width(80).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
+        columns.Bound(m => m.HLIDisplayRange).Width(150).HeaderHtmlAttributes(new { @style = "font-size:14px;" });        
+        //columns.Bound(m => m.LLIUp_Male).Width(75).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
+        //columns.Bound(m => m.LLILo_Male).Width(75).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
+        //columns.Bound(m => m.LLIUp_Female).Width(75).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
+        //columns.Bound(m => m.LLILo_Female).Width(75).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
         columns.Command(command =>
         {
             command.Edit().Text(" ").CancelText(" ").UpdateText(" ");
@@ -28,69 +29,124 @@
     })
     .ToolBar(toolbar =>
     {
-        toolbar.Template(@<text>
-            <div class="refreshBtnContainer">
-                <a class="k-button k-button-icontext k-grid-excel" href="#"><span class="k-icon k-i-excel"></span>匯出到 Excel</a>
-                <button class="btn btn-navbar k-button k-button-icontext" type="button" onclick="copylisLaboratoryItem();">
-                    檢驗資料複製
-                </button>                
-            </div>
-            <div class="toolbar">
-                <div style="float:left;padding-right:5px;">
-                <label class="category-label">條件篩選:</label>
-                @(Html.Kendo().DropDownListFor(m => m)
-                    .Name("ddl_lisLaboratoryClass")
-                    .DataTextField("LLCTrdCName")
-                    .DataValueField("LLCRowid")
-                    .Events(e => e.Select("lisLaboratoryClassChange").Change("lisLaboratoryClassChange"))
-                    //.SelectedIndex(0)
-                    .DataSource(ds => ds
-                        .Read(read => read.Action("GetlisLaboratoryClass", "GetData"))
-                    )
-                    .Filter("contains"))
-                </div>
-                <div style="float:left;line-height:30px;">
-                    <input id="searchName" type="search" placeholder="請輸入查詢條件" aria-label="Search" style="border:solid 1px #aaaaaa;padding:2px;height:30px;width:300px !important;">
-                </div>
-                <div style="float:left;line-height:30px;">
-                    <button class="btn btn-navbar" type="button" onclick="getlisLaboratoryItem();">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </text>);
+        toolbar.Create().Text("新增資料").HtmlAttributes(new { id = "addRecord" });
+        toolbar.Excel().Text("輸出到 Excel");
     })
     .Excel(e => e.Filterable(true).AllPages(true))
     .ColumnMenu()
-    .Editable(editable => editable.Mode(GridEditMode.InLine))
+    .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
     .Pageable(page => page.Refresh(true).ButtonCount(5)
-        .PageSizes(new[] { 50, 80, 100, 200, 300, 400, 500 })
+        .PageSizes(new[] { 50, 100, 200, 300, 400, 500 })
         .Messages(message => message.ItemsPerPage("每頁顯示數目"))
     )
-    .Events(e => e.DataBound("HospitalLaboratoryItem_dataBound"))
-    .PersistSelection()
+    //.Events(e => e.DataBound("HospitalLaboratoryItem_dataBound"))
+    //.PersistSelection()
     .Navigatable()
     .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
-    .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("630")).Resizable(resize => resize.Columns(true))
+    .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("650")).Resizable(resize => resize.Columns(true))
     .DataSource(dataSource => dataSource.Ajax().ServerOperation(false)
-        //.Sort(x => { x.Add("LLINhiCode").Ascending(); })
-        .Model(model =>
-        {
-            model.Id(h => h.LLIRowid);
-            model.Field(p => p.IsChecked).Editable(false);
-            model.Field(p => p.LLIRowid).Editable(false);
-            model.Field(p => p.LLCRowid).Editable(false);
-            model.Field(p => p.LLCTrdCName).Editable(false);
-            model.Field(p => p.LLINhiCode).Editable(false);
-            model.Field(p => p.LLITrdCName).Editable(false);
-            model.Field(p => p.LLIEngName).Editable(false);
-            model.Field(p => p.LLINhiCost).Editable(false);
-            model.Field(p => p.LLIUnit).Editable(false);
-        })
-        .Events(events => events.Error("error_handler"))                //.Sync("Sync_grid_HospitalLaboratoryItem")
+        .Sort(x => x.Add("HLISeqno").Ascending())
+        .Model(model => { model.Id(h => h.HLIRowid); })
+        .Events(events => events.Error("error_handler").Sync("Sync_grid_HospitalLaboratoryItem"))
         .Read(read => read.Action("HosptialLaboratoryItem_Read", "HospitalLaboratory"))
-        //.Create(create => create.Action("LisLaboratoryItem_Create", "LaboratoryBase").Data("getLLCRowid"))
+        .Create(create => create.Action("HosptialLaboratoryItem_Create", "HospitalLaboratory").Data("getHospID"))
         .Update(update => update.Action("HosptialLaboratoryItem_Update", "HospitalLaboratory"))
-        //.Destroy(destroy => destroy.Action("HosptialLaboratoryItem_Destory", "HospitalLaboratory"))
-        .PageSize(15))
-        .NoRecords("目前未有任何資料顯示 !"))
+        .Destroy(destroy => destroy.Action("HosptialLaboratoryItem_Destory", "HospitalLaboratory"))
+        .PageSize(100))
+    .NoRecords("目前未有任何資料顯示 !")
+)
+
+@(Html.Kendo().Sortable()
+    .For("#grid_HospitalLaboratoryItem")
+    .Filter("table > tbody > tr")
+    .Cursor("move")
+    .AutoScroll(true)
+    //.HintHandler("noHint")
+    .Hint("hintElement")
+    .PlaceholderHandler("placeholder")
+    .ContainerSelector("#grid_HospitalLaboratoryItem tbody")
+    .Events(events => events.Change("onMoveChange"))
+)
+
+<script>
+    var noHint = $.noop;
+
+    function placeholder(element) {
+        return element.clone().addClass("k-state-hover").css("opacity", 0.65);
+    }
+
+    function onMoveChange(e) {
+        var grid = $("#grid_HospitalLaboratoryItem").data("kendoGrid"),
+            skip = grid.dataSource.skip(),
+            oldIndex = e.oldIndex + skip,   // The old position.
+            newIndex = e.newIndex + skip,   // The new position.
+            view = grid.dataSource.view(),
+            data = grid.dataSource.data(),
+            dataItem = grid.dataSource.getByUid(e.item.data("uid"));
+
+        dataItem.HLISeqno = newIndex; // Update the order
+        dataItem.dirty = true;
+
+        // Shift the order of the records.
+        if (oldIndex < newIndex) {
+            for (var i = oldIndex + 1; i <= newIndex; i++) {
+                view[i].HLISeqno--;
+                view[i].dirty = true;
+            }
+        } else {
+            for (var i = oldIndex - 1; i >= newIndex; i--) {
+                view[i].HLISeqno++;
+                view[i].dirty = true;
+            }
+        }
+
+        grid.dataSource.sync();
+
+        //grid.dataSource.remove(dataItem);
+        //grid.dataSource.insert(newIndex, dataItem);
+
+        //$.ajax({
+        //    url: "/ZMLISSys/HospitalLaboratory/HospitalLaboratoryItemSeq_Update",
+        //    type: "Post",
+        //    data: {
+        //        sHospID: dataItem.HospID,
+        //        sHLIRowid: dataItem.HLIRowid,
+        //        iHLISeq: e.newIndex
+        //    },
+        //    success: function () {                
+        //        var grid = $('#grid_SysHospital').data('kendoGrid');
+        //        var dsa = grid.dataItem(grid.select());
+
+        //        if (dsa != null) {
+        //            $('#grid_HospitalLaboratoryItem').data('kendoGrid').dataSource.read(
+        //                {
+        //                    sHospID: dataItem.HLIRowid.HospID                            
+        //                });
+        //        }
+        //    },
+        //    error: function (data) {
+        //        alert("資料更新失敗 !!!!" + data);
+        //    }
+        //});
+
+        //alert(e.newIndex + "    " + dataItem.HLIRowid);
+    }
+
+    function hintElement(element) {                         // Customize the hint.
+
+        var grid = $("#grid_HospitalLaboratoryItem").data("kendoGrid"),
+            table = grid.table.clone(),                     // Clone the Grid table.
+            wrapperWidth = grid.wrapper.width(),            // Get the Grid width.
+            wrapper = $("<div class='k-grid k-widget'></div>").width(wrapperWidth),
+            hint;
+
+        table.find("thead").remove();                       // Remove the Grid header from the hint.
+        table.find("tbody").empty();                        // Remove the existing rows from the hint.
+        table.wrap(wrapper);                                // Wrap the table
+        table.append(element.clone().removeAttr("uid"));    // Append the dragged element.
+
+        hint = table.parent();                              // Get the wrapper.
+
+        return hint;                                        // Return the hint element.
+    }
+</script>

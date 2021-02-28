@@ -28,11 +28,13 @@ namespace ZMLISSys.Models
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<ComboDetail> ComboDetail { get; set; }
         public virtual DbSet<ComboMaster> ComboMaster { get; set; }
-        public virtual DbSet<SysHospital> SysHospital { get; set; }
-        public virtual DbSet<SysMedicalGroup> SysMedicalGroup { get; set; }
-        public virtual DbSet<SysMedicalGroupHospital> SysMedicalGroupHospital { get; set; }
         public virtual DbSet<SysRole> SysRole { get; set; }
         public virtual DbSet<SysRoleProgram> SysRoleProgram { get; set; }
-        public virtual DbSet<SysUploadServer> SysUploadServer { get; set; }
+        public virtual DbSet<sysHospitalParam> sysHospitalParam { get; set; }
+        public virtual DbSet<sysHospital> sysHospital { get; set; }
+        public virtual DbSet<sysMedicalGroup> sysMedicalGroup { get; set; }
+        public virtual DbSet<sysMedicalGroupHospital> sysMedicalGroupHospital { get; set; }
+        public virtual DbSet<sysUploadServer> sysUploadServer { get; set; }
+        public virtual DbSet<sysUploadSchedule> sysUploadSchedule { get; set; }
     }
 }

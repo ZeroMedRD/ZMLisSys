@@ -56,6 +56,11 @@ namespace ZMLISSys.Controllers
                                                 <i class='nav-icon far fa-circle text-warning'></i><p>檢驗資料匯入作業</p>
                                             </a>
                                         </li>
+                                        <li class='nav-item'>
+                                            <a href='/LISBoard/LISBoardIndex' class='nav-link'>
+                                                <i class='nav-icon far fa-circle text-warning'></i><p>檢驗資料儀表板</p>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </nav>";
 

@@ -4,7 +4,111 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LIS_AntifatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LIS_AntifatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="body_measure">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="intServerID" Type="int" />
+          <Property Name="strUserAccount" Type="nvarchar" MaxLength="20" />
+          <Property Name="datRecordTime" Type="datetime" />
+          <Property Name="intTypeID" Type="int" />
+          <Property Name="intSystolic" Type="int" />
+          <Property Name="intDiastolic" Type="int" />
+          <Property Name="intPulse" Type="int" />
+          <Property Name="intConsistencyBefore" Type="int" />
+          <Property Name="intConsistencyAfter" Type="int" />
+          <Property Name="floWeight" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floBodyFat" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floBodyFatWeight" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floBmi" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floBmr" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floWaistline" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floButtocks" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floRateOfBone" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floSoftLeanMass" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floTotalBodyWater" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floAn" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floFl" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floSf" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floVf" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floHeight" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floTemp" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floFfm" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floTbw" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floNeck" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floWrist" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="strMemo" Type="nvarchar" MaxLength="100" />
+          <Property Name="strSelf" Type="nvarchar" MaxLength="50" />
+          <Property Name="HR" Type="int" />
+          <Property Name="S3" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="S4" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="EMAT" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="SDI" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floForeheadTemp" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floEarTemp" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floUricAcid" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floCholesterol" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="intUnit" Type="int" />
+          <Property Name="floFundus" Type="nvarchar" MaxLength="30" />
+          <Property Name="floNeurology" Type="nvarchar" MaxLength="30" />
+          <Property Name="floBoneDensity" Type="nvarchar" MaxLength="30" />
+          <Property Name="strClo" Type="nvarchar" MaxLength="30" />
+          <Property Name="strC13" Type="nvarchar" MaxLength="30" />
+          <Property Name="strHpSa" Type="nvarchar" MaxLength="30" />
+          <Property Name="strFobt" Type="nvarchar" MaxLength="30" />
+          <Property Name="strTf" Type="nvarchar" MaxLength="30" />
+          <Property Name="strHbvDna" Type="nvarchar" MaxLength="30" />
+          <Property Name="strHcvRna" Type="nvarchar" MaxLength="30" />
+          <Property Name="strHcvGen" Type="nvarchar" MaxLength="30" />
+          <Property Name="strHcvRav" Type="nvarchar" MaxLength="30" />
+          <Property Name="strARna" Type="nvarchar" MaxLength="30" />
+          <Property Name="strBRna" Type="nvarchar" MaxLength="30" />
+          <Property Name="strHba1c" Type="nvarchar" MaxLength="30" />
+          <Property Name="strEAG" Type="nvarchar" MaxLength="30" />
+          <Property Name="strChol" Type="nvarchar" MaxLength="30" />
+          <Property Name="strTG" Type="nvarchar" MaxLength="30" />
+          <Property Name="strHDL" Type="nvarchar" MaxLength="30" />
+          <Property Name="strLDL" Type="nvarchar" MaxLength="30" />
+          <Property Name="strNonHDL" Type="nvarchar" MaxLength="30" />
+          <Property Name="strCHOLHDL" Type="nvarchar" MaxLength="30" />
+          <Property Name="strTGHDL" Type="nvarchar" MaxLength="30" />
+          <Property Name="strAI" Type="nvarchar" MaxLength="30" />
+          <Property Name="strMicAlb" Type="nvarchar" MaxLength="30" />
+          <Property Name="floHead" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="strHospitalAccount" Type="nvarchar" MaxLength="20" />
+          <Property Name="strUserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="strUserTel" Type="nvarchar" MaxLength="20" />
+          <Property Name="datUserBirthday" Type="datetime" />
+          <Property Name="strShake" Type="nvarchar" MaxLength="20" />
+          <Property Name="strNylon" Type="nvarchar" MaxLength="20" />
+          <Property Name="strFoot" Type="nvarchar" MaxLength="20" />
+          <Property Name="floInsulin" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floBs" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floLeftHandMass" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floRightHandMass" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floLeftFootMass" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floRightFootMass" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floBodyMass" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floSoftness" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floMassEndurance" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floHeartEndurance" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floInsulin2" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floInsulin3" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floInsulin4" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floInsulinTimes" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floLeftHandFat" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floRightHandFat" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floLeftFootFat" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floRightFootFat" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floMainBodyFat" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="strSource" Type="nvarchar" MaxLength="20" />
+          <Property Name="floSMI" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floGrip" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floWalk" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="floPef" Type="numeric" Precision="10" Scale="2" />
+        </EntityType>
         <EntityType Name="laboratory_class">
           <Key>
             <PropertyRef Name="id" />
@@ -38,12 +142,12 @@
           <Property Name="laboratory_clinic_code" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityContainer Name="LIS_AntifatModelStoreContainer">
+          <EntitySet Name="body_measure" EntityType="Self.body_measure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="laboratory_class" EntityType="Self.laboratory_class" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="laboratory_clinic" EntityType="Self.laboratory_clinic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="laboratory_item" EntityType="Self.laboratory_item" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LIS_AntifatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -83,7 +187,112 @@
           <EntitySet Name="laboratory_class" EntityType="Self.laboratory_class" />
           <EntitySet Name="laboratory_clinic" EntityType="Self.laboratory_clinic" />
           <EntitySet Name="laboratory_item" EntityType="Self.laboratory_item" />
+          <EntitySet Name="body_measure" EntityType="LIS_AntifatModel.body_measure" />
         </EntityContainer>
+        <EntityType Name="body_measure">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="intServerID" Type="Int32" />
+          <Property Name="strUserAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="datRecordTime" Type="DateTime" Precision="3" />
+          <Property Name="intTypeID" Type="Int32" />
+          <Property Name="intSystolic" Type="Int32" />
+          <Property Name="intDiastolic" Type="Int32" />
+          <Property Name="intPulse" Type="Int32" />
+          <Property Name="intConsistencyBefore" Type="Int32" />
+          <Property Name="intConsistencyAfter" Type="Int32" />
+          <Property Name="floWeight" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floBodyFat" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floBodyFatWeight" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floBmi" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floBmr" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floWaistline" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floButtocks" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floRateOfBone" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floSoftLeanMass" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floTotalBodyWater" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floAn" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floFl" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floSf" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floVf" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floHeight" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floTemp" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floFfm" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floTbw" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floNeck" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floWrist" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="strMemo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="strSelf" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HR" Type="Int32" />
+          <Property Name="S3" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="S4" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="EMAT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SDI" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floForeheadTemp" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floEarTemp" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floUricAcid" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floCholesterol" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="intUnit" Type="Int32" />
+          <Property Name="floFundus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="floNeurology" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="floBoneDensity" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strClo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strC13" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strHpSa" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strFobt" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strTf" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strHbvDna" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strHcvRna" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strHcvGen" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strHcvRav" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strARna" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strBRna" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strHba1c" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strEAG" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strChol" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strTG" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strHDL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strLDL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strNonHDL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strCHOLHDL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strTGHDL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strAI" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="strMicAlb" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="floHead" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="strHospitalAccount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strUserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strUserTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="datUserBirthday" Type="DateTime" Precision="3" />
+          <Property Name="strShake" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strNylon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strFoot" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="floInsulin" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floBs" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floLeftHandMass" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floRightHandMass" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floLeftFootMass" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floRightFootMass" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floBodyMass" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floSoftness" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floMassEndurance" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floHeartEndurance" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floInsulin2" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floInsulin3" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floInsulin4" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floInsulinTimes" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floLeftHandFat" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floRightHandFat" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floLeftFootFat" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floRightFootFat" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floMainBodyFat" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="strSource" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="floSMI" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floGrip" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floWalk" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="floPef" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -122,6 +331,111 @@
                 <ScalarProperty Name="standard" ColumnName="standard" />
                 <ScalarProperty Name="nhi_code" ColumnName="nhi_code" />
                 <ScalarProperty Name="laboratory_clinic_code" ColumnName="laboratory_clinic_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="body_measure">
+            <EntityTypeMapping TypeName="LIS_AntifatModel.body_measure">
+              <MappingFragment StoreEntitySet="body_measure">
+                <ScalarProperty Name="floPef" ColumnName="floPef" />
+                <ScalarProperty Name="floWalk" ColumnName="floWalk" />
+                <ScalarProperty Name="floGrip" ColumnName="floGrip" />
+                <ScalarProperty Name="floSMI" ColumnName="floSMI" />
+                <ScalarProperty Name="strSource" ColumnName="strSource" />
+                <ScalarProperty Name="floMainBodyFat" ColumnName="floMainBodyFat" />
+                <ScalarProperty Name="floRightFootFat" ColumnName="floRightFootFat" />
+                <ScalarProperty Name="floLeftFootFat" ColumnName="floLeftFootFat" />
+                <ScalarProperty Name="floRightHandFat" ColumnName="floRightHandFat" />
+                <ScalarProperty Name="floLeftHandFat" ColumnName="floLeftHandFat" />
+                <ScalarProperty Name="floInsulinTimes" ColumnName="floInsulinTimes" />
+                <ScalarProperty Name="floInsulin4" ColumnName="floInsulin4" />
+                <ScalarProperty Name="floInsulin3" ColumnName="floInsulin3" />
+                <ScalarProperty Name="floInsulin2" ColumnName="floInsulin2" />
+                <ScalarProperty Name="floHeartEndurance" ColumnName="floHeartEndurance" />
+                <ScalarProperty Name="floMassEndurance" ColumnName="floMassEndurance" />
+                <ScalarProperty Name="floSoftness" ColumnName="floSoftness" />
+                <ScalarProperty Name="floBodyMass" ColumnName="floBodyMass" />
+                <ScalarProperty Name="floRightFootMass" ColumnName="floRightFootMass" />
+                <ScalarProperty Name="floLeftFootMass" ColumnName="floLeftFootMass" />
+                <ScalarProperty Name="floRightHandMass" ColumnName="floRightHandMass" />
+                <ScalarProperty Name="floLeftHandMass" ColumnName="floLeftHandMass" />
+                <ScalarProperty Name="floBs" ColumnName="floBs" />
+                <ScalarProperty Name="floInsulin" ColumnName="floInsulin" />
+                <ScalarProperty Name="strFoot" ColumnName="strFoot" />
+                <ScalarProperty Name="strNylon" ColumnName="strNylon" />
+                <ScalarProperty Name="strShake" ColumnName="strShake" />
+                <ScalarProperty Name="datUserBirthday" ColumnName="datUserBirthday" />
+                <ScalarProperty Name="strUserTel" ColumnName="strUserTel" />
+                <ScalarProperty Name="strUserName" ColumnName="strUserName" />
+                <ScalarProperty Name="strHospitalAccount" ColumnName="strHospitalAccount" />
+                <ScalarProperty Name="floHead" ColumnName="floHead" />
+                <ScalarProperty Name="strMicAlb" ColumnName="strMicAlb" />
+                <ScalarProperty Name="strAI" ColumnName="strAI" />
+                <ScalarProperty Name="strTGHDL" ColumnName="strTGHDL" />
+                <ScalarProperty Name="strCHOLHDL" ColumnName="strCHOLHDL" />
+                <ScalarProperty Name="strNonHDL" ColumnName="strNonHDL" />
+                <ScalarProperty Name="strLDL" ColumnName="strLDL" />
+                <ScalarProperty Name="strHDL" ColumnName="strHDL" />
+                <ScalarProperty Name="strTG" ColumnName="strTG" />
+                <ScalarProperty Name="strChol" ColumnName="strChol" />
+                <ScalarProperty Name="strEAG" ColumnName="strEAG" />
+                <ScalarProperty Name="strHba1c" ColumnName="strHba1c" />
+                <ScalarProperty Name="strBRna" ColumnName="strBRna" />
+                <ScalarProperty Name="strARna" ColumnName="strARna" />
+                <ScalarProperty Name="strHcvRav" ColumnName="strHcvRav" />
+                <ScalarProperty Name="strHcvGen" ColumnName="strHcvGen" />
+                <ScalarProperty Name="strHcvRna" ColumnName="strHcvRna" />
+                <ScalarProperty Name="strHbvDna" ColumnName="strHbvDna" />
+                <ScalarProperty Name="strTf" ColumnName="strTf" />
+                <ScalarProperty Name="strFobt" ColumnName="strFobt" />
+                <ScalarProperty Name="strHpSa" ColumnName="strHpSa" />
+                <ScalarProperty Name="strC13" ColumnName="strC13" />
+                <ScalarProperty Name="strClo" ColumnName="strClo" />
+                <ScalarProperty Name="floBoneDensity" ColumnName="floBoneDensity" />
+                <ScalarProperty Name="floNeurology" ColumnName="floNeurology" />
+                <ScalarProperty Name="floFundus" ColumnName="floFundus" />
+                <ScalarProperty Name="intUnit" ColumnName="intUnit" />
+                <ScalarProperty Name="floCholesterol" ColumnName="floCholesterol" />
+                <ScalarProperty Name="floUricAcid" ColumnName="floUricAcid" />
+                <ScalarProperty Name="floEarTemp" ColumnName="floEarTemp" />
+                <ScalarProperty Name="floForeheadTemp" ColumnName="floForeheadTemp" />
+                <ScalarProperty Name="SDI" ColumnName="SDI" />
+                <ScalarProperty Name="EMAT" ColumnName="EMAT" />
+                <ScalarProperty Name="S4" ColumnName="S4" />
+                <ScalarProperty Name="S3" ColumnName="S3" />
+                <ScalarProperty Name="HR" ColumnName="HR" />
+                <ScalarProperty Name="strSelf" ColumnName="strSelf" />
+                <ScalarProperty Name="strMemo" ColumnName="strMemo" />
+                <ScalarProperty Name="floWrist" ColumnName="floWrist" />
+                <ScalarProperty Name="floNeck" ColumnName="floNeck" />
+                <ScalarProperty Name="floTbw" ColumnName="floTbw" />
+                <ScalarProperty Name="floFfm" ColumnName="floFfm" />
+                <ScalarProperty Name="floTemp" ColumnName="floTemp" />
+                <ScalarProperty Name="floHeight" ColumnName="floHeight" />
+                <ScalarProperty Name="floVf" ColumnName="floVf" />
+                <ScalarProperty Name="floSf" ColumnName="floSf" />
+                <ScalarProperty Name="floFl" ColumnName="floFl" />
+                <ScalarProperty Name="floAn" ColumnName="floAn" />
+                <ScalarProperty Name="floTotalBodyWater" ColumnName="floTotalBodyWater" />
+                <ScalarProperty Name="floSoftLeanMass" ColumnName="floSoftLeanMass" />
+                <ScalarProperty Name="floRateOfBone" ColumnName="floRateOfBone" />
+                <ScalarProperty Name="floButtocks" ColumnName="floButtocks" />
+                <ScalarProperty Name="floWaistline" ColumnName="floWaistline" />
+                <ScalarProperty Name="floBmr" ColumnName="floBmr" />
+                <ScalarProperty Name="floBmi" ColumnName="floBmi" />
+                <ScalarProperty Name="floBodyFatWeight" ColumnName="floBodyFatWeight" />
+                <ScalarProperty Name="floBodyFat" ColumnName="floBodyFat" />
+                <ScalarProperty Name="floWeight" ColumnName="floWeight" />
+                <ScalarProperty Name="intConsistencyAfter" ColumnName="intConsistencyAfter" />
+                <ScalarProperty Name="intConsistencyBefore" ColumnName="intConsistencyBefore" />
+                <ScalarProperty Name="intPulse" ColumnName="intPulse" />
+                <ScalarProperty Name="intDiastolic" ColumnName="intDiastolic" />
+                <ScalarProperty Name="intSystolic" ColumnName="intSystolic" />
+                <ScalarProperty Name="intTypeID" ColumnName="intTypeID" />
+                <ScalarProperty Name="datRecordTime" ColumnName="datRecordTime" />
+                <ScalarProperty Name="strUserAccount" ColumnName="strUserAccount" />
+                <ScalarProperty Name="intServerID" ColumnName="intServerID" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

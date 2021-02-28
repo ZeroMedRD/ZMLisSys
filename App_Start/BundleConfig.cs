@@ -23,7 +23,7 @@ namespace ZMLisSys
                 "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/contents/css").Include(
-                //"~/Content/bootstrap.min.css",
+                "~/Content/bootstrap.min.css",
                 //"~/Content/fontawesome.min.css",
                 // "~/Content/ionicons.min.css",
                 //"~/admin-lte/css/skins/all.min.css",
@@ -67,8 +67,8 @@ namespace ZMLisSys
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/admin-lte").Include(
-                "~/AdminLte3/dist/js/adminlte.min.js",
-                "~/AdminLte3/dist/js/pages/dashboard.js"
+                "~/AdminLte3/dist/js/adminlte.min.js"
+                //"~/AdminLte3/dist/js/pages/dashboard.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(

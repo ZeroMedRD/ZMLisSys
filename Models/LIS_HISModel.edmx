@@ -10,13 +10,12 @@
             <PropertyRef Name="HLIRowid" />
           </Key>
           <Property Name="HLIRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="LLIRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLIRowid" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLISubRowid" Type="nvarchar" MaxLength="128" />
           <Property Name="HLICode" Type="nvarchar" MaxLength="20" />
+          <Property Name="HLIName" Type="nvarchar" MaxLength="255" />
           <Property Name="HLIDisplayRange" Type="nvarchar" MaxLength="100" />
-          <Property Name="HLIUpMale" Type="float" />
-          <Property Name="HLILoMale" Type="float" />
-          <Property Name="HLIUpFemale" Type="float" />
-          <Property Name="HLILoFemale" Type="float" />
+          <Property Name="HLISeqno" Type="int" />
         </EntityType>
         <EntityType Name="lisPatientLaboratoryDetail">
           <Key>
@@ -113,11 +112,56 @@
           <Property Name="doctorG8_id" Type="nvarchar" MaxLength="50" />
           <Property Name="g8_mode" Type="nvarchar" MaxLength="1" />
         </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'his3532040438.dbo.lisLaboratoryItem' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="lisLaboratoryItem">
+          <Key>
+            <PropertyRef Name="LLIRowid" />
+          </Key>
+          <Property Name="LLIRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LLCRowid" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLINhiCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLITrdCName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LLIEngName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LLIRptName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LLINhiCost" Type="float" />
+          <Property Name="LLICostType" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLIType" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLIUnit" Type="nvarchar" MaxLength="100" />
+          <Property Name="LLIKind" Type="char" MaxLength="2" />
+          <Property Name="LLIUp_Male" Type="float" />
+          <Property Name="LLILo_Male" Type="float" />
+          <Property Name="LLIUp_Female" Type="float" />
+          <Property Name="LLILo_Female" Type="float" />
+          <Property Name="LLIConvertRate" Type="nvarchar" MaxLength="20" />
+          <Property Name="LLIConvertUnit" Type="char" MaxLength="2" />
+        </EntityType>
         <EntityContainer Name="LIS_HISModelStoreContainer">
           <EntitySet Name="lisHospitalLaboratoryItem" EntityType="Self.lisHospitalLaboratoryItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lisPatientLaboratoryDetail" EntityType="Self.lisPatientLaboratoryDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lisPatientLaboratoryMaster" EntityType="Self.lisPatientLaboratoryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lisLaboratoryItem" EntityType="Self.lisLaboratoryItem" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [lisLaboratoryItem].[LLIRowid] AS [LLIRowid], 
+    [lisLaboratoryItem].[LLCRowid] AS [LLCRowid], 
+    [lisLaboratoryItem].[LLINhiCode] AS [LLINhiCode], 
+    [lisLaboratoryItem].[LLITrdCName] AS [LLITrdCName], 
+    [lisLaboratoryItem].[LLIEngName] AS [LLIEngName], 
+    [lisLaboratoryItem].[LLIRptName] AS [LLIRptName], 
+    [lisLaboratoryItem].[LLINhiCost] AS [LLINhiCost], 
+    [lisLaboratoryItem].[LLICostType] AS [LLICostType], 
+    [lisLaboratoryItem].[LLIType] AS [LLIType], 
+    [lisLaboratoryItem].[LLIUnit] AS [LLIUnit], 
+    [lisLaboratoryItem].[LLIKind] AS [LLIKind], 
+    [lisLaboratoryItem].[LLIUp_Male] AS [LLIUp_Male], 
+    [lisLaboratoryItem].[LLILo_Male] AS [LLILo_Male], 
+    [lisLaboratoryItem].[LLIUp_Female] AS [LLIUp_Female], 
+    [lisLaboratoryItem].[LLILo_Female] AS [LLILo_Female], 
+    [lisLaboratoryItem].[LLIConvertRate] AS [LLIConvertRate], 
+    [lisLaboratoryItem].[LLIConvertUnit] AS [LLIConvertUnit]
+    FROM [dbo].[lisLaboratoryItem] AS [lisLaboratoryItem]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -181,23 +225,11 @@
         </EntityType>
         <EntityContainer Name="LIS_HISEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Patient" EntityType="Self.Patient" />
-          <EntitySet Name="lisHospitalLaboratoryItem" EntityType="LIS_HISModel.lisHospitalLaboratoryItem" />
           <EntitySet Name="lisPatientLaboratoryDetail" EntityType="LIS_HISModel.lisPatientLaboratoryDetail" />
           <EntitySet Name="lisPatientLaboratoryMaster" EntityType="LIS_HISModel.lisPatientLaboratoryMaster" />
+          <EntitySet Name="lisLaboratoryItem" EntityType="LIS_HISModel.lisLaboratoryItem" />
+          <EntitySet Name="lisHospitalLaboratoryItem" EntityType="LIS_HISModel.lisHospitalLaboratoryItem" />
         </EntityContainer>
-        <EntityType Name="lisHospitalLaboratoryItem">
-          <Key>
-            <PropertyRef Name="HLIRowid" />
-          </Key>
-          <Property Name="HLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="LLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="HLICode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="HLIDisplayRange" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="HLIUpMale" Type="Double" />
-          <Property Name="HLILoMale" Type="Double" />
-          <Property Name="HLIUpFemale" Type="Double" />
-          <Property Name="HLILoFemale" Type="Double" />
-        </EntityType>
         <EntityType Name="lisPatientLaboratoryDetail">
           <Key>
             <PropertyRef Name="PLDRowid" />
@@ -236,6 +268,40 @@
           <Property Name="PLMSNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PLMReqno" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="PLMInsertDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="lisLaboratoryItem">
+          <Key>
+            <PropertyRef Name="LLIRowid" />
+          </Key>
+          <Property Name="LLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLCRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLINhiCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLITrdCName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLIEngName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLIRptName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLINhiCost" Type="Double" />
+          <Property Name="LLICostType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLIType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLIUnit" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LLIKind" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="LLIUp_Male" Type="Double" />
+          <Property Name="LLILo_Male" Type="Double" />
+          <Property Name="LLIUp_Female" Type="Double" />
+          <Property Name="LLILo_Female" Type="Double" />
+          <Property Name="LLIConvertRate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LLIConvertUnit" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="lisHospitalLaboratoryItem">
+          <Key>
+            <PropertyRef Name="HLIRowid" />
+          </Key>
+          <Property Name="HLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLIRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLISubRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="HLICode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HLIName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HLIDisplayRange" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HLISeqno" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -300,20 +366,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="lisHospitalLaboratoryItem">
-            <EntityTypeMapping TypeName="LIS_HISModel.lisHospitalLaboratoryItem">
-              <MappingFragment StoreEntitySet="lisHospitalLaboratoryItem">
-                <ScalarProperty Name="HLILoFemale" ColumnName="HLILoFemale" />
-                <ScalarProperty Name="HLIUpFemale" ColumnName="HLIUpFemale" />
-                <ScalarProperty Name="HLILoMale" ColumnName="HLILoMale" />
-                <ScalarProperty Name="HLIUpMale" ColumnName="HLIUpMale" />
-                <ScalarProperty Name="HLIDisplayRange" ColumnName="HLIDisplayRange" />
-                <ScalarProperty Name="HLICode" ColumnName="HLICode" />
-                <ScalarProperty Name="LLIRowid" ColumnName="LLIRowid" />
-                <ScalarProperty Name="HLIRowid" ColumnName="HLIRowid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="lisPatientLaboratoryDetail">
             <EntityTypeMapping TypeName="LIS_HISModel.lisPatientLaboratoryDetail">
               <MappingFragment StoreEntitySet="lisPatientLaboratoryDetail">
@@ -352,6 +404,42 @@
                 <ScalarProperty Name="PLMPTIdno" ColumnName="PLMPTIdno" />
                 <ScalarProperty Name="PTRowid" ColumnName="PTRowid" />
                 <ScalarProperty Name="PLMRowid" ColumnName="PLMRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisLaboratoryItem">
+            <EntityTypeMapping TypeName="LIS_HISModel.lisLaboratoryItem">
+              <MappingFragment StoreEntitySet="lisLaboratoryItem">
+                <ScalarProperty Name="LLIConvertUnit" ColumnName="LLIConvertUnit" />
+                <ScalarProperty Name="LLIConvertRate" ColumnName="LLIConvertRate" />
+                <ScalarProperty Name="LLILo_Female" ColumnName="LLILo_Female" />
+                <ScalarProperty Name="LLIUp_Female" ColumnName="LLIUp_Female" />
+                <ScalarProperty Name="LLILo_Male" ColumnName="LLILo_Male" />
+                <ScalarProperty Name="LLIUp_Male" ColumnName="LLIUp_Male" />
+                <ScalarProperty Name="LLIKind" ColumnName="LLIKind" />
+                <ScalarProperty Name="LLIUnit" ColumnName="LLIUnit" />
+                <ScalarProperty Name="LLIType" ColumnName="LLIType" />
+                <ScalarProperty Name="LLICostType" ColumnName="LLICostType" />
+                <ScalarProperty Name="LLINhiCost" ColumnName="LLINhiCost" />
+                <ScalarProperty Name="LLIRptName" ColumnName="LLIRptName" />
+                <ScalarProperty Name="LLIEngName" ColumnName="LLIEngName" />
+                <ScalarProperty Name="LLITrdCName" ColumnName="LLITrdCName" />
+                <ScalarProperty Name="LLINhiCode" ColumnName="LLINhiCode" />
+                <ScalarProperty Name="LLCRowid" ColumnName="LLCRowid" />
+                <ScalarProperty Name="LLIRowid" ColumnName="LLIRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisHospitalLaboratoryItem">
+            <EntityTypeMapping TypeName="LIS_HISModel.lisHospitalLaboratoryItem">
+              <MappingFragment StoreEntitySet="lisHospitalLaboratoryItem">
+                <ScalarProperty Name="HLISeqno" ColumnName="HLISeqno" />
+                <ScalarProperty Name="HLIDisplayRange" ColumnName="HLIDisplayRange" />
+                <ScalarProperty Name="HLIName" ColumnName="HLIName" />
+                <ScalarProperty Name="HLICode" ColumnName="HLICode" />
+                <ScalarProperty Name="LLISubRowid" ColumnName="LLISubRowid" />
+                <ScalarProperty Name="LLIRowid" ColumnName="LLIRowid" />
+                <ScalarProperty Name="HLIRowid" ColumnName="HLIRowid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

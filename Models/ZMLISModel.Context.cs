@@ -26,10 +26,10 @@ namespace ZMLISSys.Models
         }
     
         public virtual DbSet<lisLaboratoryClass> lisLaboratoryClass { get; set; }
-        public virtual DbSet<lisLaboratoryItem> lisLaboratoryItem { get; set; }
         public virtual DbSet<lisLaboratoryMaster> lisLaboratoryMaster { get; set; }
         public virtual DbSet<lisLaboratoryDetail> lisLaboratoryDetail { get; set; }
         public virtual DbSet<lisLaboratoryQueue> lisLaboratoryQueue { get; set; }
         public virtual DbSet<lisLaboratorySchedule> lisLaboratorySchedule { get; set; }
+        public virtual DbSet<lisLaboratoryItem> lisLaboratoryItem { get; set; }
     }
 }

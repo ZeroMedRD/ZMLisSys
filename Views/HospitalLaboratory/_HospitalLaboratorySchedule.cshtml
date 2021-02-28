@@ -28,29 +28,31 @@
     })
     .ToolBar(toolbar =>
     {
-        toolbar.Create().Text("新增資料");
-        toolbar.Excel().Text("輸出到 Excel");        
+        toolbar.Create().Text("新增資料").HtmlAttributes(new { id = "add_lisLaboratorySchedule" }).IconClass("fas fa-plus");
+        //toolbar.Create().Text("新增資料");
+        toolbar.Excel().Text("輸出到 Excel");
     })
-    .Excel(e => e.Filterable(true).AllPages(true)).ColumnMenu()
+    .Excel(e => e.Filterable(true).AllPages(true)).ColumnMenu()    
     //.Groupable()
     .Editable(editable => editable.Mode(GridEditMode.PopUp)
-        .TemplateName("_lisLavoratorySchedule_Editor")
+        .TemplateName("_lisLaboratorySchedule_Editor")
         .DisplayDeleteConfirmation(false)
         .Window(w => w.Title("資料維護").Width(700).Draggable()))
     .Pageable(page => page.Refresh(true)
         .ButtonCount(10)
         .PageSizes(new[] { 10, 20, 30, 50, 100, 200, 500, 1000 })
         .Messages(message => message.ItemsPerPage("每頁顯示數目")))
+    //.Events(e => e.DataBound("lisLaboratorySchedule_dataBound"))
     .Navigatable()
     //.Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
     .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("670"))
     .DataSource(dataSource => dataSource
-        .Ajax()
-        .Model(model => model.Id(p => p.LLSRowid))
+        .Ajax()        
+        .Model(model => model.Id(p => p.LLSRowid ))
         .Read(read => read.Action("HospitalLaboratorySchedule_Read", "HospitalLaboratory"))
-        .Create(create => create.Action("HospitalLaboratorySchedule_Create", "HospitalLaboratory"))
+        .Create(create => create.Action("HospitalLaboratorySchedule_Create", "HospitalLaboratory").Data("getHospRowid"))
         .Update(update => update.Action("HospitalLaboratorySchedule_Update", "HospitalLaboratory"))
         .Destroy(destroy => destroy.Action("HospitalLaboratorySchedule_Destroy", "HospitalLaboratory"))
-        .Events(events => events.Error("error_handler").Sync("sync_handler")))
+        .Events(events => events.Error("error_handler").Sync("grid_lisLaboratorySchedule_Sync")))
      .NoRecords("目前未有任何資料顯示 !")
 )

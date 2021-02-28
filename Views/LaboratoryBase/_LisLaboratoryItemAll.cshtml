@@ -9,18 +9,18 @@
     .Columns(columns =>
     {
         columns.Bound(m => m.LLIRowid).Hidden(true);
-        //columns.Bound(m => m.LLCRowid).Hidden(true);
-        columns.Bound(m => m.LLCTrdCName).Width(120).EditorTemplateName("LLCRowidEditor");
+        columns.Bound(m => m.LLCRowid).Hidden(true);
+        columns.Bound(m => m.LLCTrdCName).Width(120);
         columns.Bound(m => m.LLINhiCode).HeaderHtmlAttributes(new { style = "font-size:9px;" });
         columns.Bound(m => m.LLITrdCName).Width(180);
         columns.Bound(m => m.LLIEngName).Width(200);
         columns.Bound(m => m.LLINhiCost).HeaderHtmlAttributes(new { style = "font-size:9px;" });
-        columns.Bound(m => m.LLICostTypeName).EditorTemplateName("LLICostTypeEditor").HeaderHtmlAttributes(new { style="font-size:9px;"});
-        columns.Bound(m => m.LLITypeName).EditorTemplateName("LLITypeEditor").HeaderHtmlAttributes(new { style = "font-size:9px;" });
+        columns.Bound(m => m.LLICostTypeName).HeaderHtmlAttributes(new { style="font-size:9px;"});
+        columns.Bound(m => m.LLITypeName).HeaderHtmlAttributes(new { style = "font-size:9px;" });
         columns.Bound(m => m.LLIUnit).HeaderHtmlAttributes(new { style = "font-size:9px;" });
         columns.Command(command =>
         {
-            command.Edit().Text(" ").CancelText(" ").UpdateText(" ");
+            command.Edit().Text(" ");
             command.Custom(" ").IconClass("k-icon k-i-close").Click("openWindow");
         }).Width(110);
     })
@@ -32,15 +32,19 @@
     .Excel(e => e.Filterable(true).AllPages(true))
     .ColumnMenu()
     .Editable(editable =>
-        editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+        editable.Mode(GridEditMode.PopUp)
+        .TemplateName("_lisLaboratoryItem_Editor")
+        .DisplayDeleteConfirmation(false)
+        .Window(w => w.Title("資料維護").Width(700).Draggable()))
     .Pageable(page => page.Refresh(true)
         .ButtonCount(5)
     )
     .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
     .Navigatable()
-    .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+    //.Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
     .Filterable().Scrollable(scrollable => scrollable.Enabled(true).Height("645")).Resizable(resize => resize.Columns(true))
-    .DataSource(dataSource => dataSource.Ajax().ServerOperation(false)
+    .DataSource(dataSource => dataSource.Ajax()
+        //.ServerOperation(false)
         //.Sort(x => { x.Add("LLINhiCode").Ascending(); })
         .Model(model => { model.Id(h => h.LLIRowid); })
         .Events(events => events.Error("error_handler").Sync("sync_handler"))

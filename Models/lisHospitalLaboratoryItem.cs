@@ -16,11 +16,10 @@ namespace ZMLISSys.Models
     {
         public string HLIRowid { get; set; }
         public string LLIRowid { get; set; }
+        public string LLISubRowid { get; set; }
         public string HLICode { get; set; }
+        public string HLIName { get; set; }
         public string HLIDisplayRange { get; set; }
-        public Nullable<double> HLIUpMale { get; set; }
-        public Nullable<double> HLILoMale { get; set; }
-        public Nullable<double> HLIUpFemale { get; set; }
-        public Nullable<double> HLILoFemale { get; set; }
+        public Nullable<int> HLISeqno { get; set; }
     }
 }
