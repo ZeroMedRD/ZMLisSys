@@ -132,7 +132,7 @@ namespace ZMLISSys.Controllers
                         file.SaveAs(destinationPath);
 
                         // 把上傳的紀錄寫至 UploadServer
-                        var us = new SysUploadServer()
+                        var us = new sysUploadServer()
                         {
                             USRowid = Guid.NewGuid().ToString(),
                             //USHospRowid = Session["HospRowid"].ToString(),
@@ -144,7 +144,7 @@ namespace ZMLISSys.Controllers
                             USType = "L"
                         };
 
-                        db_zmcms.SysUploadServer.Add(us);
+                        db_zmcms.sysUploadServer.Add(us);
                         db_zmcms.SaveChanges();
                     }
                 }
@@ -167,8 +167,8 @@ namespace ZMLISSys.Controllers
                     System.IO.File.Delete(deleteFile);
                 }
 
-                var us = (from u in db_zmcms.SysUploadServer where u.USLoadFilename == Session["targetNewFileName"].ToString() select u).FirstOrDefault();
-                db_zmcms.SysUploadServer.Remove(us);
+                var us = (from u in db_zmcms.sysUploadServer where u.USLoadFilename == Session["targetNewFileName"].ToString() select u).FirstOrDefault();
+                db_zmcms.sysUploadServer.Remove(us);
                 db_zmcms.SaveChanges();
             }
 
@@ -180,7 +180,7 @@ namespace ZMLISSys.Controllers
         public ActionResult SysUploadServer_Read([DataSourceRequest] DataSourceRequest request, string sHospID)
         {
             DataSourceResult
-                result = (from u in db_zmcms.SysUploadServer
+                result = (from u in db_zmcms.sysUploadServer
                           let USServerStatus = (u.USServerStatus == "S" ? "待處理" :
                                                 u.USServerStatus == "P" ? "處理中" :
                                                 u.USServerStatus == "E" ? "已完成" : u.USServerStatus)

@@ -12,7 +12,7 @@ namespace ZMLISSys.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SysMedicalGroupHospital
+    public partial class sysMedicalGroupHospital
     {
         public string MGHRowid { get; set; }
         public string MGRowid { get; set; }

@@ -299,11 +299,19 @@ namespace ZMLISSys.Controllers
                                   orderby cd.CBDDisplayOrder
                                   select new { cd.CBDRowid, cd.CBDDescription }).ToList();
 
-            DataSourceResult result = (from lli in db_lli 
+            var db_LLIKind = (from cm in db_zmcms.ComboMaster
+                              where cm.CBMClass == "LLIKind"
+                              join cd in db_zmcms.ComboDetail on cm.CBMRowid equals cd.CBMRowid
+                              orderby cd.CBDDisplayOrder
+                              select new { cd.CBDRowid, cd.CBDDescription }).ToList();
+
+            DataSourceResult result = (from lli in db_lli
                                        join t1 in db_LLICostType on lli.LLICostType equals t1.CBDRowid into ps1
                                        from rs1 in ps1.DefaultIfEmpty()
                                        join t2 in db_LLIType on lli.LLIType equals t2.CBDRowid into ps2
                                        from rs2 in ps2.DefaultIfEmpty()
+                                       join t3 in db_LLIKind on lli.LLIKind equals t3.CBDRowid into ps3
+                                       from rs3 in ps3.DefaultIfEmpty()
                                        orderby lli.LLINhiCode
                                        select new ViewModel_LisLaboratoryItem()
                                        {
@@ -312,12 +320,21 @@ namespace ZMLISSys.Controllers
                                            LLINhiCode = lli.LLINhiCode,
                                            LLITrdCName = lli.LLITrdCName,
                                            LLIEngName = lli.LLIEngName,
-                                           LLINhiCost = (float)lli.LLINhiCost,
+                                           LLIRptName = lli.LLIRptName,
+                                           LLINhiCost = lli.LLINhiCost == null ? 0 : (float)lli.LLINhiCost,
                                            LLICostType = lli.LLICostType,
                                            LLICostTypeName = (rs1 == null || rs1.CBDRowid == null ? "N/A" : rs1.CBDDescription),
                                            LLIType = lli.LLIType,
                                            LLITypeName = (rs2 == null || rs2.CBDRowid == null ? "N/A" : rs2.CBDDescription),
-                                           LLIUnit = lli.LLIUnit
+                                           LLIUnit = lli.LLIUnit,
+                                           LLIKind = lli.LLIKind,
+                                           LLIKindName = (rs3 == null || rs3.CBDRowid == null ? "N/A" : rs3.CBDDescription),
+                                           LLIUp_Male = lli.LLIUp_Male == null ? 0 : (float)lli.LLIUp_Male,
+                                           LLILo_Male = lli.LLILo_Male == null ? 0 : (float)lli.LLILo_Male,
+                                           LLIUp_Female = lli.LLIUp_Female == null ? 0 : (float)lli.LLIUp_Female,
+                                           LLILo_Female = lli.LLILo_Female == null ? 0 : (float)lli.LLILo_Female,
+                                           LLIConvertRate = lli.LLIConvertRate,
+                                           LLIConvertUnit = lli.LLIConvertUnit
                                        }).ToDataSourceResult(request);
 
             return Json(result);
@@ -335,10 +352,18 @@ namespace ZMLISSys.Controllers
                     LLINhiCode = crud.LLINhiCode,
                     LLITrdCName = crud.LLITrdCName,
                     LLIEngName = crud.LLIEngName,
+                    LLIRptName = crud.LLIRptName,
                     LLINhiCost = crud.LLINhiCost,
                     LLICostType = crud.LLICostType,
                     LLIType = crud.LLIType,
-                    LLIUnit = crud.LLIUnit
+                    LLIUnit = crud.LLIUnit,
+                    LLIKind = crud.LLIKind,
+                    LLIUp_Male = crud.LLIUp_Male,
+                    LLILo_Male = crud.LLILo_Male,
+                    LLIUp_Female = crud.LLIUp_Female,
+                    LLILo_Female = crud.LLILo_Female,
+                    LLIConvertRate = crud.LLIConvertRate,
+                    LLIConvertUnit = crud.LLIConvertUnit
                 };
 
                 db_zmlis.lisLaboratoryItem.Add(entity);
@@ -355,15 +380,23 @@ namespace ZMLISSys.Controllers
             {
                 var entity = new lisLaboratoryItem
                 {
-                    LLIRowid = crud.LLIRowid,                    
+                    LLIRowid = crud.LLIRowid,
                     LLCRowid = crud.LLCRowid,
                     LLINhiCode = crud.LLINhiCode,
                     LLITrdCName = crud.LLITrdCName,
                     LLIEngName = crud.LLIEngName,
+                    LLIRptName = crud.LLIRptName,
                     LLINhiCost = crud.LLINhiCost,
                     LLICostType = crud.LLICostType,
                     LLIType = crud.LLIType,
-                    LLIUnit = crud.LLIUnit
+                    LLIUnit = crud.LLIUnit,
+                    LLIKind = crud.LLIKind,
+                    LLIUp_Male = crud.LLIUp_Male,
+                    LLILo_Male = crud.LLILo_Male,
+                    LLIUp_Female = crud.LLIUp_Female,
+                    LLILo_Female = crud.LLILo_Female,
+                    LLIConvertRate = crud.LLIConvertRate,
+                    LLIConvertUnit = crud.LLIConvertUnit
                 };
 
                 db_zmlis.lisLaboratoryItem.Attach(entity);
@@ -410,27 +443,42 @@ namespace ZMLISSys.Controllers
                               orderby cd.CBDDisplayOrder
                               select new { cd.CBDRowid, cd.CBDDescription }).ToList();
 
+            var db_LLIKind = (from cm in db_zmcms.ComboMaster
+                              where cm.CBMClass == "LLIKind"
+                              join cd in db_zmcms.ComboDetail on cm.CBMRowid equals cd.CBMRowid
+                              orderby cd.CBDDisplayOrder
+                              select new { cd.CBDRowid, cd.CBDDescription }).ToList();
+
             DataSourceResult result = (from lli in db_lli
-                                       join llc in db_zmlis.lisLaboratoryClass on lli.LLCRowid equals llc.LLCRowid
                                        join t1 in db_LLICostType on lli.LLICostType equals t1.CBDRowid into ps1
                                        from rs1 in ps1.DefaultIfEmpty()
                                        join t2 in db_LLIType on lli.LLIType equals t2.CBDRowid into ps2
                                        from rs2 in ps2.DefaultIfEmpty()
+                                       join t3 in db_LLIKind on lli.LLIKind equals t3.CBDRowid into ps3
+                                       from rs3 in ps3.DefaultIfEmpty()
                                        orderby lli.LLINhiCode
                                        select new ViewModel_LisLaboratoryItem()
                                        {
                                            LLIRowid = lli.LLIRowid,
                                            LLCRowid = lli.LLCRowid,
-                                           LLCTrdCName = llc.LLCTrdCName,
                                            LLINhiCode = lli.LLINhiCode,
                                            LLITrdCName = lli.LLITrdCName,
                                            LLIEngName = lli.LLIEngName,
-                                           LLINhiCost = (float)lli.LLINhiCost,
+                                           LLIRptName = lli.LLIRptName,
+                                           LLINhiCost = lli.LLINhiCost == null ? 0 : (float)lli.LLINhiCost,
                                            LLICostType = lli.LLICostType,
                                            LLICostTypeName = (rs1 == null || rs1.CBDRowid == null ? "N/A" : rs1.CBDDescription),
                                            LLIType = lli.LLIType,
-                                           LLITypeName = (rs2 == null || rs2.CBDRowid == null ? "N/A" : rs2.CBDDescription),
-                                           LLIUnit = lli.LLIUnit
+                                           LLITypeName = (rs2 == null || rs2.CBDRowid == null ? "N/A" : rs2.CBDDescription),                                           
+                                           LLIUnit = lli.LLIUnit,
+                                           LLIKind = lli.LLIKind,
+                                           LLIKindName = (rs3 == null || rs3.CBDRowid == null ? "N/A" : rs3.CBDDescription),
+                                           LLIUp_Male = lli.LLIUp_Male == null ? 0 : (float)lli.LLIUp_Male,
+                                           LLILo_Male = lli.LLILo_Male == null ? 0 : (float)lli.LLILo_Male,
+                                           LLIUp_Female = lli.LLIUp_Female == null ? 0 : (float)lli.LLIUp_Female,
+                                           LLILo_Female = lli.LLILo_Female == null ? 0 : (float)lli.LLILo_Female,
+                                           LLIConvertRate = lli.LLIConvertRate,
+                                           LLIConvertUnit = lli.LLIConvertUnit
                                        }).ToDataSourceResult(request);
 
             return Json(result);
@@ -442,16 +490,24 @@ namespace ZMLISSys.Controllers
             if (ModelState.IsValid)
             {
                 var entity = new lisLaboratoryItem
-                {
+                {                    
                     LLIRowid = Guid.NewGuid().ToString(),
                     LLCRowid = crud.LLCRowid,
                     LLINhiCode = crud.LLINhiCode,
                     LLITrdCName = crud.LLITrdCName,
                     LLIEngName = crud.LLIEngName,
+                    LLIRptName = crud.LLIRptName,
                     LLINhiCost = crud.LLINhiCost,
                     LLICostType = crud.LLICostType,
                     LLIType = crud.LLIType,
-                    LLIUnit = crud.LLIUnit
+                    LLIUnit = crud.LLIUnit,
+                    LLIKind = crud.LLIKind,
+                    LLIUp_Male = crud.LLIUp_Male,
+                    LLILo_Male = crud.LLILo_Male,
+                    LLIUp_Female = crud.LLIUp_Female,
+                    LLILo_Female = crud.LLILo_Female,
+                    LLIConvertRate = crud.LLIConvertRate,
+                    LLIConvertUnit = crud.LLIConvertUnit
                 };
 
                 db_zmlis.lisLaboratoryItem.Add(entity);
@@ -473,10 +529,18 @@ namespace ZMLISSys.Controllers
                     LLINhiCode = crud.LLINhiCode,
                     LLITrdCName = crud.LLITrdCName,
                     LLIEngName = crud.LLIEngName,
+                    LLIRptName = crud.LLIRptName,
                     LLINhiCost = crud.LLINhiCost,
                     LLICostType = crud.LLICostType,
                     LLIType = crud.LLIType,
-                    LLIUnit = crud.LLIUnit
+                    LLIUnit = crud.LLIUnit,
+                    LLIKind = crud.LLIKind,
+                    LLIUp_Male = crud.LLIUp_Male,
+                    LLILo_Male = crud.LLILo_Male,
+                    LLIUp_Female = crud.LLIUp_Female,
+                    LLILo_Female = crud.LLILo_Female,
+                    LLIConvertRate = crud.LLIConvertRate,
+                    LLIConvertUnit = crud.LLIConvertUnit
                 };
 
                 db_zmlis.lisLaboratoryItem.Attach(entity);

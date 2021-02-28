@@ -1,0 +1,17 @@
+﻿@using System.Collections
+@using Kendo.Mvc.UI
+
+@(Html.Kendo().DropDownListFor(m => m)
+    .Name("LLISubRowid")
+    .DataTextField("LLITrdCName")
+    .DataValueField("LLIRowid")
+    .AutoWidth(true)
+    .ValuePrimitive(true)
+    .Filter("contains")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetLLISubRowid", "GetData");
+        }).ServerFiltering(false);
+    }).Enable(true).HtmlAttributes(new { @class= "formfont" }))

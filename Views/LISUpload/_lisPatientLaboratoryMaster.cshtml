@@ -19,10 +19,7 @@
         columns.Bound(lp => lp.PLMSNo);
         columns.Bound(lp => lp.PLMReqno).Hidden(true);
     })
-    .Events(events =>
-    {
-        events.Change("lisPatientLaboratoryMaster_Grid_OnRowSelect");
-    })
+    .Events(events => { events.Change("lisPatientLaboratoryMaster_Grid_OnRowSelect"); })
     .ColumnMenu()
     .Pageable(page => page.Refresh(true)
         .ButtonCount(10)

@@ -12,12 +12,16 @@
     @*@Scripts.Render("~/bundles/main")*@
     @Scripts.Render("~/bundles/kendo")
     @Styles.Render("~/contents/css")
+    <style>
+        .k-calendar .k-content .k-link {
+            color:darkgray;
+        }
+    </style>
 
     @*<link href="~/Content/Tabs.css" rel="stylesheet" />*@
     <link href="~/Content/ZMLISSys/ZMLISSys.css" rel="stylesheet" />
     <link href="~/Content/Grid.css" rel="stylesheet" />
     <script src="~/Scripts/ZMLISSys/ZMLISSys.js"></script>
-    @*<script src="~/Scripts/ZMLisSys.js"></script>*@
     <script>
         $(document).ready(function () {
             $("#uploadButton").bind("click", function () {

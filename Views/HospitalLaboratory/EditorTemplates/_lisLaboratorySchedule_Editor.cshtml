@@ -1,0 +1,172 @@
+﻿@model ZMLISSys.ViewModels.ViewModel_lisLaboratorySchedule
+
+<!DOCTYPE html>
+<html>
+<head>
+    @*<style>
+        .k-item {
+            color: black !important;
+        }
+    </style>*@
+    <script>
+        function CBDRowidDefault(e) {
+            var dropdownlist = $("#CBDRowid").data("kendoDropDownList");
+            dropdownlist.select(0);
+            this.trigger('change');
+        }
+    </script>
+
+    @*<link href="~/Content/Editor.css?2019112301" rel="stylesheet" />*@
+</head>
+<body>
+    @Html.HiddenFor(model => model.LLSRowid)
+    @Html.HiddenFor(model => model.HospRowid)    
+
+    <div id="PersonalBase">
+        <table>
+            <tr>
+                <td>排程描述說明</td>
+                <td colspan="4">@Html.Kendo().TextBoxFor(model => model.LLSDescription).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+            </tr>
+            <tr>
+                <td>收件人信箱</td>
+                <td colspan="4">@Html.Kendo().TextBoxFor(model => model.LLSReceiveMail).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+            </tr>
+            <tr>
+                <td>檢驗嫁接名稱</td>
+                <td colspan="4">
+                    @(Html.Kendo().DropDownListFor(model => model.CBDRowid)
+                        .DataTextField("CBDDescription")
+                        .DataValueField("CBDRowid")
+                        .SelectedIndex(0)
+                        .AutoWidth(true)
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetCombo", "GetData", new { stext = "HOSPGRAFTING" });
+                            });
+                        }).HtmlAttributes(new { style = "width:100%; max-width: 700px !important;"})
+                        .ValuePrimitive(true)
+                        .Filter("contains"))
+                </td>
+            </tr>
+            <tr>
+                <td>主機連線位置</td>
+                <td colspan="4">@Html.Kendo().TextBoxFor(model => model.LLSTcpIp).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+            </tr>
+            <tr>
+                <th style="text-align:center">登入帳號１</th>
+                <th style="text-align:center">登入帳號２</th>
+                <th style="text-align:center">登入帳號３</th>
+                <th style="text-align:center" colspan="2">登入密碼</th>
+            </tr>
+            <tr>
+                <td>@Html.Kendo().TextBoxFor(model => model.LLSLogin01).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+                <td>@Html.Kendo().TextBoxFor(model => model.LLSLogin02).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+                <td>@Html.Kendo().TextBoxFor(model => model.LLSLogin03).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+                <td colspan="2">
+                    @Html.Kendo().TextBoxFor(model => model.LLSPassword).HtmlAttributes(new { type = "password", style = "width: 100%; max-width: 700px !important;" })
+                </td>
+            </tr>
+            <tr>
+                <td>API連接指令</td>
+                <td colspan="4">@Html.Kendo().TextBoxFor(model => model.LLSAPIUrl).HtmlAttributes(new { style = "width: 100%; max-width: 700px !important;" }) </td>
+            </tr>
+            <tr>
+                <th style="text-align:center">排程執行時間一</th>
+                <th style="text-align:center">排程執行時間二</th>
+                <th style="text-align:center">排程執行時間三</th>
+                <th style="text-align:center">排程執行時間四</th>
+                <th style="text-align:center">排程執行時間五</th>
+            </tr>
+            <tr>
+                <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime01).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime02).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime03).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime04).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime05).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+            </tr>
+        </table>
+
+
+        @*<div class="form-group-sm form-group-padding">
+                <div class="row row-padding">
+                    <div class="col-md-12 no-padding">
+                        <div class="HeadOneWidth">
+                            <i class="fas fa-users"> 排程描述說明</i>
+                        </div>
+                        <div class="BodyOneWidth">
+                            @Html.TextBoxFor(model => model.LLSDescription, new { @class = "InputOneBox" })
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        @*<div class="form-group-sm form-group-padding">
+                <div class="row row-padding">
+                    <div class="col-md-12 no-padding">
+                        <div class="HeadOneWidth">
+                            <i class="fas fa-hospital-alt"> 收件人信箱</i>
+                        </div>
+                        <div class="BodyOneWidth">
+                            @Html.TextBoxFor(model => model.LLSReceiveMail, new { @class = "InputOneBox" })
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        <!--<div class="form-group-sm form-group-padding">
+            <div class="row row-padding">
+                <div class="col-md-12 no-padding">
+                    <div class="box-body no-padding">
+                        <table class="table table-striped">
+                            <tr>
+                                <th style="text-align:center">星期一</th>
+                                <th style="text-align:center">星期二</th>
+                                <th style="text-align:center">星期三</th>
+                                <th style="text-align:center">星期四</th>
+                                <th style="text-align:center">星期五</th>
+                                <th style="text-align:center">星期六</th>
+                                <th style="text-align:center">星期日</th>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center">@Html.CheckBoxFor(model => model.LLSMon, new { @class = "InputOneBox" })</td>
+                                <td style="text-align:center">@Html.CheckBoxFor(model => model.LLSTue, new { @class = "InputOneBox" })</td>
+                                <td style="text-align:center">@Html.CheckBoxFor(model => model.LLSWed, new { @class = "InputOneBox" })</td>
+                                <td style="text-align:center">@Html.CheckBoxFor(model => model.LLSThu, new { @class = "InputOneBox" })</td>
+                                <td style="text-align:center">@Html.CheckBoxFor(model => model.LLSFri, new { @class = "InputOneBox" })</td>
+                                <td style="text-align:center">@Html.CheckBoxFor(model => model.LLSSat, new { @class = "InputOneBox" })</td>
+                                <td style="text-align:center">@Html.CheckBoxFor(model => model.LLSSun, new { @class = "InputOneBox" })</td>
+                            </tr>
+                        </table>
+                    </div>-->
+        <!-- /.box-body -->
+        <!--</div>
+        <div class="col-md-12 no-padding">
+            <div class="box-body no-padding">
+                <table class="table table-striped">
+                    <tr>
+                        <th style="text-align:center">排程執行時間一</th>
+                        <th style="text-align:center">排程執行時間二</th>
+                        <th style="text-align:center">排程執行時間三</th>
+                        <th style="text-align:center">排程執行時間四</th>
+                        <th style="text-align:center">排程執行時間五</th>
+                    </tr>
+                    <tr>
+                        <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime01).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                        <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime02).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                        <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime03).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                        <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime04).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                        <td>@(Html.Kendo().TimePickerFor(model => model.LLSTime05).Interval(10).HtmlAttributes(new { style = "width: 100%;color:black;" }).Format("HH:mm:ss"))</td>
+                    </tr>
+                </table>
+            </div>-->
+        <!-- /.box-body -->
+        <!--</div>
+            </div>
+        </div>-->
+    </div>
+</body>
+</html>
+

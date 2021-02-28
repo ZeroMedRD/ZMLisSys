@@ -60,7 +60,7 @@ namespace ZMLISSys.Controllers
         }
 
         #region HospitalLaboratoryItem CRUD
-        public ActionResult HosptialLaboratoryItem_Read([DataSourceRequest] DataSourceRequest request, string sHospID, string sLLCRowid, string sSearchString)
+        public ActionResult HosptialLaboratoryItem_Read([DataSourceRequest] DataSourceRequest request, string sHospID)
         {
             DataSourceResult result = ("").ToDataSourceResult(request);
 
@@ -73,66 +73,23 @@ namespace ZMLISSys.Controllers
                 {
                     LIS_HISEntities db_zmcmsdata = new LIS_HISEntities(myClass.GetSQLConnectionString(dbs, "his" + sHospID, userid, password, @"res://*/Models.LIS_HISModel.csdl|res://*/Models.LIS_HISModel.ssdl|res://*/Models.LIS_HISModel.msl"));
 
-                    List<lisLaboratoryItem> db_lli = new List<lisLaboratoryItem>();
-
-                    if (!String.IsNullOrEmpty(sLLCRowid))
-                    {
-                        db_lli = (from lli in db_zmlis.lisLaboratoryItem where lli.LLCRowid == sLLCRowid select lli).ToList();
-                    }
-                    else if (!String.IsNullOrEmpty(sSearchString))
-                    {
-                        db_lli = (from lli in db_zmlis.lisLaboratoryItem
-                                  where (lli.LLINhiCode.Contains(sSearchString) ||
-                                         lli.LLITrdCName.Contains(sSearchString) ||
-                                         lli.LLIEngName.Contains(sSearchString)) 
-                                  select lli
-                                  ).ToList();
-                    }
-                    else
-                    {
-                        db_lli = (from lli in db_zmlis.lisLaboratoryItem select lli).ToList();
-                    }
-
-                    var db = from lli in db_lli
-                             join llc in db_zmlis.lisLaboratoryClass on lli.LLCRowid equals llc.LLCRowid into ps1
-                             from llc in ps1.DefaultIfEmpty()
-                             select new
-                             {
-                                 LLIRowid = lli.LLIRowid,
-                                 LLCRowid = lli.LLCRowid,
-                                 LLCTrdCName = llc.LLCTrdCName,
-                                 LLINhiCode = lli.LLINhiCode,
-                                 LLITrdCName = lli.LLITrdCName,
-                                 LLIEngName = lli.LLIEngName,
-                                 LLINhiCost = (float)lli.LLINhiCost,
-                                 LLICostType = lli.LLICostType,
-                                 LLIType = lli.LLIType,
-                                 LLIUnit = lli.LLIUnit
-                             };
-
-                    result = (from lli in db
-                              join t1 in db_zmcmsdata.lisHospitalLaboratoryItem on lli.LLIRowid equals t1.LLIRowid into ps1
-                              from rs1 in ps1.DefaultIfEmpty()
-                              orderby lli.LLINhiCode ascending
+                    result = (from lhli in db_zmcmsdata.lisHospitalLaboratoryItem 
+                              join db_lliRowid in db_zmcmsdata.lisLaboratoryItem on lhli.LLIRowid equals db_lliRowid.LLIRowid into ps1 from o1 in ps1.DefaultIfEmpty()
+                              join db_lliSubRowid in db_zmcmsdata.lisLaboratoryItem on lhli.LLISubRowid equals db_lliSubRowid.LLIRowid into ps2 from o2 in ps2.DefaultIfEmpty()
+                              orderby lhli.HLISeqno,lhli.HLICode
                               select new ViewModel_HospitalLaboratoryItem()
                               {
-                                  HospID = sHospID,
-                                  IsChecked = rs1 == null ? false : true,
-                                  LLIRowid = lli.LLIRowid,
-                                  LLCRowid = lli.LLCRowid,
-                                  LLCTrdCName = lli.LLCTrdCName,
-                                  HLIRowid = rs1 == null ? "" : rs1.HLIRowid,
-                                  LLINhiCode = lli.LLINhiCode,
-                                  LLITrdCName = lli.LLITrdCName + " " + lli.LLIEngName,
-                                  LLIEngName = lli.LLIEngName,
-                                  LLINhiCost = (float)lli.LLINhiCost,
-                                  LLIUnit = lli.LLIUnit,
-                                  HLICode = rs1 == null ? "" : rs1.HLICode,
-                                  HLIDisplayRange = rs1 == null ? "" : rs1.HLIDisplayRange,
-                                  HLILoMale = rs1 == null || rs1.HLILoMale == null ? 0 : (float)rs1.HLILoMale,
-                                  HLIUpMale = rs1 == null || rs1.HLIUpMale == null ? 0 : (float)rs1.HLIUpMale,
-                                  HLILoFemale = rs1 == null || rs1.HLILoFemale == null ? 0 : (float)rs1.HLILoFemale,
-                                  HLIUpFemale = rs1 == null || rs1.HLIUpFemale == null ? 0 : (float)rs1.HLIUpFemale
+                                  HospID = sHospID,                                  
+                                  HLIRowid = lhli.HLIRowid,
+                                  LLIRowid = lhli.LLIRowid,
+                                  LLISubRowid = lhli.LLISubRowid,
+                                  HLICode = lhli.HLICode,
+                                  HLIName = lhli.HLIName,
+                                  HLIDisplayRange = lhli.HLIDisplayRange,
+                                  LLINhiCode = o1.LLINhiCode,
+                                  LLITrdCName01 = o1.LLITrdCName == null ? "" :  o1.LLITrdCName,
+                                  LLITrdCName02 = o2.LLITrdCName == null ? "" : o2.LLITrdCName,
+                                  HLISeqno = (lhli.HLISeqno == null) ? 999999 : (int)lhli.HLISeqno
                               }).ToDataSourceResult(request);
                 }
             }
@@ -141,7 +98,7 @@ namespace ZMLISSys.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult HosptialLaboratoryItem_Create([DataSourceRequest] DataSourceRequest request, ViewModel_HospitalLaboratoryItem crud, string sHospID, string sRowid)
+        public ActionResult HosptialLaboratoryItem_Create([DataSourceRequest] DataSourceRequest request, ViewModel_HospitalLaboratoryItem crud, string sHospID)
         {
             GetLink();
 
@@ -152,13 +109,17 @@ namespace ZMLISSys.Controllers
                 var entity = new lisHospitalLaboratoryItem
                 {
                     HLIRowid = Guid.NewGuid().ToString(),
-                    LLIRowid = sRowid
+                    LLIRowid = crud.LLIRowid,
+                    LLISubRowid = crud.LLISubRowid,
+                    HLICode = crud.HLICode,
+                    HLIName = crud.HLIName,
+                    HLIDisplayRange = crud.HLIDisplayRange,
+                    HLISeqno = 0
                 };
 
                 db_zmcmsdata.lisHospitalLaboratoryItem.Add(entity);
                 db_zmcmsdata.SaveChanges();
-            }
-            
+            }            
 
             return Json(new[] { crud }.ToDataSourceResult(new DataSourceRequest(), ModelState));
         }
@@ -178,14 +139,13 @@ namespace ZMLISSys.Controllers
                 {
                     var entity = new lisHospitalLaboratoryItem
                     {
+                        HLIRowid = crud.HLIRowid,
                         LLIRowid = crud.LLIRowid,
-                        HLIRowid = crud.HLIRowid,                        
+                        LLISubRowid = crud.LLISubRowid,
                         HLICode = crud.HLICode,
+                        HLIName = crud.HLIName,
                         HLIDisplayRange = crud.HLIDisplayRange,
-                        HLILoMale = crud.HLILoMale,
-                        HLIUpMale = crud.HLIUpMale,
-                        HLILoFemale = crud.HLILoFemale,
-                        HLIUpFemale = crud.HLIUpFemale
+                        HLISeqno = crud.HLISeqno
                     };
 
                     db_zmcmsdata.lisHospitalLaboratoryItem.Attach(entity);
@@ -227,7 +187,7 @@ namespace ZMLISSys.Controllers
 
             if (!String.IsNullOrEmpty(sSearchString))
             {
-                DataSourceResult result = (from sh in db_zmcms.SysHospital
+                DataSourceResult result = (from sh in db_zmcms.sysHospital
                           where sh.HospActive == true && sh.HospID != "0000000000" &&                          
                           (sh.HospID.Contains(sSearchString) ||
                            sh.HospAddress.Contains(sSearchString) ||
@@ -244,7 +204,7 @@ namespace ZMLISSys.Controllers
             }
             else
             {
-                DataSourceResult result = (from sh in db_zmcms.SysHospital
+                DataSourceResult result = (from sh in db_zmcms.sysHospital
                       where sh.HospActive == true && sh.HospID != "0000000000"
                       orderby sh.HospID ascending                     
                       select new
@@ -260,7 +220,7 @@ namespace ZMLISSys.Controllers
         }
         #endregion
 
-        #region  HospitalLaboratory CRUD
+        #region  HospitalLaboratorySchedule CRUD
         public ActionResult HospitalLaboratorySchedule_Read([DataSourceRequest] DataSourceRequest request, string sHospRowid)
         {
             DataSourceResult result =
@@ -270,17 +230,23 @@ namespace ZMLISSys.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LISSchedule_Create([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud, string sHospRowid)
+        public ActionResult HospitalLaboratorySchedule_Create([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud, string sHospRowid)
         {
             string sRowid = Guid.NewGuid().ToString();
 
-            if (!String.IsNullOrWhiteSpace(sHospRowid) && ModelState.IsValid)
+            if (!String.IsNullOrEmpty(sHospRowid) && ModelState.IsValid)
             {
                 var entity = new lisLaboratorySchedule
                 {
                     LLSRowid = sRowid,
                     HospRowid = sHospRowid,
                     CBDRowid = crud.CBDRowid,
+                    LLSTcpIp = crud.LLSTcpIp,
+                    LLSLogin01 = crud.LLSLogin01,
+                    LLSLogin02 = crud.LLSLogin02,
+                    LLSLogin03 = crud.LLSLogin03,
+                    LLSPassword = crud.LLSPassword,
+                    LLSAPIUrl = crud.LLSAPIUrl,
                     LLSMon = crud.LLSMon,
                     LLSTue = crud.LLSTue,
                     LLSWed = crud.LLSWed,
@@ -300,14 +266,14 @@ namespace ZMLISSys.Controllers
                 db_zmlis.lisLaboratorySchedule.Add(entity);
                 db_zmlis.SaveChanges();
 
-                //insert_LS.LLSRowid = entity.LLSRowid;
+                crud.LLSRowid = entity.LLSRowid;
             }
 
             return Json(new[] { crud }.ToDataSourceResult(new DataSourceRequest(), ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LISSchedule_Update([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud)
+        public ActionResult HospitalLaboratorySchedule_Update([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud)
         {
             if (ModelState.IsValid)
             {
@@ -315,7 +281,13 @@ namespace ZMLISSys.Controllers
                 {
                     LLSRowid = crud.LLSRowid,
                     HospRowid = crud.HospRowid,
-                    CBDRowid = crud.CBDRowid,                    
+                    CBDRowid = crud.CBDRowid,
+                    LLSTcpIp = crud.LLSTcpIp,
+                    LLSLogin01 = crud.LLSLogin01,
+                    LLSLogin02 = crud.LLSLogin02,
+                    LLSLogin03 = crud.LLSLogin03,
+                    LLSPassword = crud.LLSPassword,
+                    LLSAPIUrl = crud.LLSAPIUrl,
                     LLSMon = crud.LLSMon,
                     LLSTue = crud.LLSTue,
                     LLSWed = crud.LLSWed,
@@ -341,7 +313,7 @@ namespace ZMLISSys.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LISSchedule_Destroy([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud)
+        public ActionResult HospitalLaboratorySchedule_Destroy([DataSourceRequest] DataSourceRequest request, lisLaboratorySchedule crud)
         {
             if (ModelState.IsValid)
             {
@@ -356,6 +328,31 @@ namespace ZMLISSys.Controllers
             }
 
             return Json(new[] { crud }.ToDataSourceResult(request, ModelState));
+        }
+        #endregion
+
+        #region HospitalLaboratoryItemSeq_Update : 更新檢驗檢視先後順序
+        public ActionResult HospitalLaboratoryItemSeq_Update(string sHospID, string sHLIRowid, int iHLISeq)
+        {
+            if (String.IsNullOrEmpty(sHospID) != true)
+            {
+                GetLink();
+
+                // 判斷資料庫是否存在
+                if (myClass.DatabaseOrTableExist(dbs, ic, userid, password, "his" + sHospID, null, 0) == true)
+                {
+                    LIS_HISEntities db_zmcmsdata = new LIS_HISEntities(myClass.GetSQLConnectionString(dbs, "his" + sHospID, userid, password, @"res://*/Models.LIS_HISModel.csdl|res://*/Models.LIS_HISModel.ssdl|res://*/Models.LIS_HISModel.msl"));
+
+                    var lisHospitalLaboratoryItem = new lisHospitalLaboratoryItem() { HLIRowid = sHLIRowid, HLISeqno = iHLISeq };
+                    db_zmcmsdata.lisHospitalLaboratoryItem.Attach(lisHospitalLaboratoryItem);
+                    db_zmcmsdata.Entry(lisHospitalLaboratoryItem).Property(p => p.HLISeqno).IsModified = true;
+                    var result = db_zmcmsdata.SaveChanges();
+
+                    return Json(result);
+                }
+            }
+            
+            return Json("");
         }
         #endregion
     }

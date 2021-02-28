@@ -12,7 +12,7 @@ namespace ZMLISSys.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SysUploadServer
+    public partial class sysUploadServer
     {
         public string USRowid { get; set; }
         public string USHospRowid { get; set; }

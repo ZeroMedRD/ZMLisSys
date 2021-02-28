@@ -41,10 +41,18 @@
           <Property Name="LLINhiCode" Type="nvarchar" MaxLength="128" />
           <Property Name="LLITrdCName" Type="nvarchar" MaxLength="255" />
           <Property Name="LLIEngName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LLIRptName" Type="nvarchar" MaxLength="255" />
           <Property Name="LLINhiCost" Type="float" />
           <Property Name="LLICostType" Type="nvarchar" MaxLength="128" />
           <Property Name="LLIType" Type="nvarchar" MaxLength="128" />
-          <Property Name="LLIUnit" Type="nvarchar" MaxLength="128" />
+          <Property Name="LLIUnit" Type="nvarchar" MaxLength="100" />
+          <Property Name="LLIKind" Type="char" MaxLength="2" />
+          <Property Name="LLIUp_Male" Type="float" />
+          <Property Name="LLILo_Male" Type="float" />
+          <Property Name="LLIUp_Female" Type="float" />
+          <Property Name="LLILo_Female" Type="float" />
+          <Property Name="LLIConvertRate" Type="nvarchar" MaxLength="20" />
+          <Property Name="LLIConvertUnit" Type="char" MaxLength="2" />
         </EntityType>
         <EntityType Name="lisLaboratoryMaster">
           <Key>
@@ -74,8 +82,8 @@
             <PropertyRef Name="LLSRowid" />
           </Key>
           <Property Name="LLSRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="HospRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="CBDRowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="HospRowid" Type="nvarchar" MaxLength="128" />
+          <Property Name="CBDRowid" Type="nvarchar" MaxLength="128" />
           <Property Name="LLSTcpIp" Type="nvarchar" MaxLength="25" />
           <Property Name="LLSLogin01" Type="nvarchar" MaxLength="50" />
           <Property Name="LLSLogin02" Type="nvarchar" MaxLength="50" />
@@ -111,11 +119,11 @@
       <Schema Namespace="ZMLISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ZMLISEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="lisLaboratoryClass" EntityType="ZMLISModel.lisLaboratoryClass" />
-          <EntitySet Name="lisLaboratoryItem" EntityType="ZMLISModel.lisLaboratoryItem" />
           <EntitySet Name="lisLaboratoryMaster" EntityType="ZMLISModel.lisLaboratoryMaster" />
           <EntitySet Name="lisLaboratoryDetail" EntityType="ZMLISModel.lisLaboratoryDetail" />
           <EntitySet Name="lisLaboratoryQueue" EntityType="ZMLISModel.lisLaboratoryQueue" />
           <EntitySet Name="lisLaboratorySchedule" EntityType="ZMLISModel.lisLaboratorySchedule" />
+          <EntitySet Name="lisLaboratoryItem" EntityType="ZMLISModel.lisLaboratoryItem" />
         </EntityContainer>
         <EntityType Name="lisLaboratoryClass">
           <Key>
@@ -125,20 +133,6 @@
           <Property Name="LLCCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LLCTrdCName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="LLCEngName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="lisLaboratoryItem">
-          <Key>
-            <PropertyRef Name="LLIRowid" />
-          </Key>
-          <Property Name="LLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="LLCRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="LLINhiCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="LLITrdCName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LLIEngName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LLINhiCost" Type="Double" />
-          <Property Name="LLICostType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="LLIType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="LLIUnit" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="lisLaboratoryMaster">
           <Key>
@@ -186,8 +180,8 @@
             <PropertyRef Name="LLSRowid" />
           </Key>
           <Property Name="LLSRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="HospRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CBDRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="HospRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CBDRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="LLSTcpIp" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="LLSLogin01" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LLSLogin02" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -209,6 +203,28 @@
           <Property Name="LLSDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="LLSReceiveMail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="lisLaboratoryItem">
+          <Key>
+            <PropertyRef Name="LLIRowid" />
+          </Key>
+          <Property Name="LLIRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLCRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLINhiCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLITrdCName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLIEngName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLIRptName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LLINhiCost" Type="Double" />
+          <Property Name="LLICostType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLIType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LLIUnit" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LLIKind" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="LLIUp_Male" Type="Double" />
+          <Property Name="LLILo_Male" Type="Double" />
+          <Property Name="LLIUp_Female" Type="Double" />
+          <Property Name="LLILo_Female" Type="Double" />
+          <Property Name="LLIConvertRate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LLIConvertUnit" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -222,21 +238,6 @@
                 <ScalarProperty Name="LLCTrdCName" ColumnName="LLCTrdCName" />
                 <ScalarProperty Name="LLCCode" ColumnName="LLCCode" />
                 <ScalarProperty Name="LLCRowid" ColumnName="LLCRowid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="lisLaboratoryItem">
-            <EntityTypeMapping TypeName="ZMLISModel.lisLaboratoryItem">
-              <MappingFragment StoreEntitySet="lisLaboratoryItem">
-                <ScalarProperty Name="LLIUnit" ColumnName="LLIUnit" />
-                <ScalarProperty Name="LLIType" ColumnName="LLIType" />
-                <ScalarProperty Name="LLICostType" ColumnName="LLICostType" />
-                <ScalarProperty Name="LLINhiCost" ColumnName="LLINhiCost" />
-                <ScalarProperty Name="LLIEngName" ColumnName="LLIEngName" />
-                <ScalarProperty Name="LLITrdCName" ColumnName="LLITrdCName" />
-                <ScalarProperty Name="LLINhiCode" ColumnName="LLINhiCode" />
-                <ScalarProperty Name="LLCRowid" ColumnName="LLCRowid" />
-                <ScalarProperty Name="LLIRowid" ColumnName="LLIRowid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -310,6 +311,29 @@
                 <ScalarProperty Name="CBDRowid" ColumnName="CBDRowid" />
                 <ScalarProperty Name="HospRowid" ColumnName="HospRowid" />
                 <ScalarProperty Name="LLSRowid" ColumnName="LLSRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lisLaboratoryItem">
+            <EntityTypeMapping TypeName="ZMLISModel.lisLaboratoryItem">
+              <MappingFragment StoreEntitySet="lisLaboratoryItem">
+                <ScalarProperty Name="LLIConvertUnit" ColumnName="LLIConvertUnit" />
+                <ScalarProperty Name="LLIConvertRate" ColumnName="LLIConvertRate" />
+                <ScalarProperty Name="LLILo_Female" ColumnName="LLILo_Female" />
+                <ScalarProperty Name="LLIUp_Female" ColumnName="LLIUp_Female" />
+                <ScalarProperty Name="LLILo_Male" ColumnName="LLILo_Male" />
+                <ScalarProperty Name="LLIUp_Male" ColumnName="LLIUp_Male" />
+                <ScalarProperty Name="LLIKind" ColumnName="LLIKind" />
+                <ScalarProperty Name="LLIUnit" ColumnName="LLIUnit" />
+                <ScalarProperty Name="LLIType" ColumnName="LLIType" />
+                <ScalarProperty Name="LLICostType" ColumnName="LLICostType" />
+                <ScalarProperty Name="LLINhiCost" ColumnName="LLINhiCost" />
+                <ScalarProperty Name="LLIRptName" ColumnName="LLIRptName" />
+                <ScalarProperty Name="LLIEngName" ColumnName="LLIEngName" />
+                <ScalarProperty Name="LLITrdCName" ColumnName="LLITrdCName" />
+                <ScalarProperty Name="LLINhiCode" ColumnName="LLINhiCode" />
+                <ScalarProperty Name="LLCRowid" ColumnName="LLCRowid" />
+                <ScalarProperty Name="LLIRowid" ColumnName="LLIRowid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -6,9 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="0c2bf2fe98044aeea607b4aeef8a2fbd" Name="Diagram1">
         <EntityTypeShape EntityType="LIS_HISModel.Patient" Width="1.5" PointX="8.75" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="LIS_HISModel.lisHospitalLaboratoryItem" Width="2" PointX="0.75" PointY="0.5" />
-        <EntityTypeShape EntityType="LIS_HISModel.lisPatientLaboratoryDetail" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LIS_HISModel.lisPatientLaboratoryDetail" Width="3.25" PointX="3.75" PointY="0.75" />
         <EntityTypeShape EntityType="LIS_HISModel.lisPatientLaboratoryMaster" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="LIS_HISModel.lisLaboratoryItem" Width="2.75" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="LIS_HISModel.lisHospitalLaboratoryItem" Width="2.375" PointX="11.125" PointY="0.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

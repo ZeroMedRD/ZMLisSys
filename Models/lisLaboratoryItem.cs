@@ -19,9 +19,17 @@ namespace ZMLISSys.Models
         public string LLINhiCode { get; set; }
         public string LLITrdCName { get; set; }
         public string LLIEngName { get; set; }
+        public string LLIRptName { get; set; }
         public Nullable<double> LLINhiCost { get; set; }
         public string LLICostType { get; set; }
         public string LLIType { get; set; }
         public string LLIUnit { get; set; }
+        public string LLIKind { get; set; }
+        public Nullable<double> LLIUp_Male { get; set; }
+        public Nullable<double> LLILo_Male { get; set; }
+        public Nullable<double> LLIUp_Female { get; set; }
+        public Nullable<double> LLILo_Female { get; set; }
+        public string LLIConvertRate { get; set; }
+        public string LLIConvertUnit { get; set; }
     }
 }

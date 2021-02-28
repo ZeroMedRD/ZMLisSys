@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Scripts.Render("~/bundles/main")
+    @Scripts.Render("~/bundles/kendo")
+    @Styles.Render("~/contents/css")
+    <script src="~/Scripts/ZMLISSys/ZMLISSys.js"></script>
+    <link href="~/Content/ZMLISSys/ZMLISSys.css" rel="stylesheet" />
+    <link href="~/Content/Grid.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/ZMLISSys/ZMLISBoard.js"></script>
+
+    <style>
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+            color: #fff;
+            background-color: #0094ff;
+            border-color: #dee2e6 #dee2e6 #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="PatientMyAge" hidden></div>
+    <div class="card card-info">
+        <div class="card-header" style="padding:15px 10px 5px 10px;">
+            <div style="float:left;"><h3 class="card-title">檢驗資料儀表板</h3></div>
+            <div class="card-tools">
+                <div style="padding-right:15px;float:left;">
+                    <span id="PatientName"></span> ( 性別：<span id="PatientGender"></span>｜實際年齡：<span id="PatientAge"></span>｜最近量測日期：<span id="PatientMeasureDate"></span>｜身高：<span id="PatientHeight"></span>｜體重：<span id="PatientWeight"></span> )
+                </div>
+            </div>
+            <!-- /.card-tools -->
+        </div>
+
+        <!-- #region patientlist : 顯示病人清單列表 -->
+        @section patientlist {
+            <aside class="control-sidebar control-sidebar-dark" style="width:15% !important;">
+                <div style="padding:15px;">
+                    <div class="input-group input-group-sm">
+                        <input id="searchPatient" class="form-control form-control-navbar" type="search" placeholder="輸入病歷號碼或身份證字號" aria-label="Search" style="font-size:16px;">
+                        <div class="input-group-append" style="background-color:white;">
+                            <button class="btn btn-navbar" type="button" onclick="getFilterPatient();">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    @(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_Patient>()
+                        .Name("grid_Patient")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(m => m.hospID).Hidden(true);
+                            columns.Bound(m => m.id).Hidden(true);
+                            columns.Bound(m => m.strIdno).Hidden(true);
+                            columns.Bound(m => m.strUserAccount);
+                            columns.Bound(m => m.strName);
+                        })
+                        .ColumnMenu()
+                        .Resizable(resize => resize.Columns(true))
+                        .Scrollable(scrollable => scrollable.Enabled(true).Height("750"))
+                        .Pageable(pageable => pageable.Input(false).Numeric(false).Info(false).PreviousNext(true).Refresh(false).PageSizes(false).ButtonCount(5))
+                        //.Pageable(page => page.Refresh(true).ButtonCount(1))
+                        .Filterable()
+                        .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+                        .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+                        .Events(events => { events.Change("Patient_Grid_OnRowSelect"); })
+                        .DataSource(dataSource => dataSource.Ajax()
+                            .Model(model => { model.Id(h => h.id); })
+                            .Read(read => read.Action("GetPatient", "GetData"))
+                            .PageSize(20))
+                    )
+                </div>
+            </aside>
+        }
+        <!-- #endregion -->
+
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    @(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisPatientLaboratoryDateGroup>()
+                        .Name("grid_lisPatientLaboratoryDateGroup")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(m => m.HospID).Hidden(true);
+                            columns.Bound(m => m.PLMRowid).Hidden(true);
+                            columns.Bound(m => m.PTRowid).Hidden(true);
+                            columns.Bound(m => m.PLMPTCode).Hidden(true);
+                            columns.Bound(m => m.PLMSNo);
+                            columns.Bound(m => m.PLMApplyDate).Format("{0: yyyy-MM-dd}");
+                        })
+                        .ColumnMenu()
+                        .Events(events => { events.Change("grid_lisPatientLaboratoryDateGroup_OnRowSelect"); })
+                        //.Events(e => e.Edit("grid_lisPatientLaboratoryDateGroup_Edit"))
+                        //.Pageable(page => page.Refresh(true).ButtonCount(5))
+                        .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+                        .Navigatable()
+                        .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+                        .Scrollable(scrollable => scrollable.Enabled(true).Height("675"))
+                        .DataSource(dataSource => dataSource.Ajax()
+                            .Events(events => events.Error("error_handler").Sync("sync_handler"))
+                            .Sort(x => { x.Add("PLMApplyDate").Descending(); })
+                            .Model(model => model.Id(h => h.PLMRowid))
+                            .Read(read => read.Action("lisPatientLaboratory_Read", "LISBoard"))
+                            .ServerOperation(false))
+                        .NoRecords("目前未有任何資料顯示 !"))
+                </div>
+
+                <!-- 統計明細 -->
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" onclick="click_event('lisdate')">
+                                    <a class="nav-link active" id="lisdate-tab" data-toggle="tab" href="#lisdate" role="tab" aria-controls="lisdate" aria-selected="true">檢驗日期明細</a>
+                                </li>
+                                <li class="nav-item" onclick="click_event('lislist')">
+                                    <a class="nav-link" id="lislist-tab" data-toggle="tab" href="#lislist" role="tab" aria-controls="profile" aria-selected="false">檢驗表列式明細</a>
+                                </li>
+                                <li class="nav-item" onclick="click_event('lischart')">
+                                    <a class="nav-link" id="lischart-tab" data-toggle="tab" href="#lischart" role="tab" aria-controls="contact" aria-selected="false">檢驗圖表</a>
+                                </li>
+                                <li class="nav-item" onclick="click_event('lisreport')">
+                                    <a class="nav-link" id="lisreport-tab" data-toggle="tab" href="#lisreport" role="tab" aria-controls="contact" aria-selected="false">檢驗報告</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="example" class="col-md-3" style="padding-top:10px;">
+                            <label style="padding-right:20px;"><input id="ckPLDType" type="checkbox"> 異常值排列至前面</label>
+                            <label><input id="ckSelectPLDType" type="checkbox"> 選取異常值</label>
+                            @*@(Html.Kendo().CheckBox().Name("ckAlert").Label("異常值排列至前面").HtmlAttributes(new { onclick="clickHandler" }))*@
+                        </div>
+                    </div>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="lisdate" role="tabpanel" aria-labelledby="lisdate-tab">
+                            @Html.Partial("_LisBoardDate")
+                            @Html.Partial("_LisBoardCopyBoard")
+                        </div>
+                        <div class="tab-pane fade" id="lislist" role="tabpanel" aria-labelledby="lislist-tab">
+                            @*@Html.Partial("_LisBoardList")*@
+                            <div style="border:1px solid;">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                        </div>
+                        <div class="tab-pane fade" id="lischart" role="tabpanel" aria-labelledby="lischart-tab">
+                            @*@Html.Partial("_LisBoardChart")*@
+                        </div>
+                        <div class="tab-pane fade" id="lisreport" role="tabpanel" aria-labelledby="lisreport-tab">
+                            @*@Html.Partial("_LisBoardReport")*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalWindow">
+        <h4>確定要刪除資料嗎 ?</h4>
+        <div style="text-align:right;">
+            <button id="yes" class="k-button">要刪除</button>
+            <button id="no" class="k-button">取消</button>
+        </div>
+    </div>
+
+    <div id="ConfirmFormWindow">
+        <h4>資料已經儲存完畢 !</h4>
+        <div style="text-align:right;">
+            <button id="no" class="k-button" onclick="$('#ConfirmFormWindow').data('kendoWindow').close();">確定</button>
+        </div>
+    </div>
+
+    <div id="modalChartWindow">
+        @{Html.RenderPartial("_ChartDetail");}
+    </div>
+</body>
+</html>
+
+@section footermessage {
+    <!-- Default to the left -->    
+    <strong>Copyright &copy; 2020-2025 <a href="http://www.zeromed.com.tw/">. 凌醫科技顧問股份有限公司</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 2.0.0-alpha
+        </div>
+}
+
+

@@ -1,0 +1,62 @@
+﻿<style>
+    .k-grid .k-state-selected {
+        background-color: #f3ce00 !important;
+        color: #000000;
+    }
+
+    .k-grid .k-alt.k-state-selected {
+        background-color: #f3ce00 !important;
+        color: #000000;
+    }
+</style>
+@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisPatientLaboratoryDetail>()
+    .Name("grid_lisPatientLaboratoryDetail")
+    .Columns(columns =>
+    {
+        columns.Select().Width(50).HtmlAttributes(new { @id="ttt" });
+        columns.Bound(lpd => lpd.PLDRowid).Hidden(true);
+        columns.Bound(lpd => lpd.PLMRowid).Hidden(true);
+        columns.Bound(lpd => lpd.HLIRowid).Hidden(true);
+        columns.Bound(lpd => lpd.HLISeqno).Hidden(true);
+        columns.Command(command =>
+        {
+            command.Custom("open01").Text(" ").IconClass("fas fa-chart-line").Click("openLISChartWindow");
+        }).Width("6%");
+        columns.Bound(lpd => lpd.PLDCode).Width("12%");
+        columns.Bound(lpd => lpd.PLDName);
+        columns.Bound(lpd => lpd.PLDValue).Width("10%");
+        //columns.Bound(lpd => lpd.PLDStrValue);
+        columns.Bound(lpd => lpd.PLDType).Hidden(true);
+        columns.Bound(lpd => lpd.PLDUnit).Width("15%");
+        columns.Bound(lpd => lpd.PLDMemo);
+    })
+    .ColumnMenu()
+    .Events(ev => ev.Change("onChange").DataBound("onDataBound"))
+    .PersistSelection()
+    //.Pageable(page => page.Refresh(true).ButtonCount(10).PageSizes(new[] { 15, 30, 50, 100, 150, 200 })
+    //    .Messages(message => message.ItemsPerPage("筆／頁")))
+    //.Selectable(selectable => selectable.Mode(GridSelectionMode.Multiple).Type(GridSelectionType.Row))
+    .Navigatable()
+    .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+    .Scrollable(scrollable => scrollable.Enabled(true).Height("480"))
+    .DataSource(dataSource => dataSource.Ajax()
+        .Sort(x => { x.Add("HLISeqno").Ascending(); })
+        .Model(model => {
+            model.Id(o => o.PLDRowid);
+            model.Field(o => o.PLDName);
+            model.Field(o => o.PLDValue);
+        })
+        .Read(read => read.Action("lisPatientLaboratoryDetail_Read", "LISBoard"))
+        .Events(events => events.Error("error_handler"))        // .Sync("sync_handler_ordfa")
+        .ServerOperation(false)
+        //.PageSize(50)
+        )
+    .NoRecords("目前未有任何資料顯示 !")
+)
+
+<style>
+    .overvalue {
+        font-weight: bold;
+        color: red !important;
+    }
+</style>

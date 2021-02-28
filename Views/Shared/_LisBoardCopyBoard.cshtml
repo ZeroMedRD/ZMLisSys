@@ -1,0 +1,65 @@
+﻿<style>
+    #TableCopyPasteBoard {
+        /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #TableCopyPasteBoard td, #TableCopyPasteBoard th {
+            border: 1px solid #ff7d20;
+            padding: 8px;
+        }
+
+        #TableCopyPasteBoard tr {
+            background-color: antiquewhite;
+        }
+
+        #TableCopyPasteBoard th {
+            font-size: 16px;
+            border: 1px solid #ff7d20;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            /*background-color: #4CAF50;*/
+            color: black;
+        }
+
+    .tdTitle {
+        text-align: center;
+        width: 15%;
+    }
+
+    .tdContent {
+        text-align: left;
+        width: 35%;
+    }
+
+    textarea {
+        /*border: 0;*/
+        overflow-x: auto; /* IE */
+        overflow-y: auto; /* IE */
+        resize: none; /* Firefox, Chrome */
+    }
+</style>
+<div id="TableCopyPasteBoard">
+    <table style="width:100%; height:100%;">
+        <tr>
+            <td width="2%" style="background-color:#007e10;color:white;">剪貼簿</td>
+            <td width="85%" style="vertical-align: text-top;">
+                @*<div style="width:100%; height:100%;">*@
+                    <textarea id="lbCopyText" style="width: 100%; height:100%; max-width: 100%;"></textarea>
+                @*</div>*@
+                <!--<div id="lbCopyText">-->
+                    @*<lable ></lable>*@
+                <!--</div>-->                
+            </td>
+            <td width="10%">
+                <div style="text-align:center;">
+                    <div style="padding-bottom:5px;"><button type="button" class="btn btn-info"> 問診排列 </button></div>
+                    <div style="padding-bottom:5px;"><button type="button" class="btn btn-danger" onclick="textcopy()"> 檢驗複製 </button></div>
+                    <div style="padding-bottom:5px;"><button type="button" class="btn btn-warning" onclick="textreset()"> 資料重置 </button></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
