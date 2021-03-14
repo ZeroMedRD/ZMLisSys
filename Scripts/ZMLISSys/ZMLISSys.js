@@ -814,6 +814,112 @@ function getFilterPatient(sHospID) {
 }
 // #endregion
 
+function grid_lisPatientLaboratoryDateGroup_OnRowSelect(e) {
+    // 取得資料前,先把條件變數做整理
+    var grid = e.sender;
+    var dsa = grid.dataItem(grid.select());
+
+    //alert(dsa.HospID + "    " + dsa.PLMRowid);
+
+    if (dsa != null) {
+        var grid = $("#grid_lisPatientLaboratoryDetail").data("kendoGrid");                
+        // 重新讀取
+        grid.dataSource.read({
+            sHospID: dsa.HospID,
+            sPLMRowid: dsa.PLMRowid
+        });        
+        grid.clearSelection();
+
+        // 每次換頁會自動轉至第一頁
+        grid.one("dataBound", function (e) {
+            var dataSource = e.sender.dataSource;
+            //var items = dataSource.data().length;
+            //var pageSize = dataSource.pageSize();
+            //var pageNum = parseInt(items / pageSize) + 1;
+            dataSource.page(1);
+        });
+
+        document.getElementById("lbCopyText").innerText = "";
+    }
+    else {
+        //$("#addRecord").hide();
+        //$("#exportExcel").hide();
+    }
+
+    return;
+}
+
+// #region Patient_Grid_OnRowSelect : 右側邉條輔助查詢功能
+function Patient_Grid_OnRowSelect(e) {
+    // 取得資料前,先把條件變數做整理
+    var grid = e.sender;
+    var selectedRow = grid.select();
+    var dataItem = grid.dataItem(selectedRow);
+
+    //alert(dataItem.hospID + '\n' + dataItem.id);
+    var HospID = dataItem.hospID;
+    var strUserId = dataItem.id;
+
+    // Reload ViewBag
+    $.ajax({
+        url: "/ZMLisSys/GetData/PatientBase",
+        type: "GET",
+        data: {
+            HospID: HospID,
+            strUserId: strUserId
+        },
+        success: function (data) {
+            document.getElementById("PatientName").innerText = data[0].trim();
+            document.getElementById("PatientGender").innerText = data[1].trim();
+            document.getElementById("PatientAge").innerText = data[2].trim();
+            document.getElementById("PatientMeasureDate").innerText = data[3].trim();
+            document.getElementById("PatientHeight").innerText = data[4].trim();
+            document.getElementById("PatientWeight").innerText = data[5].trim();
+            //document.getElementById("PatientTel").innerText = data[6].trim();
+            document.getElementById("PatientMyAge").innerText = data[7].trim();
+        }
+    });
+
+    // 產生病人的檢驗歷史日期
+    $("#grid_lisPatientLaboratoryDateGroup").data("kendoGrid").
+        dataSource.read(
+            {
+                HospID: HospID,
+                strUserId: strUserId
+            });
+    $("#grid_lisPatientLaboratoryDateGroup").data("kendoGrid").clearSelection();
+
+    // 檢驗明組資料需清除
+    $("#grid_lisPatientLaboratoryDetail").data("kendoGrid").
+        dataSource.read(
+            {                
+                sHospID: HospID,
+                sPLMRowid: ""
+            });
+
+    document.getElementById("lbCopyText").innerText = "";    
+}
+// #endregion
+
+// #region getFilterPatient : 依查詢條件內容搜尋病人基本資料
+function getFilterPatient(sHospID) {
+    var str = document.getElementById("searchPatient").value;
+
+    //if (code.replace(/(^s*)|(s*$)/g, "").length == 0) { code = "0" };
+    //const parsed = parseInt(code, 10);
+    //if (isNaN(parsed)) { parsed = 0; }
+
+    // 重新讀取病人列表清單
+    $("#grid_Patient").data("kendoGrid").
+        dataSource.read(
+            {
+                sHospID: sHospID,
+                sSearchString: str
+            });
+    return;
+}
+// #endregion
+
 // #region GetSysUploadServerSelected : 取得選擇的醫事機構代碼
 function GetSysUploadServerSelected(e) {
     var HospIDValue = $("#ddlSysHospital").data("kendoDropDownList").value();
