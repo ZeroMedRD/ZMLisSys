@@ -14,6 +14,9 @@
           <Property Name="LLISubRowid" Type="nvarchar" MaxLength="128" />
           <Property Name="HLICode" Type="nvarchar" MaxLength="20" />
           <Property Name="HLIName" Type="nvarchar" MaxLength="255" />
+          <Property Name="HLITitleName" Type="nvarchar" MaxLength="30" />
+          <Property Name="HLIUpValue" Type="nvarchar" MaxLength="20" />
+          <Property Name="HLILoValue" Type="nvarchar" MaxLength="20" />
           <Property Name="HLIDisplayRange" Type="nvarchar" MaxLength="100" />
           <Property Name="HLISeqno" Type="int" />
         </EntityType>
@@ -113,6 +116,22 @@
           <Property Name="g8_mode" Type="nvarchar" MaxLength="1" />
         </EntityType>
         <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'his3532040438.dbo.DHO_Users' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="DHO_Users">
+          <Key>
+            <PropertyRef Name="rowid" />
+          </Key>
+          <Property Name="rowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="org_code" Type="nvarchar" MaxLength="255" />
+          <Property Name="dho_uid" Type="nvarchar" MaxLength="10" />
+          <Property Name="dho_account" Type="nvarchar" MaxLength="255" />
+          <Property Name="reg_type" Type="char" MaxLength="1" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_id" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_dob" Type="datetime" />
+          <Property Name="create_date" Type="datetime" />
+        </EntityType>
+        <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'his3532040438.dbo.lisLaboratoryItem' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
         <EntityType Name="lisLaboratoryItem">
           <Key>
@@ -141,6 +160,19 @@
           <EntitySet Name="lisPatientLaboratoryDetail" EntityType="Self.lisPatientLaboratoryDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lisPatientLaboratoryMaster" EntityType="Self.lisPatientLaboratoryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DHO_Users" EntityType="Self.DHO_Users" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DHO_Users].[rowid] AS [rowid], 
+    [DHO_Users].[org_code] AS [org_code], 
+    [DHO_Users].[dho_uid] AS [dho_uid], 
+    [DHO_Users].[dho_account] AS [dho_account], 
+    [DHO_Users].[reg_type] AS [reg_type], 
+    [DHO_Users].[user_name] AS [user_name], 
+    [DHO_Users].[user_id] AS [user_id], 
+    [DHO_Users].[user_dob] AS [user_dob], 
+    [DHO_Users].[create_date] AS [create_date]
+    FROM [dbo].[DHO_Users] AS [DHO_Users]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="lisLaboratoryItem" EntityType="Self.lisLaboratoryItem" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [lisLaboratoryItem].[LLIRowid] AS [LLIRowid], 
@@ -228,6 +260,7 @@
           <EntitySet Name="lisPatientLaboratoryDetail" EntityType="LIS_HISModel.lisPatientLaboratoryDetail" />
           <EntitySet Name="lisPatientLaboratoryMaster" EntityType="LIS_HISModel.lisPatientLaboratoryMaster" />
           <EntitySet Name="lisLaboratoryItem" EntityType="LIS_HISModel.lisLaboratoryItem" />
+          <EntitySet Name="DHO_Users" EntityType="LIS_HISModel.DHO_Users" />
           <EntitySet Name="lisHospitalLaboratoryItem" EntityType="LIS_HISModel.lisHospitalLaboratoryItem" />
         </EntityContainer>
         <EntityType Name="lisPatientLaboratoryDetail">
@@ -291,6 +324,20 @@
           <Property Name="LLIConvertRate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="LLIConvertUnit" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
         </EntityType>
+        <EntityType Name="DHO_Users">
+          <Key>
+            <PropertyRef Name="rowid" />
+          </Key>
+          <Property Name="rowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="org_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="dho_uid" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="dho_account" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="reg_type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="user_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_dob" Type="DateTime" Precision="3" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="lisHospitalLaboratoryItem">
           <Key>
             <PropertyRef Name="HLIRowid" />
@@ -300,6 +347,9 @@
           <Property Name="LLISubRowid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="HLICode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="HLIName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HLITitleName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="HLIUpValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HLILoValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="HLIDisplayRange" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="HLISeqno" Type="Int32" />
         </EntityType>
@@ -430,11 +480,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DHO_Users">
+            <EntityTypeMapping TypeName="LIS_HISModel.DHO_Users">
+              <MappingFragment StoreEntitySet="DHO_Users">
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="user_dob" ColumnName="user_dob" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="reg_type" ColumnName="reg_type" />
+                <ScalarProperty Name="dho_account" ColumnName="dho_account" />
+                <ScalarProperty Name="dho_uid" ColumnName="dho_uid" />
+                <ScalarProperty Name="org_code" ColumnName="org_code" />
+                <ScalarProperty Name="rowid" ColumnName="rowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="lisHospitalLaboratoryItem">
             <EntityTypeMapping TypeName="LIS_HISModel.lisHospitalLaboratoryItem">
               <MappingFragment StoreEntitySet="lisHospitalLaboratoryItem">
                 <ScalarProperty Name="HLISeqno" ColumnName="HLISeqno" />
                 <ScalarProperty Name="HLIDisplayRange" ColumnName="HLIDisplayRange" />
+                <ScalarProperty Name="HLILoValue" ColumnName="HLILoValue" />
+                <ScalarProperty Name="HLIUpValue" ColumnName="HLIUpValue" />
+                <ScalarProperty Name="HLITitleName" ColumnName="HLITitleName" />
                 <ScalarProperty Name="HLIName" ColumnName="HLIName" />
                 <ScalarProperty Name="HLICode" ColumnName="HLICode" />
                 <ScalarProperty Name="LLISubRowid" ColumnName="LLISubRowid" />

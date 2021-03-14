@@ -56,12 +56,18 @@
             //.PageSize(50)
             )
         .NoRecords("目前未有任何資料顯示 !")
-    )
+    )    
+ </div>
 
-        <style>
-            .overvalue {
-                font-weight: bold;
-                color: red !important;
-            }
-        </style>
-    </div>
+<div style="padding:10px">
+    <button id="chartPrint" class="btn btn-danger" onclick="window.print()"> 
+        列印 
+    </button>
+</div>
+
+<style>
+    .overvalue {
+        font-weight: bold;
+        color: red !important;
+    }
+</style>

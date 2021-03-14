@@ -1,0 +1,26 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisPatientLaboratoryDateGroup>()
+    .Name("grid_lisPatientLaboratoryDateGroup")
+    .Columns(columns =>
+    {
+        columns.Bound(m => m.HospID).Hidden(true);
+        columns.Bound(m => m.PLMRowid).Hidden(true);
+        columns.Bound(m => m.PTRowid).Hidden(true);
+        columns.Bound(m => m.PTIdno).Hidden(true);
+        columns.Bound(m => m.PLMPTCode).Hidden(true);
+        columns.Bound(m => m.PLMSNo);
+        columns.Bound(m => m.PLMApplyDate).Format("{0: yyyy-MM-dd}");
+    })
+     .ColumnMenu()
+     .Events(events => { events.Change("grid_lisPatientLaboratoryDateGroup_OnRowSelect"); })
+     .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+     .Navigatable()
+     .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+     .Scrollable(scrollable => scrollable.Enabled(true).Height(690))
+     .DataSource(dataSource => dataSource.Ajax()
+        .Events(events => events.Error("error_handler").Sync("sync_handler"))
+        .Sort(x => { x.Add("PLMApplyDate").Descending(); })
+        .Model(model => model.Id(h => new { h.PLMRowid, h.PLMApplyDate }))
+        .Read(read => read.Action("lisPatientLaboratory_Read", "LISBoard", new { @HospID = ViewBag.HospID, @strUserId = ViewBag.PTRowid }))
+        .ServerOperation(false))
+     .NoRecords("目前未有任何資料顯示 !")
+)

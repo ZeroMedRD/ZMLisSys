@@ -8,8 +8,9 @@
         //columns.Bound(m => m.LLIRowid).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
         //columns.Bound(m => m.LLISubRowid).Hidden(true).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
         columns.Bound(m => m.HLISeqno).HeaderHtmlAttributes(new { @style = "font-size:14px;" }).Width(80);
-        columns.Bound(m => m.HLICode).Width(120).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
-        columns.Bound(m => m.HLIName).Width(150).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
+        columns.Bound(m => m.HLICode).Width(100).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
+        columns.Bound(m => m.HLIName).Width(120).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
+        columns.Bound(m => m.HLITitleName).Width(120).HeaderHtmlAttributes(new { @style = "font-size:11px;" });
         //columns.Bound(m => m.LLCTrdCName).Width(110).HeaderHtmlAttributes(new { @style = "font-size:14px;" });
         columns.Bound(m => m.LLITrdCName01).Width(150).EditorTemplateName("_LLDRowidEditor").HeaderHtmlAttributes(new { @style = "font-size:14px;" });
         columns.Bound(m => m.LLITrdCName02).Width(150).EditorTemplateName("_LLDSubRowidEditor").HeaderHtmlAttributes(new { @style = "font-size:14px;" });

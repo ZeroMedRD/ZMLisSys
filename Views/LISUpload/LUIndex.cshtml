@@ -100,9 +100,10 @@
                 </div>
 
                 <div class="card card-dark">
-                    <div class="card-header" style="padding:0 10px 0 10px;">
+                    <div class="card-header" style="padding:5px;">
                         <h3 class="card-title card-title-vertical">檢驗細項資料</h3>
                         <div class="card-tools">
+                            <button id="btnAppPush" class="btn btn-danger" onclick="PushDHO('D')">檢驗推送</button>
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                         </div>
                     </div>
@@ -142,6 +143,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="ConfirmFormWindow">
+        @*資料已經推送完畢 !*@
+        <label id="PushFeedback"></label>
+        <div style="text-align:right;">
+            <button id="pushOk" class="k-button" onclick="$('#ConfirmFormWindow').data('kendoWindow').close();">確定</button>
         </div>
     </div>
 </body>

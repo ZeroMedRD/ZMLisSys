@@ -229,11 +229,14 @@ namespace ZMLISSys.ViewModels
         [Display(Name = "醫療院所檢驗檢查資料序號")]
         public string HLIRowid { get; set; }
 
-        [Display(Name = "檢驗所檢驗代碼")]
+        [Display(Name = "檢驗代碼")]
         public string HLICode { get; set; }
 
         [Display(Name = "檢驗所檢驗名稱")]
         public string HLIName { get; set; }
+
+        [Display(Name = "檢驗所檢驗名稱別名")]
+        public string HLITitleName { get; set; }
 
         [Display(Name = "顯示值範圍")]
         public string HLIDisplayRange { get; set; }        
@@ -288,7 +291,7 @@ namespace ZMLISSys.ViewModels
     }
     #endregion
 
-    #region SysHospital 醫事機構資料表 (65.52.165.109/Database:ZMCMSv2)
+    #region ViewModel_SysHospital (SysHospital)-醫事機構資料表 (65.52.165.109/Database:ZMCMSv2)
     public class ViewModel_SysHospital
     {
         public string HospRowid { get; set; }
@@ -304,7 +307,7 @@ namespace ZMLISSys.ViewModels
     }
     #endregion
 
-    #region lisPatientLaboratoryMaster 病人檢驗表頭資料 (65.52.165.109/Database:his1234567890)
+    #region ViewModel_lisPatientLaboratoryMaster (lisPatientLaboratoryMaster)-病人檢驗表頭資料 (65.52.165.109/Database:his1234567890)
     public class ViewModel_lisPatientLaboratoryMaster
     {
         [Display(Name = "檢驗表頭序號")]
@@ -354,10 +357,13 @@ namespace ZMLISSys.ViewModels
 
         [Display(Name = "看診序號")]
         public string PLMReqno { get; set; }
+
+        [Display(Name = "APP")]
+        public bool APPFlag { get; set; }
     }
     #endregion
 
-    #region lisPatientLaboratoryMaster 病人檢驗表身資料 (65.52.165.109/Database:his1234567890)
+    #region ViewModel_lisPatientLaboratoryDetail (lisPatientLaboratoryMaster)-病人檢驗表身資料 (65.52.165.109/Database:his1234567890)
     public class ViewModel_lisPatientLaboratoryDetail
     {
         [Display(Name = "檢驗表身序號")]
@@ -398,7 +404,7 @@ namespace ZMLISSys.ViewModels
     }
     #endregion
 
-    #region lisPatientLaboratoryMaster 病人檢驗表身資料 (65.52.165.109/Database:his1234567890)
+    #region ViewModel_lisPatientLaboratoryDateGroup-病人檢驗依日期群組的檢驗日期表 (65.52.165.109/Database:his1234567890)
     public class ViewModel_lisPatientLaboratoryDateGroup
     {
         //lplm.PLMRowid, lplm.PTRowid, lplm.PLMPTCode, lplm.PLMApplyDate
@@ -411,6 +417,9 @@ namespace ZMLISSys.ViewModels
         [Display(Name = "病人資料序號")]
         public string PTRowid { get; set; }
 
+        [Display(Name = "病人身份證號")]
+        public string PTIdno { get; set; }
+
         [Display(Name = "病歷號碼")]
         public string PLMPTCode { get; set; }
 
@@ -422,7 +431,22 @@ namespace ZMLISSys.ViewModels
     }
     #endregion
 
-    #region SysUploadServer 資料上傳主機狀態 (65.52.165.109/Database:ZMCMSv2)    
+    #region ViewModel_lisPatientLaboratoryClassGroup (lisPatientLaboratoryMaster)-病人檢驗依日期群組的檢驗日期表 (65.52.165.109/Database:his1234567890)
+    public class ViewModel_lisPatientLaboratoryClassGroup
+    {
+        //lplm.PLMRowid, lplm.PTRowid, lplm.PLMPTCode, lplm.PLMApplyDate
+        [Display(Name = "檢驗項目資料序號")]
+        public string HLIRowid { get; set; }
+
+        [Display(Name = "檢驗代碼")]
+        public string PLDCode { get; set; }
+
+        [Display(Name = "檢驗名稱")]
+        public string HLIName { get; set; }        
+    }
+    #endregion
+
+    #region ViewModel_SysUploadServer (SysUploadServer)-資料上傳主機狀態 (65.52.165.109/Database:ZMCMSv2)    
     public class ViewModel_SysUploadServer
     {
         [Display(Name = "資料序號")]
@@ -467,7 +491,7 @@ namespace ZMLISSys.ViewModels
     }
     #endregion
 
-    #region lisLaboratorySchedule 檢驗API自動上傳排程設定 (65.52.165.109/Database:ZMCMSv2)    
+    #region ViewModel_lisLaboratorySchedule (lisLaboratorySchedule)-檢驗API自動上傳排程設定 (65.52.165.109/Database:ZMCMSv2)    
     public class ViewModel_lisLaboratorySchedule
     {
         [Display(Name = "資料序號")]
@@ -544,7 +568,7 @@ namespace ZMLISSys.ViewModels
     }
     #endregion
 
-    #region ViewModel_Patient => Patient : 病人基本資料表 (zmcms.cloud/Database:his1234567890)
+    #region ViewModel_Patient (Patient)-病人基本資料表 (zmcms.cloud/Database:his1234567890)
     public class ViewModel_Patient
     {
         [Display(Name = "資料序號")]

@@ -2,21 +2,24 @@
 @{
     ViewBag.Title = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var pHospID = ViewBag.HospID;
+    var pPTRowid = ViewBag.PTRowid;    
 }
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    @Scripts.Render("~/bundles/main")
+    @*@Scripts.Render("~/bundles/main")*@
     @Scripts.Render("~/bundles/kendo")
     @Styles.Render("~/contents/css")
     <script src="~/Scripts/ZMLISSys/ZMLISSys.js"></script>
     <link href="~/Content/ZMLISSys/ZMLISSys.css" rel="stylesheet" />
     <link href="~/Content/Grid.css" rel="stylesheet" />
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Scripts/ZMLISSys/ZMLISBoard.js"></script>
+    @*<script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+    <script src="~/Scripts/ZMLISSys/ZMLISBoard.js?version=20210312001"></script>
 
     <style>
         .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -72,56 +75,37 @@
                         .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
                         .Events(events => { events.Change("Patient_Grid_OnRowSelect"); })
                         .DataSource(dataSource => dataSource.Ajax()
-                            .Model(model => { model.Id(h => h.id); })
-                            .Read(read => read.Action("GetPatient", "GetData"))
+                            .Model(model => {
+                                model.Id(h => h.id);
+                            })
+                            .Read(read => read.Action("GetPatient", "GetData", new { @sSearchString = ViewBag.PTRowid }).Data("RefreshData('" + pHospID + "','" +  pPTRowid + "')"))
                             .PageSize(20))
                     )
                 </div>
             </aside>
         }
         <!-- #endregion -->
-
         <!-- /.card-header -->
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-3">
-                    @(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisPatientLaboratoryDateGroup>()
-                        .Name("grid_lisPatientLaboratoryDateGroup")
-                        .Columns(columns =>
-                        {
-                            columns.Bound(m => m.HospID).Hidden(true);
-                            columns.Bound(m => m.PLMRowid).Hidden(true);
-                            columns.Bound(m => m.PTRowid).Hidden(true);
-                            columns.Bound(m => m.PLMPTCode).Hidden(true);
-                            columns.Bound(m => m.PLMSNo);
-                            columns.Bound(m => m.PLMApplyDate).Format("{0: yyyy-MM-dd}");
-                        })
-                        .ColumnMenu()
-                        .Events(events => { events.Change("grid_lisPatientLaboratoryDateGroup_OnRowSelect"); })
-                        //.Events(e => e.Edit("grid_lisPatientLaboratoryDateGroup_Edit"))
-                        //.Pageable(page => page.Refresh(true).ButtonCount(5))
-                        .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
-                        .Navigatable()
-                        .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
-                        .Scrollable(scrollable => scrollable.Enabled(true).Height("675"))
-                        .DataSource(dataSource => dataSource.Ajax()
-                            .Events(events => events.Error("error_handler").Sync("sync_handler"))
-                            .Sort(x => { x.Add("PLMApplyDate").Descending(); })
-                            .Model(model => model.Id(h => h.PLMRowid))
-                            .Read(read => read.Action("lisPatientLaboratory_Read", "LISBoard"))
-                            .ServerOperation(false))
-                        .NoRecords("目前未有任何資料顯示 !"))
+                    <div id="lpdg">
+                        @Html.Partial("LeftSelection/_LisPatientLaboratoryDateGroup")
+                    </div>
+                    <div id="lplg">
+                        @Html.Partial("LeftSelection/_LisPatientLaboratoryClassGroup")
+                    </div>
                 </div>
 
                 <!-- 統計明細 -->
                 <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" onclick="click_event('lisdate')">
                                     <a class="nav-link active" id="lisdate-tab" data-toggle="tab" href="#lisdate" role="tab" aria-controls="lisdate" aria-selected="true">檢驗日期明細</a>
                                 </li>
-                                <li class="nav-item" onclick="click_event('lislist')">
+                                <li class="nav-item" onclick="click_event('lisclass')">
                                     <a class="nav-link" id="lislist-tab" data-toggle="tab" href="#lislist" role="tab" aria-controls="profile" aria-selected="false">檢驗表列式明細</a>
                                 </li>
                                 <li class="nav-item" onclick="click_event('lischart')">
@@ -132,9 +116,16 @@
                                 </li>
                             </ul>
                         </div>
-                        <div id="example" class="col-md-3" style="padding-top:10px;">
-                            <label style="padding-right:20px;"><input id="ckPLDType" type="checkbox"> 異常值排列至前面</label>
-                            <label><input id="ckSelectPLDType" type="checkbox"> 選取異常值</label>
+                        <div id="example" class="col-md-4" style="padding-top:10px;">
+                            <div id="divPLDType" style="padding-top:5px;padding-right:20px;float:left;">
+                                <label><input id="ckPLDType" type="checkbox"> 異常值排列至前面</label>
+                            </div>
+                            <div id="divSelectPLDType" style="padding-top: 5px; padding-right: 20px; float: left;">
+                                <label><input id="ckSelectPLDType" type="checkbox"> 選取異常值</label>
+                            </div>
+                            <div id="divAppPush" style="float:left;">
+                                <button style="padding:5px 10px 5px 10px;background-color:red;color:white;border:solid 1px transparent;border-radius:0.25rem;" onclick="PushDHO('B')">檢驗推送</button>
+                            </div>
                             @*@(Html.Kendo().CheckBox().Name("ckAlert").Label("異常值排列至前面").HtmlAttributes(new { onclick="clickHandler" }))*@
                         </div>
                     </div>
@@ -144,11 +135,13 @@
                             @Html.Partial("_LisBoardCopyBoard")
                         </div>
                         <div class="tab-pane fade" id="lislist" role="tabpanel" aria-labelledby="lislist-tab">
-                            @*@Html.Partial("_LisBoardList")*@
-                            <div style="border:1px solid;">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                            @Html.Partial("_LisBoardClass")
+                            @Html.Partial("_LisBoardClassCopyBoard")
+                            @*<div style="border:1px solid;"></div>*@
                         </div>
                         <div class="tab-pane fade" id="lischart" role="tabpanel" aria-labelledby="lischart-tab">
-                            @*@Html.Partial("_LisBoardChart")*@
+                            @*@Html.Partial("_LisBoardClass")*@
+                            @Html.Partial("_LisBoardChart")
                         </div>
                         <div class="tab-pane fade" id="lisreport" role="tabpanel" aria-labelledby="lisreport-tab">
                             @*@Html.Partial("_LisBoardReport")*@
@@ -177,6 +170,12 @@
     <div id="modalChartWindow">
         @{Html.RenderPartial("_ChartDetail");}
     </div>
+
+    <script>
+        document.getElementById('lpdg').style.display = 'block';
+        document.getElementById('lplg').style.display = 'none';
+        document.getElementById('divAppPush').style.display = 'none';
+    </script>
 </body>
 </html>
 
@@ -188,5 +187,3 @@
             <b>Version</b> 2.0.0-alpha
         </div>
 }
-
-

@@ -36,5 +36,6 @@ namespace ZMLISSys.Models
         public virtual DbSet<sysMedicalGroupHospital> sysMedicalGroupHospital { get; set; }
         public virtual DbSet<sysUploadServer> sysUploadServer { get; set; }
         public virtual DbSet<sysUploadSchedule> sysUploadSchedule { get; set; }
+        public virtual DbSet<DHO_Users> DHO_Users { get; set; }
     }
 }

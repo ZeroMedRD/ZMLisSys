@@ -1,0 +1,26 @@
+﻿@*@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisHospitalLaboratoryItemGroup>()
+    .Name("grid_lisLaboratoryItemGroup")
+    .Columns(columns =>
+    {
+        columns.Bound(m => m.HLIRowid).Hidden(true);
+        columns.Bound(m => m.LLIRowid).Hidden(true);
+        columns.Bound(m => m.LLISubRowid).Hidden(true);
+        columns.Bound(m => m.HLICode);
+        columns.Bound(m => m.HLIName);
+        columns.Bound(m => m.HLIDisplayRange).Hidden(true);
+        columns.Bound(m => m.HLISeqno).Hidden(true);
+    })
+    .ColumnMenu()
+    //.Events(events => { events.Change("grid_lisLaboratoryItemGroup_OnRowSelect"); })    
+    .Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+    .Navigatable()
+    .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+    .Scrollable(scrollable => scrollable.Enabled(true).Height(690))
+    .DataSource(dataSource => dataSource.Ajax()
+        .Events(events => events.Error("error_handler").Sync("sync_handler"))
+        .Sort(x => { x.Add("HLISeqno").Descending(); })
+        .Model(model => model.Id(h => h.HLIRowid))
+        .Read(read => read.Action("lisHospitalLaboratoryItem_Read", "LISBoard"))
+        .ServerOperation(false))
+    .NoRecords("目前未有任何資料顯示 !")
+)*@

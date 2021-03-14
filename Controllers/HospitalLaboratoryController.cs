@@ -85,6 +85,7 @@ namespace ZMLISSys.Controllers
                                   LLISubRowid = lhli.LLISubRowid,
                                   HLICode = lhli.HLICode,
                                   HLIName = lhli.HLIName,
+                                  HLITitleName = lhli.HLITitleName,
                                   HLIDisplayRange = lhli.HLIDisplayRange,
                                   LLINhiCode = o1.LLINhiCode,
                                   LLITrdCName01 = o1.LLITrdCName == null ? "" :  o1.LLITrdCName,
@@ -113,6 +114,7 @@ namespace ZMLISSys.Controllers
                     LLISubRowid = crud.LLISubRowid,
                     HLICode = crud.HLICode,
                     HLIName = crud.HLIName,
+                    HLITitleName = crud.HLITitleName,
                     HLIDisplayRange = crud.HLIDisplayRange,
                     HLISeqno = 0
                 };
@@ -144,6 +146,7 @@ namespace ZMLISSys.Controllers
                         LLISubRowid = crud.LLISubRowid,
                         HLICode = crud.HLICode,
                         HLIName = crud.HLIName,
+                        HLITitleName = crud.HLITitleName,
                         HLIDisplayRange = crud.HLIDisplayRange,
                         HLISeqno = crud.HLISeqno
                     };

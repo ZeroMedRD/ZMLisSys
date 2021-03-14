@@ -1,0 +1,26 @@
+﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisPatientLaboratoryClassGroup>()
+    .Name("grid_lisPatientLaboratoryClassGroup")
+    .Columns(columns =>
+    {
+        columns.Select().Width(50);
+        columns.Bound(m => m.HLIRowid).Hidden(true);
+        columns.Bound(m => m.PLDCode);
+        columns.Bound(m => m.HLIName);
+    })
+    .ColumnMenu()
+    .Events(ev => ev.Change("lisPatientLaboratoryClassGroup_onChange"))
+    //.Events(events => { events.Change("grid_lisPatientLaboratoryClassGroup_OnRowSelect"); })
+    //.Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+    .PersistSelection()
+    .Navigatable()
+    .Sortable(sortable => { sortable.SortMode(GridSortMode.MultipleColumn); })
+    .Scrollable(scrollable => scrollable.Enabled(true).Height(690))
+    .DataSource(dataSource => dataSource.Ajax()
+        .Events(events => events.Error("error_handler").Sync("sync_handler"))
+        .Sort(x => { x.Add("PLDCode").Ascending(); })
+        .Model(model => model.Id(h => h.PLDCode))
+        .Read(read => read.Action("lisLaboratoryClassItem_Read", "LISBoard", new { @HospID = ViewBag.HospID, @strUserId = ViewBag.PTRowid }))
+        //.PageSize(20)
+        .ServerOperation(false))
+    .NoRecords("目前未有任何資料顯示 !")
+)

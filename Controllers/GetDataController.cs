@@ -163,7 +163,8 @@ namespace ZMLISSys.Controllers
                 if (!String.IsNullOrEmpty(sSearchString))
                 {
                     DataSourceResult db_patient = (from p in db_his.Patient
-                                                   where p.strUserAccount.Contains(sSearchString) || p.strName.Contains(sSearchString) || p.strIdno.Contains(sSearchString)
+                                                   where p.id.Contains(sSearchString) || p.strUserAccount.Contains(sSearchString) || 
+                                                         p.strName.Contains(sSearchString) || p.strIdno.Contains(sSearchString)
                                                    orderby p.strUserAccount
                                                    select new
                                                    {
@@ -402,55 +403,66 @@ namespace ZMLISSys.Controllers
 
                     // 取得日期格式是否是國曆型態
                     var stwc = (from cbd in db_zmcms.ComboDetail where cbd.CBDCode == hp.HospLisDateFormat select new { CBDDescription = cbd.CBDDescription }).First();
-
-                    DateTime dt = DateTime.Now;
                     CultureInfo culture = new CultureInfo("zh-TW");
                     culture.DateTimeFormat.Calendar = new TaiwanCalendar();
-                    string sdt = stwc.CBDDescription.Contains("國") == true ? dt.ToString(hp.HospLisDateFormat, culture) : dt.ToString(hp.HospLisDateFormat);
-
-                    // 日期顯示結果
-                    string result = String.Format(hp.HospLisDateStyle, sdt);
 
                     // 檢驗項目呈現方式
                     int icount = 0;
+                    bool lDateFlag = false;
                     string sHospLisItemTemp = "";
                     string sColumnSpace = "&nbsp;";
-
+                    string result = "";
                     foreach (var db in db_data.Data)
                     {
+                        lDateFlag = false;
                         string sPLDCode = db.PLDCode;
                         string sPLDValue = db.PLDValue;
+                        DateTime dt = DateTime.Now;
 
-                        // 取得檢驗代碼、檢驗簡稱、英文全名、中文全名
-                        var db_laboratoryItem = (from li in db_his.lisHospitalLaboratoryItem where li.HLICode == sPLDCode select li).First();
-                        if (db_laboratoryItem != null)
+                        if (sPLDCode == "PLMApplyDate")
                         {
-                            sHospLisItemTemp += (hp.HospLisItemTemp01 == true) ? String.Format("{0}  ", db_laboratoryItem.HLICode) : "";     // 檢驗代碼
-                            sHospLisItemTemp += (hp.HospLisItemTemp02 == true) ? String.Format("{0}  ", db_laboratoryItem.HLIName) : "";     // 檢驗簡稱
-                            sHospLisItemTemp += (hp.HospLisItemTemp03 == true) ? String.Format("{0}  ", db_laboratoryItem.HLIName) : "";     // 英文全名
-                            sHospLisItemTemp += (hp.HospLisItemTemp04 == true) ? String.Format("{0}  ", db_laboratoryItem.HLIName) : "";     // 中文全名
-                        }
-                        else
-                        {
-                            sHospLisItemTemp += (hp.HospLisItemTemp01 == true) ? String.Format("{0}  ", sPLDCode) : "";     // 檢驗代碼
-                            sHospLisItemTemp += (hp.HospLisItemTemp02 == true) ? String.Format("{0}  ", sPLDCode) : "";     // 檢驗簡稱
-                            sHospLisItemTemp += (hp.HospLisItemTemp03 == true) ? String.Format("{0}  ", sPLDCode) : "";     // 英文全名
-                            sHospLisItemTemp += (hp.HospLisItemTemp04 == true) ? String.Format("{0}  ", sPLDCode) : "";     // 中文全名
+                            dt = Convert.ToDateTime(db.PLDValue);
+                            lDateFlag = true;
+
+                            string sdt = stwc.CBDDescription.Contains("國") == true ? dt.ToString(hp.HospLisDateFormat, culture) : dt.ToString(hp.HospLisDateFormat);
+
+                            // 日期顯示結果
+                            result = String.Format(hp.HospLisDateStyle, sdt);
                         }                        
 
-                        if (icount < hp.HospLisRowCount)
+                        // 取得檢驗代碼、檢驗簡稱、英文全名、中文全名
+                        if (lDateFlag == false)
                         {
-                            icount++;
-                        }
-                        else
-                        {
-                            icount = 1;
-                            result += Environment.NewLine + sColumnSpace.Repeat(hp.HospLisColumnSpace);
-                        }
+                            var db_laboratoryItem = (from li in db_his.lisHospitalLaboratoryItem where li.HLICode == sPLDCode select li).First();
+                            if (db_laboratoryItem != null)
+                            {
+                                sHospLisItemTemp += (hp.HospLisItemTemp01 == true) ? String.Format("{0}  ", db_laboratoryItem.HLICode.Trim()) : "";     // 檢驗代碼
+                                sHospLisItemTemp += (hp.HospLisItemTemp02 == true) ? String.Format("{0}  ", db_laboratoryItem.HLIName.Trim()) : "";     // 檢驗簡稱
+                                sHospLisItemTemp += (hp.HospLisItemTemp03 == true) ? String.Format("{0}  ", db_laboratoryItem.HLIName.Trim()) : "";     // 英文全名
+                                sHospLisItemTemp += (hp.HospLisItemTemp04 == true) ? String.Format("{0}  ", db_laboratoryItem.HLIName.Trim()) : "";     // 中文全名
+                            }
+                            else
+                            {
+                                sHospLisItemTemp += (hp.HospLisItemTemp01 == true) ? String.Format("{0}  ", sPLDCode.Trim()) : "";     // 檢驗代碼
+                                sHospLisItemTemp += (hp.HospLisItemTemp02 == true) ? String.Format("{0}  ", sPLDCode.Trim()) : "";     // 檢驗簡稱
+                                sHospLisItemTemp += (hp.HospLisItemTemp03 == true) ? String.Format("{0}  ", sPLDCode.Trim()) : "";     // 英文全名
+                                sHospLisItemTemp += (hp.HospLisItemTemp04 == true) ? String.Format("{0}  ", sPLDCode.Trim()) : "";     // 中文全名
+                            }
 
-                        result += String.Format(hp.HospLisItemAndValueTemplate, sHospLisItemTemp, sPLDValue) + hp.HospLisDelimiter;
+                            if (icount < hp.HospLisRowCount)
+                            {
+                                icount++;
+                            }
+                            else
+                            {
+                                icount = 1;
+                                result += Environment.NewLine + sColumnSpace.Repeat(hp.HospLisColumnSpace);
+                            }
 
-                        sHospLisItemTemp = "";
+                            result += String.Format(hp.HospLisItemAndValueTemplate, sHospLisItemTemp, sPLDValue) + hp.HospLisDelimiter;
+
+                            sHospLisItemTemp = "";
+                        }
                     }
 
                     // 去掉最後一個的分隔符號

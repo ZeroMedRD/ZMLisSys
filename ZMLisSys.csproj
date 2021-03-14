@@ -64,6 +64,9 @@
     <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ClosedXML.0.95.4\lib\net46\ClosedXML.dll</HintPath>
     </Reference>
+    <Reference Include="DHOLib">
+      <HintPath>..\DHOLib\DHO\DHOClass\bin\Debug\DHOLib.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.12.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>packages\DocumentFormat.OpenXml.2.12.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
@@ -107,8 +110,27 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net46\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net46\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -127,8 +149,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
@@ -200,6 +220,10 @@
     </Compile>
     <Compile Include="Models\ComboMaster.cs">
       <DependentUpon>LIS_ZMCMSv2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DHO.cs" />
+    <Compile Include="Models\DHO_Users.cs">
+      <DependentUpon>LIS_HISModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\laboratory_class.cs">
       <DependentUpon>LIS_AntifatModel.tt</DependentUpon>
@@ -2615,16 +2639,28 @@
     </Content>
     <Content Include="packages\Antlr.3.5.0.2\.signature.p7s" />
     <Content Include="packages\Antlr.3.5.0.2\Antlr.3.5.0.2.nupkg" />
-    <Content Include="packages\bootstrap.3.3.7\.signature.p7s" />
-    <Content Include="packages\bootstrap.3.3.7\bootstrap.3.3.7.nupkg" />
-    <Content Include="packages\bootstrap.3.3.7\content\Content\bootstrap-theme.css.map" />
-    <Content Include="packages\bootstrap.3.3.7\content\Content\bootstrap-theme.min.css.map" />
-    <Content Include="packages\bootstrap.3.3.7\content\Content\bootstrap.css.map" />
-    <Content Include="packages\bootstrap.3.3.7\content\Content\bootstrap.min.css.map" />
-    <Content Include="packages\bootstrap.3.3.7\content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages\bootstrap.3.3.7\content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="packages\bootstrap.3.3.7\content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="packages\bootstrap.3.3.7\content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="packages\bootstrap.4.5.3\bootstrap.png" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap.css" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap.min.css" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\js\bootstrap.js" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap-grid.css" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap-grid.min.css" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap-reboot.css" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap-reboot.min.css" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap.css" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap.min.css" />
+    <Content Include="packages\bootstrap.4.5.3\content\Scripts\bootstrap.bundle.js" />
+    <Content Include="packages\bootstrap.4.5.3\content\Scripts\bootstrap.bundle.min.js" />
+    <Content Include="packages\bootstrap.4.5.3\content\Scripts\bootstrap.js" />
+    <Content Include="packages\bootstrap.4.5.3\content\Scripts\bootstrap.min.js" />
+    <Content Include="packages\bootstrap.4.5.3\LICENSE.txt" />
     <Content Include="packages\EntityFramework.6.2.0\.signature.p7s" />
     <Content Include="packages\EntityFramework.6.2.0\content\net40\App.config.transform" />
     <Content Include="packages\EntityFramework.6.2.0\content\net40\Web.config.transform" />
@@ -2846,6 +2882,28 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\.signature.p7s" />
+    <Content Include="packages\bootstrap.4.5.3\bootstrap.4.5.3.nupkg" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\css\bootstrap.min.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\js\bootstrap.js.map" />
+    <Content Include="packages\bootstrap.4.5.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap-grid.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap-grid.min.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap-reboot.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap-reboot.min.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Content\bootstrap.min.css.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Scripts\bootstrap.bundle.js.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Scripts\bootstrap.js.map" />
+    <Content Include="packages\bootstrap.4.5.3\content\Scripts\bootstrap.min.js.map" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -2867,13 +2925,6 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll" />
     <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.pdb" />
-    <Content Include="packages\bootstrap.3.3.7\content\Content\bootstrap-theme.css" />
-    <Content Include="packages\bootstrap.3.3.7\content\Content\bootstrap-theme.min.css" />
-    <Content Include="packages\bootstrap.3.3.7\content\Content\bootstrap.css" />
-    <Content Include="packages\bootstrap.3.3.7\content\Content\bootstrap.min.css" />
-    <Content Include="packages\bootstrap.3.3.7\content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="packages\bootstrap.3.3.7\content\Scripts\bootstrap.js" />
-    <Content Include="packages\bootstrap.3.3.7\content\Scripts\bootstrap.min.js" />
     <Content Include="packages\EntityFramework.6.2.0\lib\net40\EntityFramework.dll" />
     <Content Include="packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll" />
     <Content Include="packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.xml" />
@@ -5239,6 +5290,11 @@
     <Content Include="Views\LISBoard\_LisBoardDate.cshtml" />
     <Content Include="Views\Shared\_LisBoardCopyBoard.cshtml" />
     <Content Include="Views\LISBoard\_ChartDetail.cshtml" />
+    <Content Include="Views\LISBoard\LeftSelection\_LisPatientLaboratoryDateGroup.cshtml" />
+    <Content Include="Views\LISBoard\LeftSelection\_LisPatientLaboratoryClassGroup.cshtml" />
+    <Content Include="Views\LISBoard\_LisBoardClass.cshtml" />
+    <Content Include="Views\Shared\_LisBoardClassCopyBoard.cshtml" />
+    <Content Include="Views\LISBoard\_LisBoardChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5340,6 +5396,7 @@ set v3=D:\ZeroMedRD\ZMLISSys\Scripts\ZMLISSys
   echo mput %25v2%25\ZMLISSys.css
   echo cd ..\..\Scripts\ZMLISSys
   echo mput %25v3%25\ZMLISSys.js
+  echo mput %25v3%25\ZMLISBoard.js
   echo BYE
 )
 ftp -n -s:ZMLISSys.txt

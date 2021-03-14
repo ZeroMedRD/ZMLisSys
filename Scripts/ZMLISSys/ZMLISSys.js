@@ -645,6 +645,8 @@ function GetLaboratoryData() {
 
     // 產生伺服器排程資料
     $("#grid_SysUploadServer").data("kendoGrid").dataSource.read(HospIDValue);
+
+    $("#btnAppPush").hide();
 }
 // #endregion
 
@@ -661,6 +663,28 @@ function lisPatientLaboratoryMaster_Grid_OnRowSelect(e) {
                 sHospID: HospIDValue,
                 sPLMRowid: dsa.PLMRowid
             });
+
+    $("#btnAppPush").show();
+}
+
+function lplmPushStatus(e) {
+    // get the index of the PLDValue cell
+    var columns = e.sender.columns;
+    var columnIndex = this.wrapper.find(".k-grid-header [data-field=" + "PLMPTIdno" + "]").index();
+
+    // iterate the table rows and apply custom row and cell styling
+    var rows = e.sender.tbody.children();
+    for (var j = 0; j < rows.length; j++) {
+        var row = $(rows[j]);
+        var dataItem = e.sender.dataItem(row);
+
+        var bAPPFlag = dataItem.get("APPFlag");       
+
+        var cell = row.children().eq(columnIndex);
+        if (bAPPFlag == true) {
+            cell.addClass("colorAPP");
+        }
+    }
 }
 
 function grid_lisPatientLaboratoryDateGroup_OnRowSelect(e) {
@@ -688,6 +712,7 @@ function grid_lisPatientLaboratoryDateGroup_OnRowSelect(e) {
             dataSource.page(1);
         });
 
+        document.getElementById('divAppPush').style.display = 'block';
         document.getElementById("lbCopyText").innerText = "";
     }
     else {
@@ -738,7 +763,27 @@ function Patient_Grid_OnRowSelect(e) {
             });
     $("#grid_lisPatientLaboratoryDateGroup").data("kendoGrid").clearSelection();
 
-    // 檢驗明組資料需清除
+    // 產生病人的檢驗項目
+    $("#grid_lisPatientLaboratoryClassGroup").data("kendoGrid").
+        dataSource.read(
+            {
+                HospID: HospID,
+                strUserId: strUserId
+            });
+    $("#grid_lisPatientLaboratoryClassGroup").data("kendoGrid").clearSelection();
+
+    // 產生病人檢驗 POVIT
+    $("#grid_lisBoardClassDetail").data("kendoGrid").
+        dataSource.read(
+            {
+                HospID: HospID,
+                sPTRowid: strUserId,
+                sJsonString: null
+            });
+    $("#grid_lisBoardClassDetail").data("kendoGrid").clearSelection();
+
+
+    // 檢驗明細資料需清除
     $("#grid_lisPatientLaboratoryDetail").data("kendoGrid").
         dataSource.read(
             {                
@@ -802,4 +847,63 @@ function onUpload(e) {
     var HospIDValue = $("#ddlSysHospital").data("kendoDropDownList").value();
 
     e.data = { HospID: HospIDValue };
+}
+
+function PushDHO(sMode) {
+    var HospID = "";
+    var PLMRowid = "";
+    var UserId = "";
+
+    if (sMode == "D") {
+        var lplm_grid = $("#grid_lisPatientLaboratoryMaster").data("kendoGrid");
+        var dataItem = lplm_grid.dataItem(lplm_grid.select());
+
+        // 取得資料前,先把條件變數做整理
+        var HospID = $("#ddlSysHospital").data("kendoDropDownList").value();
+        var PLMRowid = dataItem.PLMRowid;
+        var UserId = dataItem.PLMPTIdno;
+    }
+    else if (sMode == "B") {
+        var lpldg_grid = $("#grid_lisPatientLaboratoryDateGroup").data("kendoGrid");
+        var dataItem = lpldg_grid.dataItem(lpldg_grid.select());
+
+        // 取得資料前,先把條件變數做整理
+        var HospID = dataItem.HospID;
+        var PLMRowid = dataItem.PLMRowid;
+        var UserId = dataItem.PTIdno;
+    }
+
+    //alert(HospID + '   \n' + PLMRowid + '    \n' + UserId);
+
+    // Call Push DHO Controller
+    if (HospID != "") {
+        $.ajax({
+            url: "/ZMLisSys/LISUpload/PushDHO",
+            type: "GET",
+            data: {
+                HospID: HospID,
+                UserId: UserId,
+                PLMRowid: PLMRowid,
+            },
+            success: function (data) {
+                alert(data);
+                //document.getElementById("PatientName").innerText = data[0].trim();
+                //document.getElementById("PatientGender").innerText = data[1].trim();
+                //document.getElementById("PatientAge").innerText = data[2].trim();
+                //document.getElementById("PatientMeasureDate").innerText = data[3].trim();
+                //document.getElementById("PatientHeight").innerText = data[4].trim();
+                //document.getElementById("PatientWeight").innerText = data[5].trim();
+                ////document.getElementById("PatientTel").innerText = data[6].trim();
+                //document.getElementById("PatientMyAge").innerText = data[7].trim();
+
+                wndConfirmMessage.center().open();
+            }
+        });        
+    }
+    else {
+        // 顯示傳送失敗訊息
+        wndConfirmMessage.center().open();
+    };
+
+    
 }

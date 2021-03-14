@@ -1,0 +1,85 @@
+﻿@*@{
+    var list_ClassItem = ViewBag.ClassItem as List<ZMLISSys.Models.lisHospitalLaboratoryItem>;
+}*@
+<div class="clearfix">
+    <div class="row">
+        @foreach (var dt in ViewBag.ClassItem)
+        {
+            string sDivName = '"' +  "div_" + @dt.HLIRowid + '"';
+            string sChartName = "chart_" + @dt.HLIRowid;
+            string sTitle = @dt.HLIRowid;
+
+            <div id="div_@(dt.HLIRowid)" class="col-sm-4" style="display:none;">
+                @(Html.Kendo().Chart<ZMLISSys.ViewModels.ViewModel_LISChart>().Name(sChartName)
+                    .Legend(false).ChartArea(a => a.Width(400))
+                    .DataSource(ds => ds.Read(read => read.Action("_GetChart", "LISBoard"))
+                        .Events(events => events.Error("error_handler"))
+                    )
+                    .Series(series =>
+                    {
+                        series.Scatter(
+                            model => model.PLMApplyDate,
+                            model => model.PLDValue
+                            );
+                    })
+                    .Title(sTitle)
+                    .XAxis(axis => axis.Date().BaseUnit(ChartAxisBaseUnit.Days).Labels(labels => labels.Format("{0:yyyy-MM-dd}")))
+                    .YAxis(axis => axis.Numeric().Labels(labels => labels.Format("{0:N2}"))
+                        .PlotBands(plotBands => plotBands.Add(0, 200, "#FFFFCB").Opacity(0.3))
+                        //.PlotBands(plotBands => plotBands.Add(50, 100, "#FFFFCB").Opacity(0.8))
+                        //.PlotBands(plotBands => plotBands.Add(100, 200, "#CCEFDB").Opacity(0.8))
+                        .Line(line => line.Width(0)))
+                    .Tooltip(tooltip => tooltip.Visible(true).Format("{0:MM-dd}:{1:N2}").Opacity(1))
+                )
+            </div>
+        }
+        @*<div class="col-sm-4">
+                @(Html.Kendo().Chart<ZMLISSys.ViewModels.ViewModel_LISChart>().Name("chart_002")
+                    .Legend(false).ChartArea(a => a.Width(400))
+                    .DataSource(ds => ds.Read(read => read.Action("_GetChart", "LISBoard"))
+                        .Events(events => events.Error("error_handler"))
+                    )
+                    .Series(series =>
+                    {
+                        series.Scatter(
+                            model => model.PLMApplyDate,
+                            model => model.PLDValue
+                            );
+                    })
+                    .XAxis(axis => axis.Date().BaseUnit(ChartAxisBaseUnit.Days).Labels(labels => labels.Format("{0:yyyy-MM-dd}")))
+                    .YAxis(axis => axis.Numeric().Labels(labels => labels.Format("{0:N2}"))
+                        .PlotBands(plotBands => plotBands.Add(0, 200, "#FFFFCB").Opacity(0.3))
+                        //.PlotBands(plotBands => plotBands.Add(50, 100, "#FFFFCB").Opacity(0.8))
+                        //.PlotBands(plotBands => plotBands.Add(100, 200, "#CCEFDB").Opacity(0.8))
+                        .Line(line => line.Width(0))
+                        .Max(200)
+                        .Min(0))
+                    .Tooltip(tooltip => tooltip.Visible(true).Format("{0:MM-dd}:{1:N2}").Opacity(1))
+                )
+            </div>
+            <div class="col-sm-4">
+                @(Html.Kendo().Chart<ZMLISSys.ViewModels.ViewModel_LISChart>().Name("chart_003")
+                    .Legend(false).ChartArea(a => a.Width(400))
+                    .DataSource(ds => ds.Read(read => read.Action("_GetChart", "LISBoard"))
+                        .Events(events => events.Error("error_handler"))
+                    )
+                    .Series(series =>
+                    {
+                        series.Scatter(
+                            model => model.PLMApplyDate,
+                            model => model.PLDValue
+                            );
+                    })
+                    .XAxis(axis => axis.Date().BaseUnit(ChartAxisBaseUnit.Days).Labels(labels => labels.Format("{0:yyyy-MM-dd}")))
+                    .YAxis(axis => axis.Numeric().Labels(labels => labels.Format("{0:N2}"))
+                        .PlotBands(plotBands => plotBands.Add(0, 200, "#FFFFCB").Opacity(0.3))
+                        //.PlotBands(plotBands => plotBands.Add(50, 100, "#FFFFCB").Opacity(0.8))
+                        //.PlotBands(plotBands => plotBands.Add(100, 200, "#CCEFDB").Opacity(0.8))
+                        .Line(line => line.Width(0))
+                        .Max(200)
+                        .Min(0))
+                    .Tooltip(tooltip => tooltip.Visible(true).Format("{0:MM-dd}:{1:N2}").Opacity(1))
+                )
+            </div>*@
+    </div>
+</div>

@@ -1,7 +1,7 @@
 ﻿@(Html.Kendo().Grid<ZMLISSys.ViewModels.ViewModel_lisPatientLaboratoryMaster>()
     .Name("grid_lisPatientLaboratoryMaster")
     .Columns(columns =>
-    {
+    {   
         columns.Bound(lp => lp.PLMRowid).Hidden(true);
         columns.Bound(lp => lp.PLMPTRowid).Hidden(true);
         columns.Bound(lp => lp.PLMPTIdno);
@@ -19,8 +19,9 @@
         columns.Bound(lp => lp.PLMSNo);
         columns.Bound(lp => lp.PLMReqno).Hidden(true);
     })
-    .Events(events => { events.Change("lisPatientLaboratoryMaster_Grid_OnRowSelect"); })
+    .Events(events => { events.Change("lisPatientLaboratoryMaster_Grid_OnRowSelect").DataBound("lplmPushStatus"); })
     .ColumnMenu()
+    .Resizable(resize => resize.Columns(true))
     .Pageable(page => page.Refresh(true)
         .ButtonCount(10)
         .PageSizes(new[] { 50, 100, 300, 500, 1000 })
@@ -40,3 +41,10 @@
             )
     .NoRecords("目前未有任何資料顯示 !")
 )
+
+<style>
+    .colorAPP {
+        font-weight: bold;
+        color: #ff6a00 !important;
+    }
+</style>

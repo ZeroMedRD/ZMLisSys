@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZMLISSys", "ZMLISSys.csproj", "{7E31A07B-89A9-440E-82BC-39E876A7E6D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZMLib", "..\ZMLib\ZMLib\ZMLib.csproj", "{E22315F3-0F28-4D8E-9F98-9F827990E05A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{7E31A07B-89A9-440E-82BC-39E876A7E6D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E31A07B-89A9-440E-82BC-39E876A7E6D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E31A07B-89A9-440E-82BC-39E876A7E6D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E22315F3-0F28-4D8E-9F98-9F827990E05A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E22315F3-0F28-4D8E-9F98-9F827990E05A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E22315F3-0F28-4D8E-9F98-9F827990E05A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E22315F3-0F28-4D8E-9F98-9F827990E05A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

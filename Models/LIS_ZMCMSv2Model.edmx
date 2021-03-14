@@ -68,6 +68,20 @@
           <Property Name="CBMLastModifiedDateTime" Type="datetime" />
           <Property Name="CBMModifiedUserRowid" Type="nvarchar" MaxLength="128" />
         </EntityType>
+        <EntityType Name="DHO_Users">
+          <Key>
+            <PropertyRef Name="rowid" />
+          </Key>
+          <Property Name="rowid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="org_code" Type="nvarchar" MaxLength="255" />
+          <Property Name="dho_uid" Type="nvarchar" MaxLength="10" />
+          <Property Name="dho_account" Type="nvarchar" MaxLength="255" />
+          <Property Name="reg_type" Type="char" MaxLength="1" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_id" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_dob" Type="datetime" />
+          <Property Name="create_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="sysHospital">
           <Key>
             <PropertyRef Name="HospRowid" />
@@ -183,6 +197,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComboMaster" EntityType="Self.ComboMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DHO_Users" EntityType="Self.DHO_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysHospital" EntityType="Self.sysHospital" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysHospitalParam" EntityType="Self.sysHospitalParam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysMedicalGroup" EntityType="Self.sysMedicalGroup" Schema="dbo" store:Type="Tables" />
@@ -298,6 +313,7 @@
           <EntitySet Name="sysMedicalGroupHospital" EntityType="LIS_ZMCMSv2Model.sysMedicalGroupHospital" />
           <EntitySet Name="sysUploadServer" EntityType="LIS_ZMCMSv2Model.sysUploadServer" />
           <EntitySet Name="sysUploadSchedule" EntityType="LIS_ZMCMSv2Model.sysUploadSchedule" />
+          <EntitySet Name="DHO_Users" EntityType="LIS_ZMCMSv2Model.DHO_Users" />
         </EntityContainer>
         <EntityType Name="sysHospitalParam">
           <Key>
@@ -386,6 +402,20 @@
           <Property Name="SUSRowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SUSHospID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="SUSDateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="DHO_Users">
+          <Key>
+            <PropertyRef Name="rowid" />
+          </Key>
+          <Property Name="rowid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="org_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="dho_uid" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="dho_account" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="reg_type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="user_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_dob" Type="DateTime" Precision="3" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -571,6 +601,21 @@
                 <ScalarProperty Name="SUSDateTime" ColumnName="SUSDateTime" />
                 <ScalarProperty Name="SUSHospID" ColumnName="SUSHospID" />
                 <ScalarProperty Name="SUSRowid" ColumnName="SUSRowid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DHO_Users">
+            <EntityTypeMapping TypeName="LIS_ZMCMSv2Model.DHO_Users">
+              <MappingFragment StoreEntitySet="DHO_Users">
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="user_dob" ColumnName="user_dob" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="reg_type" ColumnName="reg_type" />
+                <ScalarProperty Name="dho_account" ColumnName="dho_account" />
+                <ScalarProperty Name="dho_uid" ColumnName="dho_uid" />
+                <ScalarProperty Name="org_code" ColumnName="org_code" />
+                <ScalarProperty Name="rowid" ColumnName="rowid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

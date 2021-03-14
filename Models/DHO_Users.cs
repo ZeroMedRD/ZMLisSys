@@ -12,17 +12,16 @@ namespace ZMLISSys.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class lisHospitalLaboratoryItem
+    public partial class DHO_Users
     {
-        public string HLIRowid { get; set; }
-        public string LLIRowid { get; set; }
-        public string LLISubRowid { get; set; }
-        public string HLICode { get; set; }
-        public string HLIName { get; set; }
-        public string HLITitleName { get; set; }
-        public string HLIUpValue { get; set; }
-        public string HLILoValue { get; set; }
-        public string HLIDisplayRange { get; set; }
-        public Nullable<int> HLISeqno { get; set; }
+        public string rowid { get; set; }
+        public string org_code { get; set; }
+        public string dho_uid { get; set; }
+        public string dho_account { get; set; }
+        public string reg_type { get; set; }
+        public string user_name { get; set; }
+        public string user_id { get; set; }
+        public Nullable<System.DateTime> user_dob { get; set; }
+        public Nullable<System.DateTime> create_date { get; set; }
     }
 }

@@ -1,0 +1,69 @@
+﻿@model System.Data.DataTable
+
+<style>
+    .k-grid .k-state-selected {
+        background-color: #f3ce00 !important;
+        color: #000000;
+    }
+
+    .k-grid .k-alt.k-state-selected {
+        background-color: #f3ce00 !important;
+        color: #000000;
+    }
+</style>
+@*https://www.telerik.com/blogs/dynamic-data-in-the-kendo-ui-grid*@
+@*https://dotnetlearningarray.blogspot.com/2015/06/telerik-mvc-grid-with-dynamic-columns.html*@
+@(Html.Kendo().Grid<dynamic>()
+    .Name("grid_lisBoardClassDetail")
+    //.AutoBind(false)
+    .Columns(columns =>
+    {
+        foreach (System.Data.DataColumn column in Model.Columns)
+        {
+            //You can write additional validation on columns if needed, as shown
+            if (column.DataType.FullName == "System.DateTime")
+            {
+                var c = columns.Bound(column.ColumnName).Format("{0:MM/dd/yyyy}");
+            }
+            else
+            {
+                var c = columns.Bound(column.ColumnName);
+            }
+        }
+    })
+    //.ColumnMenu()
+    //.Events(ev => ev.Change("lisPatientLaboratoryClassGroup_onChange").DataBound("onDataBound"))
+    //.Events(ev => ev.DataBound("onDataBound"))
+    //.Selectable(selectable => selectable.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+    .Events(ev => ev.DataBound("resizeClassDetailGrid"))   // in ZMLISBoard.js
+    .PersistSelection()
+    .Navigatable()
+    //.Sortable()    
+    .Scrollable(scrollable => scrollable.Enabled(true).Height("480"))
+    .Resizable(resize => resize.Columns(true))
+    .DataSource(dataSource => dataSource.Ajax()
+        //.Sort(x => { x.Add("HLISeqno").Ascending(); })
+        //.Model(model =>
+        //{
+        //    var id = Model.PrimaryKey[0].ColumnName;
+        //    model.Id(id);
+        //    foreach (System.Data.DataColumn column in Model.Columns)
+        //    {
+        //        var field = model.Field(column.ColumnName, column.DataType);
+        //        if (column.ColumnName == id)
+        //        {
+        //            field.Editable(false);
+        //        }
+        //    }
+        //})
+        .Read(read => read.Action("lisPatientLaboratoryPOVIT_Read", "LISBoard")).ServerOperation(false)
+        .Events(events => events.Error("error_handler"))
+    ).NoRecords("目前未有任何資料顯示 !")
+)
+
+<style>
+    .overvalue {
+        font-weight: bold;
+        color: red !important;
+    }
+</style>

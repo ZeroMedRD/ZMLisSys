@@ -13,7 +13,7 @@
     .Name("grid_lisPatientLaboratoryDetail")
     .Columns(columns =>
     {
-        columns.Select().Width(50).HtmlAttributes(new { @id="ttt" });
+        columns.Select().Width(50);
         columns.Bound(lpd => lpd.PLDRowid).Hidden(true);
         columns.Bound(lpd => lpd.PLMRowid).Hidden(true);
         columns.Bound(lpd => lpd.HLIRowid).Hidden(true);
